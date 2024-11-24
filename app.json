@@ -18,10 +18,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.paulaymanu113.puntodecruz"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5dbcc33b-7d88-4ffd-9f4a-09590c32abd2"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
