@@ -42,7 +42,7 @@ export default function Converter() {
                 <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
 
                 {
-                    colors &&
+                    colors && 
                     <View style={[styles.row, { width: "100%", justifyContent: "space-between" }]}>
                         <Button
                             onClick={() => {
@@ -102,6 +102,7 @@ export default function Converter() {
                         <Button
                             onClick={() => {
                                 setWebviewKey((key) => key + 1);
+                                setColors(null); 
                             }}
                             text={"Reiniciar"}
                         />
