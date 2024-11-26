@@ -43,14 +43,26 @@ export default function Converter() {
 
                 {
                     colors &&
-                        <View style={{ alignSelf: "flex-end" }}>
-                            <Button
-                                onClick={() => {
-                                    setWebviewKey((key) => key + 1);
-                                }}
-                                text={"Reiniciar"}
-                            />
-                        </View>
+                    <View style={[styles.row, { width: "100%", justifyContent: "space-between" }]}>
+                        <Button
+                            onClick={() => {
+                                ref.current.capture().then(uri => {
+                                    requestPermissions(uri)
+                                })
+                            }}
+                            disabled={renderColors}
+                            small
+                            text={"Descargar Imagen"}
+                        />
+                        <Button
+                            onClick={() => {
+                                ref.current.capture().then(uri => convertToPdf(uri))
+                            }}
+                            disabled={renderColors}
+                            small
+                            text={"Descargar PDF"}
+                        />
+                    </View>
                 }
 
                 <ViewShot ref={ref} options={{ fileName: "Test", format: "jpg", quality: 0.9 }} style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -80,30 +92,19 @@ export default function Converter() {
 
                 {
                     colors &&
-                    <View style={{ gap: 8, width: "100%" }}>
-                        <Text style={ui.text}>Elige una acción para descargar</Text>
-                        <View style={styles.row}>
-                            <Button
-                                onClick={() => {
-                                    ref.current.capture().then(uri => {
-                                        requestPermissions(uri)
-                                    })
-                                }}
-                                text={"Imagen"}
-                            />
-                            <Button
-                                onClick={() => {
-                                    ref.current.capture().then(uri => convertToPdf(uri))
-                                }}
-                                text={"PDF"}
-                            />
-                            <Button
-                                onClick={() => {
-                                    setRenderColors(!renderColors);
-                                }}
-                                text={renderColors ? "Ver imagen" : "Ver colores"}
-                            />
-                        </View>
+                    <View style={[styles.row, { justifyContent: "space-between" }]}>
+                        <Button
+                            onClick={() => {
+                                setRenderColors(!renderColors);
+                            }}
+                            text={renderColors ? "Ver imagen" : "Ver colores"}
+                        />
+                        <Button
+                            onClick={() => {
+                                setWebviewKey((key) => key + 1);
+                            }}
+                            text={"Reiniciar"}
+                        />
                     </View>
                 }
             </View>
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 12,
-        paddingTop: StatusBar.currentHeight + 16,
+        paddingTop: StatusBar.currentHeight + 32,
         paddingHorizontal: 20,
         paddingBottom: 16,
         backgroundColor: "#fff",
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     },
 
     row: {
+        width: "100%",
         flexDirection: "row",
         gap: 8,
         flexWrap: "wrap",

@@ -9,10 +9,9 @@ export const ui = {
         fontSize: 18,
     },
     muted: {
-        fontFamily: "poppins-medium",
+        fontFamily: "poppins-regular",
         color: "#404040",
-        fontSize: 16,
-        lineHeight: 20,
+        fontSize: 15,
     },
     bold: {
         fontFamily: "poppins-bold"

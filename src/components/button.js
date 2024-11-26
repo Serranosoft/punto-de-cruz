@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ui } from "../utils/styles";
 
-export default function Button({ icon, text, onClick, disabled }) {
+export default function Button({ icon, text, onClick, disabled, small }) {
     return (
-        <TouchableOpacity style={[styles.button, disabled && styles.disabled]} onPress={onClick} disabled={disabled}>
+        <TouchableOpacity style={[styles.button, disabled && styles.disabled, small && styles.small]} onPress={onClick} disabled={disabled}>
             {icon}
-            <Text style={[ui.text, styles.buttonText]}>{text}</Text>
+            <Text style={[small ? ui.muted : ui.text, styles.buttonText]}>{text}</Text>
         </TouchableOpacity>
     )
 }
@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 12,
         backgroundColor: "#c44601",
-        paddingVertical: 4,
-        paddingHorizontal: 12,
+        paddingVertical: 6,
+        paddingHorizontal: 16,
         borderRadius: 8,
 
         shadowColor: "#efedff",
@@ -39,5 +39,5 @@ const styles = StyleSheet.create({
 
     disabled: {
         backgroundColor: "#777586"
-    }
+    },
 })
