@@ -30,7 +30,6 @@ export async function convertToPdf(image) {
                 `;
 
     const { uri } = await Print.printToFileAsync({ html });
-    console.log('File has been saved to:', uri);
 
     await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
 };
@@ -64,7 +63,6 @@ async function save(conversion) {
         ToastAndroid.showWithGravityAndOffset(SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
 
     } catch (error) {
-        console.log(error);
         ToastAndroid.showWithGravityAndOffset(PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
     }
 }

@@ -9,8 +9,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function DesignsHome() {
 
-    console.log(highlight[0]);
-
     return (
         <View style={styles.container}>
             <Text style={[ui.h2, ui.center]}>💫 Populares 💫</Text>

@@ -22,13 +22,8 @@ export default function Item() {
     useEffect(() => {
         // Recuperar todas las imagenes de cloudinary con la tag category+subcategory
         const tag = `${category.toLowerCase()}-${subcategory.toLowerCase().split(" ").join("-")}`;
-        console.log(tag);
         fetchResourcesList(tag);
     }, [])
-
-    useEffect(() => {
-        // console.log(images);
-    }, [images])
 
     async function fetchResourcesList(tag) {
         const response = await fetch(`https://res.cloudinary.com/dvuvk6yrw/image/list/${tag}.json`)
