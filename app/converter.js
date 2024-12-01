@@ -1,4 +1,4 @@
-import { Dimensions, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StatusBar, StyleSheet, View } from "react-native";
 import Bubble from "../src/components/bubble";
 import { useRef, useState } from "react";
 import { Stack } from "expo-router";
@@ -6,7 +6,6 @@ import Button from "../src/components/button";
 import ViewShot from "react-native-view-shot";
 import { WebView } from 'react-native-webview';
 import { convertToPdf, requestPermissions } from "../src/utils/media";
-import { ui } from "../src/utils/styles";
 
 const width = Dimensions.get("screen").width;
 

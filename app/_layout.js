@@ -1,12 +1,10 @@
 import { SplashScreen, Stack } from "expo-router";
-import { View, StatusBar, StyleSheet, Pressable, Image } from "react-native";
+import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as Notifications from 'expo-notifications';
 import { DataContext } from "../src/utils/DataContext";
-import { ui } from "../src/utils/styles";
-import { getAllFavorites, initDb } from "../src/utils/storage";
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -34,24 +32,6 @@ export default function Layout() {
         });
     }, [])
 
-
-    useEffect(() => {
-        init();
-    }, []);
-
-    async function init() {
-        await initDb();
-    }
-
-    const [favorites, setFavorites] = useState([]);
-    useEffect(() => {
-        async function getFavorites() {
-            const result = await getAllFavorites();
-            if (result) setFavorites(result);
-        }
-        getFavorites();
-    }, [])
-
     if (!fontsLoaded) {
         return null;
     }
@@ -61,9 +41,6 @@ export default function Layout() {
             <DataContext.Provider value={{ favorites: favorites, setFavorites: setFavorites }}>
                 <GestureHandlerRootView style={styles.wrapper}>
                     <Stack />
-                    {/* <Pressable onPress={() => router.push("/favorites")} style={ui.floatingWrapper}>
-                        <Image style={ui.floatingImg} source={require("../assets/favorites.png")} />
-                    </Pressable> */}
                 </GestureHandlerRootView>
             </DataContext.Provider>
             <StatusBar style="light" />

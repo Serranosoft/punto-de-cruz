@@ -1,22 +1,19 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { createRef, useEffect, useState } from "react";
+import { router, Stack, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import Progress from "../src/layout/item/progress";
-// import { fetchData, fetchImages } from "../src/utils/data";
 import Card from "../src/layout/item/Card";
 import Bubble from "../src/components/bubble";
 import { ui } from "../src/utils/styles";
-import Pinch from "../src/components/pinch";
 import Actions from "../src/layout/item/actions";
+import Button from "../src/components/button";
 
 export default function Item() {
 
     const params = useLocalSearchParams();
     const { category, subcategory, steps } = params;
 
-    // const [steps, setSteps] = useState([]);
     const [images, setImages] = useState([]);
-
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
@@ -51,11 +48,23 @@ export default function Item() {
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
             <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
-            <View style={styles.action}>
-            </View>
             <View style={styles.wrapper}>
                 <Text style={[ui.h2, { marginBottom: 8 }]}>{`${category} / ${subcategory}`}</Text>
                 <Card name={`${category} / ${subcategory}`} images={images} setCurrent={setCurrent} current={current} steps={steps} />
+                {
+                    (current+1) == steps ?
+                        <View style={styles.column}>
+                            <Text style={[ui.h3, ui.center]}>¿Quieres el patrón con la guía completa en PDF?</Text>
+                            <Button
+                                text={"Descargar patrón en PDF"} 
+                                onClick={() => router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${category.toLowerCase().replace(" ", "-")}-${subcategory.toLowerCase().replace(" ", "-")}.pdf`)}>
+                            </Button>
+                        </View>
+                        :
+                        <View style={styles.column}>
+                            <Text style={[ui.muted, ui.center]}>En el último paso tienes la guía completa para descargar en PDF</Text>
+                        </View>
+                }
                 <Actions />
                 <Progress current={(current + 1)} qty={steps} setCurrent={setCurrent} />
             </View>
@@ -75,5 +84,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "space-around",
         gap: 12,
+    },
+
+    column: {
+        gap: 8,
+        alignItems: "center",
+        marginBottom: 8,
+        alignSelf: "center"
     }
 })

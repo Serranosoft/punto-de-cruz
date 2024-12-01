@@ -19,7 +19,7 @@ export async function testNotification() {
         const notificacion = {
             identifier: "notificacion-5-sec",
             content: {
-                title: '¿Has practicado hoy crochet?',
+                title: '¿Has practicado hoy punto de cruz?',
                 body: '¡Empieza a elaborar los puntos mas comunes!',
             },
             trigger: {
@@ -55,7 +55,7 @@ export async function scheduleWeeklyNotification() {
         const notificacion = {
             identifier: 'notificacion-semanal-miercoles',
             content: {
-                title: '¿Has practicado hoy crochet?',
+                title: '¿Has practicado hoy punto de cruz?',
                 body: '¡Empieza a elaborar los puntos mas comunes!',
             },
             trigger: {

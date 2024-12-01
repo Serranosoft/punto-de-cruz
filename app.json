@@ -1,23 +1,24 @@
 {
   "expo": {
-    "name": "punto-de-cruz",
+    "name": "Punto de Cruz",
     "slug": "punto-de-cruz",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icono-punto-de-cruz-movil.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-punto-de-cruz.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F7F0EC"
     },
+    "scheme": "punto-de-cruz",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
+        "backgroundColor": "#F7F0EC"
       },
       "package": "com.paulaymanu113.puntodecruz"
     },
