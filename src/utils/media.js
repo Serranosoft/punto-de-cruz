@@ -2,12 +2,10 @@ import { ToastAndroid } from "react-native";
 import * as MediaLibrary from 'expo-media-library';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
 import { shareAsync } from 'expo-sharing';
+import { useContext } from "react";
+import { LangContext } from "./LangContext";
 
-const ALBUM_NAME = "Punto de cruz";
-const PERMISSION_DENIED = "Permiso denegado"
-const SUCCESS = "Imagen guardada en la galería"
 
 
 
@@ -36,33 +34,33 @@ export async function convertToPdf(image) {
 
 
 /** Encargado de solicitar los permisos necesarios para almacenar el resultado en la galería del dispositivo */
-export async function requestPermissions(conversion) {
+export async function requestPermissions(conversion, messages) {
     try {
         const { status } = await MediaLibrary.requestPermissionsAsync(false, ["photo"]);
         if (status === "granted") {
-            save(conversion);
+            save(conversion, messages);
         } else {
-            ToastAndroid.showWithGravityAndOffset(PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         }
     } catch (error) {
-        ToastAndroid.showWithGravityAndOffset(PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
     }
 }
 
 /** Almacenar en galería */
-async function save(conversion) {
+async function save(conversion, messages) {
     try {
         const asset = await MediaLibrary.createAssetAsync(conversion);
-        let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+        let album = await MediaLibrary.getAlbumAsync(messages.ALBUM_NAME);
         if (!album) {
-            album = await MediaLibrary.createAlbumAsync(ALBUM_NAME, asset, false);
+            album = await MediaLibrary.createAlbumAsync(messages.ALBUM_NAME, asset, false);
         } else {
             await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
         }
 
-        ToastAndroid.showWithGravityAndOffset(SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        ToastAndroid.showWithGravityAndOffset(messages.SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
 
     } catch (error) {
-        ToastAndroid.showWithGravityAndOffset(PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
     }
 }

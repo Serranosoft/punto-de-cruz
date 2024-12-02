@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from "react-native"
 import { ui } from "../../utils/styles"
+import { LangContext } from "../../utils/LangContext";
+import { useContext } from "react";
 
 export default function Feedback() {
+    const { language } = useContext(LangContext);
 
     return (
         <View style={styles.container}>
-            <Text style={[ui.h2, ui.center]}>🎀 ¿Te gusta la app? 🎀</Text>
-            <Text style={[ui.text, ui.center]}>Dame una puntuación en la Play Store para ayudarme a seguir mejorando 🌈🌈</Text>
+            <Text style={[ui.h2, ui.center]}>🎀 {language.t("_homeFooterTitle")} 🎀</Text>
+            <Text style={[ui.text, ui.center]}>{language.t("_homeFooterSubtitle")} 🌈🌈</Text>
         </View>
     )
 }

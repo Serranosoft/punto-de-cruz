@@ -1,23 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ui } from "../../utils/styles";
+import { gap, ui } from "../../utils/styles";
 import Button from "../../components/button";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from "expo-router";
+import { LangContext } from "../../utils/LangContext";
+import { useContext } from "react";
 
 export default function ConverterHome() {
 
+    const { language } = useContext(LangContext);
     const router = useRouter();
 
     return (
-        <View style={styles.container}>
-            <Text style={[ui.h2, ui.center]}>🤩 Tus fotos 🤩</Text>
+        <View style={gap.medium}>
+            <Text style={[ui.h2, ui.center]}>🤩 {language.t("_homeYourPhotos")} 🤩</Text>
             <View style={styles.box}>
                 <View style={styles.wrapper}>
-                    <Text style={[ui.text, ui.bold, { textAlign: "center", maxWidth: 250 }]}>Convierte tus fotos en punto de cruz</Text>
+                    <Text style={[ui.text, ui.bold, ui.center, { maxWidth: 250 }]}>{language.t("_homeConvertInfo")}</Text>
                     <Button
                         onClick={() => router.navigate("/converter")}
                         icon={<MaterialIcons name="menu-book" size={24} color="#fff" />}
-                        text={"Convertir mis fotos"}
+                        text={language.t("_homeConvertPhotos")}
                     />
                 </View>
             </View>
@@ -26,9 +29,6 @@ export default function ConverterHome() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        gap: 16
-    },
     box: {
         alignItems: "center",
         justifyContent: "center",

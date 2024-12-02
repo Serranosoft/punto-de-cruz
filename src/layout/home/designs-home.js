@@ -1,67 +1,68 @@
-import { FlatList, StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, ImageBackground } from "react-native";
-import { Link, Stack, useRouter } from "expo-router";
-import { ui } from "../../utils/styles";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
+import { gap, layout, ui } from "../../utils/styles";
 import { Image } from "expo-image";
-import { useMemo, useState } from "react";
+import { useContext } from "react";
+import { LangContext } from "../../utils/LangContext";
 import { highlight } from "../../utils/data";
-import Button from "../../components/button";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function DesignsHome() {
 
+    const { language } = useContext(LangContext);
+
     return (
-        <View style={styles.container}>
-            <Text style={[ui.h2, ui.center]}>💫 Populares 💫</Text>
-            <View style={styles.grid}>
-                <Link style={[styles.box]} href={{ pathname: "/item", params: { category: highlight[0].category, subcategory: highlight[0].data.name, steps: highlight[0].data.steps }}} asChild>
+        <View style={gap.big}>
+            <Text style={[ui.h2, ui.center]}>💫 {language.t("_homePopular")} 💫</Text>
+            <View style={[layout.row, gap.small, { height: 250 }]}>
+                <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[0].fetch, subcategoryFetch: highlight(language)[0].data.fetch, category: highlight(language)[0].category, subcategory: highlight(language)[0].data.name, steps: highlight(language)[0].data.steps }}} asChild>
                     <TouchableOpacity>
                         <Image
                             style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
-                            source={{ uri: highlight[0].data.image }}
+                            source={{ uri: highlight(language)[0].data.image }}
                         />
                         <View style={styles.overlay} />
                         <View style={styles.boxInner}>
                             <View style={styles.boxBorder}>
                                 <View style={styles.boxContent}>
-                                    <Text style={[ui.h3, ui.bold, { color: "#fff" }]}>{highlight[0].data.name}</Text>
+                                    <Text style={[ui.h3, ui.bold, { color: "#fff" }]}>{highlight(language)[0].data.name}</Text>
                                 </View>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </Link>
 
-                <View style={styles.group}>
-                    <Link style={[styles.box]} href={{ pathname: "/item", params: { category: highlight[1].category, subcategory: highlight[1].data.name, steps: highlight[1].data.steps } }} asChild>
+                <View style={[layout.flex, gap.small]}>
+                    <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[1].fetch, subcategoryFetch: highlight(language)[1].data.fetch, category: highlight(language)[1].category, subcategory: highlight(language)[1].data.name, steps: highlight(language)[1].data.steps } }} asChild>
                         <TouchableOpacity>
                             <View style={styles.pill}>
-                                <Text style={[ui.muted, { color: "#fff" }]}>¡Tendencia!</Text>
+                                <Text style={[ui.muted, { color: "#fff" }]}>{language.t("_homeTrend")}</Text>
                             </View>
                             <Image
                                 style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
-                                source={{ uri: highlight[1].data.image }}
+                                source={{ uri: highlight(language)[1].data.image }}
                             />
                             <View style={styles.overlay} />
                             <View style={styles.boxInner}>
                                 <View style={styles.boxBorder}>
                                     <View style={styles.boxContent}>
-                                        <Text style={[ui.text, ui.bold, { color: "#fff" }]}>{highlight[1].data.name}</Text>
+                                        <Text style={[ui.text, ui.bold, { color: "#fff" }]}>{highlight(language)[1].data.name}</Text>
                                     </View>
                                 </View>
                             </View>
                         </TouchableOpacity>
                     </Link>
 
-                    <Link style={[styles.box]} href={{ pathname: "/item", params: { category: highlight[2].category, subcategory: highlight[2].data.name, steps: highlight[2].data.steps } }} asChild>
+                    <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[2].fetch, subcategoryFetch: highlight(language)[2].data.fetch, category: highlight(language)[2].category, subcategory: highlight(language)[2].data.name, steps: highlight(language)[2].data.steps } }} asChild>
                         <TouchableOpacity>
                             <Image
                                 style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
-                                source={{ uri: highlight[2].data.image }}
+                                source={{ uri: highlight(language)[2].data.image }}
                             />
                             <View style={styles.overlay} />
                             <View style={styles.boxInner}>
                                 <View style={styles.boxBorder}>
                                     <View style={styles.boxContent}>
-                                        <Text style={[ui.text, ui.bold, { color: "#fff" }]}>{highlight[2].data.name}</Text>
+                                        <Text style={[ui.text, ui.bold, { color: "#fff" }]}>{highlight(language)[2].data.name}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -69,30 +70,11 @@ export default function DesignsHome() {
                     </Link>
                 </View>
             </View>
-            <Button
-                onClick={() => router.navigate("/converter")}
-                icon={<MaterialIcons name="menu-book" size={24} color="#fff" />}
-                text={"Ver todos los diseños"}
-            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-
-    container: {
-        gap: 24
-    },
-
-    grid: {
-        flexDirection: "row",
-        gap: 8,
-        height: 250,
-    },
-
-    box: {
-        flex: 1,
-    },
 
     overlay: {
         position: "absolute",
@@ -118,17 +100,6 @@ const styles = StyleSheet.create({
 
     boxContent: {
         alignItems: "flex-start",
-    },
-
-    group: {
-        flex: 1,
-        gap: 8,
-    },
-
-    item: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
     },
 
     pill: {

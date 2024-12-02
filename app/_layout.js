@@ -1,10 +1,13 @@
 import { SplashScreen, Stack } from "expo-router";
 import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as Notifications from 'expo-notifications';
-import { DataContext } from "../src/utils/DataContext";
+import { LangContext } from "../src/utils/LangContext";
+import { I18n } from "i18n-js";
+import { translations } from "../src/utils/localizations";
+import { getLocales } from "expo-localization";
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -32,17 +35,24 @@ export default function Layout() {
         });
     }, [])
 
+    // Idioma
+    const [language, setLanguage] = useState(getLocales()[0].languageCode || "es");
+    const i18n = new I18n(translations);
+    i18n.locale = language;
+    i18n.enableFallback = true
+    i18n.defaultLocale = "es";
+
     if (!fontsLoaded) {
         return null;
     }
 
     return (
         <View style={styles.container}>
-            <DataContext.Provider value={{ favorites: favorites, setFavorites: setFavorites }}>
+            <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
                 <GestureHandlerRootView style={styles.wrapper}>
                     <Stack />
                 </GestureHandlerRootView>
-            </DataContext.Provider>
+            </LangContext.Provider>
             <StatusBar style="light" />
         </View >
     )

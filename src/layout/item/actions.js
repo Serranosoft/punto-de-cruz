@@ -3,21 +3,26 @@ import Pinch from "../../components/pinch";
 import { Text } from "react-native";
 import { ui } from "../../utils/styles";
 import DoubleTap from "../../components/double-tap";
+import { LangContext } from "../../utils/LangContext";
+import { useContext } from "react";
 
 export default function Actions() {
+
+    const { language } = useContext(LangContext);
+
     return (
         <View style={styles.container}>
             <View style={styles.action}>
                 <View style={styles.icon}>
                     <Pinch />
                 </View>
-                <Text style={ui.muted}>Arrastrar (Zoom)</Text>
+                <Text style={ui.muted}>{language.t("_itemActionPinch")}</Text>
             </View>
             <View style={styles.action}>
                 <View style={styles.icon}>
                     <DoubleTap />
                 </View>
-                <Text style={ui.muted}>Doble pulsación (Zoom)</Text>
+                <Text style={ui.muted}>{language.t("_itemActionDoublePress")}</Text>
             </View>
         </View>
     )

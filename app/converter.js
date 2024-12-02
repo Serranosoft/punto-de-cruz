@@ -1,11 +1,13 @@
 import { Dimensions, StatusBar, StyleSheet, View } from "react-native";
 import Bubble from "../src/components/bubble";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Stack } from "expo-router";
 import Button from "../src/components/button";
 import ViewShot from "react-native-view-shot";
 import { WebView } from 'react-native-webview';
 import { convertToPdf, requestPermissions } from "../src/utils/media";
+import { LangContext } from "../src/utils/LangContext";
+import Header from "../src/components/header";
 
 const width = Dimensions.get("screen").width;
 
@@ -28,15 +30,23 @@ const MyWebComponent = ({ setColors, webviewKey }) => {
 
 export default function Converter() {
 
+    const { language } = useContext(LangContext);
+
     const [webviewKey, setWebviewKey] = useState(1);
     const [colors, setColors] = useState(null);
     const [renderColors, setRenderColors] = useState(false);
 
     const ref = useRef();
 
+    const messages = {
+        PERMISSION_DENIED: language.t("_convertMediaPermissionDenied"),
+        ALBUM_NAME: language.t("_convertMediaAlbum"),
+        SUCCESS: language.t("_convertMediaSuccess"),
+    }
+
     return (
         <>
-            <Stack.Screen options={{ headerShown: false }} />
+            <Stack.Screen options={{ header: () => <Header title={language.t("_headerTitle")} /> }} />
             <View style={styles.container}>
                 <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
 
@@ -46,7 +56,7 @@ export default function Converter() {
                         <Button
                             onClick={() => {
                                 ref.current.capture().then(uri => {
-                                    requestPermissions(uri)
+                                    requestPermissions(uri, messages)
                                 })
                             }}
                             disabled={renderColors}
@@ -64,7 +74,7 @@ export default function Converter() {
                     </View>
                 }
 
-                <ViewShot ref={ref} options={{ fileName: "Test", format: "jpg", quality: 0.9 }} style={{ flex: 1, backgroundColor: "#fff" }}>
+                <ViewShot ref={ref} options={{ fileName: "punto-de-cruz-colores", format: "jpg", quality: 0.9 }} style={{ flex: 1, backgroundColor: "#fff" }}>
                     {
                         <>
                             <View style={[styles.row, { display: renderColors ? "flex" : "none" }]}>

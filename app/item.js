@@ -1,24 +1,28 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Progress from "../src/layout/item/progress";
 import Card from "../src/layout/item/Card";
 import Bubble from "../src/components/bubble";
-import { ui } from "../src/utils/styles";
+import { padding, ui } from "../src/utils/styles";
 import Actions from "../src/layout/item/actions";
 import Button from "../src/components/button";
+import { LangContext } from "../src/utils/LangContext";
+import Header from "../src/components/header";
 
 export default function Item() {
 
     const params = useLocalSearchParams();
-    const { category, subcategory, steps } = params;
-
+    const { category, subcategory, categoryFetch, subcategoryFetch, steps } = params;
+    const { language } = useContext(LangContext);
+    console.log(categoryFetch);
+    console.log(subcategoryFetch);
     const [images, setImages] = useState([]);
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
         // Recuperar todas las imagenes de cloudinary con la tag category+subcategory
-        const tag = `${category.toLowerCase()}-${subcategory.toLowerCase().split(" ").join("-")}`;
+        const tag = `${categoryFetch.toLowerCase()}-${subcategoryFetch.toLowerCase().split(" ").join("-")}`;
         fetchResourcesList(tag);
     }, [])
 
@@ -46,23 +50,22 @@ export default function Item() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false }} />
+            <Stack.Screen options={{ header: () => <Header title={`${category} / ${subcategory}`} /> }} />
             <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
             <View style={styles.wrapper}>
-                <Text style={[ui.h2, { marginBottom: 8 }]}>{`${category} / ${subcategory}`}</Text>
                 <Card name={`${category} / ${subcategory}`} images={images} setCurrent={setCurrent} current={current} steps={steps} />
                 {
                     (current+1) == steps ?
                         <View style={styles.column}>
-                            <Text style={[ui.h3, ui.center]}>¿Quieres el patrón con la guía completa en PDF?</Text>
+                            <Text style={[ui.h3, ui.center]}>{language.t("_itemPdfTitle")}</Text>
                             <Button
-                                text={"Descargar patrón en PDF"} 
+                                text={language.t("_itemPdfButton")} 
                                 onClick={() => router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${category.toLowerCase().replace(" ", "-")}-${subcategory.toLowerCase().replace(" ", "-")}.pdf`)}>
                             </Button>
                         </View>
                         :
                         <View style={styles.column}>
-                            <Text style={[ui.muted, ui.center]}>En el último paso tienes la guía completa para descargar en PDF</Text>
+                            <Text style={[ui.muted, ui.center]}>{language.t("_itemPdfInfo")}</Text>
                         </View>
                 }
                 <Actions />
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
     column: {
         gap: 8,
         alignItems: "center",
+        alignSelf: "center",
         marginBottom: 8,
-        alignSelf: "center"
     }
 })
