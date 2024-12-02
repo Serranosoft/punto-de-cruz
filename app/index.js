@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, StatusBar, ScrollView } from "react-native";
 import { Stack } from "expo-router";
 import { ui } from "../src/utils/styles";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { categories_raw } from "../src/utils/data";
+import { useContext, useEffect } from "react";
 import { scheduleWeeklyNotification } from "../src/utils/notifications";
 import Bubble from "../src/components/bubble";
 import ConverterHome from "../src/layout/home/converter-home";

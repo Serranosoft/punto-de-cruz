@@ -1,7 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import { useAnimatedStyle } from "react-native-reanimated";
-import Animated from 'react-native-reanimated';
-import { Link } from "expo-router";
 import { ui } from "../../utils/styles";
 import ArrowLeft from "../../components/arrow-left";
 import ArrowRight from "../../components/arrow-right";

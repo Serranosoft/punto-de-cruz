@@ -589,11 +589,7 @@ const translations = {
     
         _dataCocina: "Cucina",
         _dataCocinaPasteles: "Dolci",
-    },
-    
-    
-    // Se continúa para `fr`, `de`, `hi`, `it` con el mismo formato detallado.
-    
+    },    
 }
 
 export { translations };

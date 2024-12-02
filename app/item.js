@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import Progress from "../src/layout/item/progress";
 import Card from "../src/layout/item/Card";
 import Bubble from "../src/components/bubble";
-import { padding, ui } from "../src/utils/styles";
+import { ui } from "../src/utils/styles";
 import Actions from "../src/layout/item/actions";
 import Button from "../src/components/button";
 import { LangContext } from "../src/utils/LangContext";
@@ -15,8 +15,6 @@ export default function Item() {
     const params = useLocalSearchParams();
     const { category, subcategory, categoryFetch, subcategoryFetch, steps } = params;
     const { language } = useContext(LangContext);
-    console.log(categoryFetch);
-    console.log(subcategoryFetch);
     const [images, setImages] = useState([]);
     const [current, setCurrent] = useState(0);
 

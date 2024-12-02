@@ -1,5 +1,5 @@
 import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import { colors, layout, padding, ui } from "../src/utils/styles";
+import { layout, padding, ui } from "../src/utils/styles";
 import { useContext } from "react";
 import LangList from "../src/components/lang-list";
 import { LangContext } from "../src/utils/LangContext";

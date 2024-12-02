@@ -1,4 +1,4 @@
-import { colors, ui } from "../utils/styles";
+import { ui } from "../utils/styles";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export default function LangListItem({ updateLanguage, acronym, title, setSelected, selected }) {
