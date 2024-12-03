@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 12,
-        paddingTop: StatusBar.currentHeight + 32,
+        paddingTop: StatusBar.currentHeight + 80,
         paddingHorizontal: 20,
         paddingBottom: 16,
         backgroundColor: "#fff",
