@@ -58,7 +58,7 @@ export default function Item() {
                             <Text style={[ui.h3, ui.center]}>{language.t("_itemPdfTitle")}</Text>
                             <Button
                                 text={language.t("_itemPdfButton")} 
-                                onClick={() => router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${category.toLowerCase().replace(" ", "-")}-${subcategory.toLowerCase().replace(" ", "-")}.pdf`)}>
+                                onClick={() => router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${category.toLowerCase().replaceAll(" ", "-")}-${subcategory.toLowerCase().replaceAll(" ", "-")}.pdf`)}>
                             </Button>
                         </View>
                         :
