@@ -1,14 +1,8 @@
-import { ToastAndroid } from "react-native";
+import { Alert, Platform, ToastAndroid } from "react-native";
 import * as MediaLibrary from 'expo-media-library';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import { shareAsync } from 'expo-sharing';
-import { useContext } from "react";
-import { LangContext } from "./LangContext";
-
-
-
-
 
 export async function convertToPdf(image) {
     const base64Image = await FileSystem.readAsStringAsync(image, {
@@ -40,10 +34,18 @@ export async function requestPermissions(conversion, messages) {
         if (status === "granted") {
             save(conversion, messages);
         } else {
-            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            if (Platform.OS === "android") {
+                ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            } else {
+                Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+            }
         }
     } catch (error) {
-        ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        if (Platform.OS === "android") {
+            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        } else {
+            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+        }
     }
 }
 
@@ -57,10 +59,17 @@ async function save(conversion, messages) {
         } else {
             await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
         }
-
-        ToastAndroid.showWithGravityAndOffset(messages.SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        if (Platform.OS === "android") {
+            ToastAndroid.showWithGravityAndOffset(messages.SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        } else {
+            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+        }
 
     } catch (error) {
-        ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        if (Platform.OS === "android") {
+            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        } else {
+            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+        }
     }
 }

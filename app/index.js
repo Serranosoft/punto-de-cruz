@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Stack } from "expo-router";
 import { ui } from "../src/utils/styles";
 import { useContext, useEffect } from "react";
@@ -10,7 +10,7 @@ import DesignsListHome from "../src/layout/home/designs-list-home";
 import Feedback from "../src/layout/home/feedback";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
-
+import Constants from "expo-constants";
 export default function Home() {
     const { language } = useContext(LangContext);
     useEffect(() => scheduleNotification(), []);
@@ -40,7 +40,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: StatusBar.currentHeight + 80,
+        paddingTop: Constants.statusBarHeight + 80,
         backgroundColor: "#fff"
     },
     scroll: {

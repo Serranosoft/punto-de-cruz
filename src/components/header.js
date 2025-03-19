@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
-import { components, ui } from "../utils/styles"
+import { components, padding, ui } from "../utils/styles"
 import { useContext, useState } from "react";
 import { LangContext } from "../utils/LangContext";
 import { Menu, MenuDivider, MenuItem } from "react-native-material-menu";
@@ -26,8 +26,11 @@ export default function Header({ isHome, title }) {
                             </TouchableWithoutFeedback>
                         )}>
                         <MenuDivider />
-                        <MenuItem onPress={() => router.push("settings")}>
-                            <View style={components.row}>
+                        <MenuItem onPress={() => {
+                            router.push("settings");
+                            hideMenu();
+                        }}>
+                            <View style={[components.row, padding.smallHorizontal]}>
                                 <Image style={styles.img} source={require("../../assets/settings.png")} />
                                 <Text>{language.t("_headerDropdownOption2")}</Text>
                             </View>

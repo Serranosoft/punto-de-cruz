@@ -1,4 +1,4 @@
-import { Dimensions, StatusBar, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Bubble from "../src/components/bubble";
 import { useContext, useRef, useState } from "react";
 import { Stack } from "expo-router";
@@ -8,6 +8,7 @@ import { WebView } from 'react-native-webview';
 import { convertToPdf, requestPermissions } from "../src/utils/media";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
+import Constants from "expo-constants";
 
 const width = Dimensions.get("screen").width;
 
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 12,
-        paddingTop: StatusBar.currentHeight + 80,
+        paddingTop: Constants.statusBarHeight + 80,
         paddingHorizontal: 20,
         paddingBottom: 16,
         backgroundColor: "#fff",

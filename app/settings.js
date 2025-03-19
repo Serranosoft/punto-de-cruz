@@ -1,17 +1,18 @@
-import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { layout, padding, ui } from "../src/utils/styles";
 import { useContext } from "react";
 import LangList from "../src/components/lang-list";
 import { LangContext } from "../src/utils/LangContext";
 import { Stack } from "expo-router";
 import Header from "../src/components/header";
+import Constants from "expo-constants";
 
 export default function Settings() {
 
     const { language } = useContext(LangContext);
 
     return (
-        <View style={[layout.flex, padding.bigHorizontal, { paddingTop: StatusBar.currentHeight + 80, backgroundColor: "#fff" }]}>
+        <View style={[layout.flex, padding.bigHorizontal, { paddingTop: Constants.statusBarHeight + 80, backgroundColor: "#fff" }]}>
             <Stack.Screen options={{ header: () => <Header title={language.t("_settingsTitle")} /> }} />
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.box}>

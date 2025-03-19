@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import Progress from "../src/layout/item/progress";
@@ -9,6 +9,7 @@ import Actions from "../src/layout/item/actions";
 import Button from "../src/components/button";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
+import Constants from "expo-constants";
 
 export default function Item() {
 
@@ -76,7 +77,7 @@ export default function Item() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: StatusBar.currentHeight + 32,
+        paddingTop: Constants.statusBarHeight + 32,
         paddingHorizontal: 16,
         paddingBottom: 16,
         backgroundColor: "#fff"
