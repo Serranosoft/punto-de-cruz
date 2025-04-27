@@ -13,7 +13,11 @@
     },
     "scheme": "punto-de-cruz",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.paulaymanu113.puntodecruz",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
