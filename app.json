@@ -1,44 +1,52 @@
 {
-  "expo": {
-    "name": "Punto de Cruz",
-    "slug": "punto-de-cruz",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icono-punto-de-cruz-movil.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-punto-de-cruz.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#F7F0EC"
-    },
-    "scheme": "punto-de-cruz",
-    "ios": {
-      "supportsTablet": false,
-      "buildNumber": "2",
-      "bundleIdentifier": "com.paulaymanu113.puntodecruz",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
-        "backgroundColor": "#F7F0EC"
-      },
-      "versionCode": 3,
-      "package": "com.paulaymanu113.puntodecruz"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "5dbcc33b-7d88-4ffd-9f4a-09590c32abd2"
-      }
-    },
-    "plugins": [
-      "expo-asset",
-      "expo-localization"
-    ]
-  }
+    "expo": {
+        "name": "Punto de Cruz",
+        "slug": "punto-de-cruz",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icono-punto-de-cruz-movil.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash-punto-de-cruz.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#F7F0EC"
+        },
+        "scheme": "punto-de-cruz",
+        "ios": {
+            "supportsTablet": false,
+            "buildNumber": "2",
+            "bundleIdentifier": "com.paulaymanu113.puntodecruz",
+            "infoPlist": {
+                "ITSAppUsesNonExemptEncryption": false,
+                "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión."
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
+                "backgroundColor": "#F7F0EC"
+            },
+            "versionCode": 3,
+            "package": "com.paulaymanu113.puntodecruz"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "5dbcc33b-7d88-4ffd-9f4a-09590c32abd2"
+            }
+        },
+        "plugins": [
+            "expo-asset",
+            "expo-localization",
+            [
+                "expo-image-picker",
+                {
+                    "photosPermission": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
+                    "cameraPermission": "Permite a la aplicación capturar una foto para comenzar con la conversión."
+                }
+            ]
+        ]
+    }
 }

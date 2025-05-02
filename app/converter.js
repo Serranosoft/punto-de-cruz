@@ -17,7 +17,7 @@ const MyWebComponent = ({ setColors, webviewKey }) => {
         <WebView
             key={webviewKey}
             source={{ uri: 'https://conversor-patron-de-cruz.vercel.app/' }}
-            style={{ width: (width - 40), borderWidth: 3, borderColor: "red" }}
+            style={{ width: (width - 40) }}
             setSupportMultipleWindows={false}
             onMessage={(event) => {
                 if (event.nativeEvent.data === "keepAlive") {

@@ -12,7 +12,7 @@ const translations = {
         _homeConvertPhotos: "Convertir mis fotos",
         _homeMyDesigns: "Más diseños",
         _homeFooterTitle: "¿Te gusta la app?",
-        _homeFooterSubtitle: "Dame una puntuación en la Play Store para ayudarme a seguir mejorando",
+        _homeFooterSubtitle: "Dame una puntuación para ayudarme a seguir mejorando",
 
         _itemPdfTitle: "¿Quieres el patrón con la guía completa en PDF?",
         _itemPdfButton: "Descargar patrón en PDF",
@@ -98,7 +98,7 @@ const translations = {
         _homeConvertPhotos: "Convert my photos",
         _homeMyDesigns: "More designs",
         _homeFooterTitle: "Do you like the app?",
-        _homeFooterSubtitle: "Rate me on the Play Store to help me keep improving",
+        _homeFooterSubtitle: "Rate me to help me keep improving",
     
         _itemPdfTitle: "Do you want the pattern with the full guide in PDF?",
         _itemPdfButton: "Download pattern in PDF",
@@ -267,7 +267,7 @@ const translations = {
         _homeConvertPhotos: "Convertir mes photos",
         _homeMyDesigns: "Plus de modèles",
         _homeFooterTitle: "Vous aimez l'application ?",
-        _homeFooterSubtitle: "Notez-moi sur le Play Store pour m'aider à continuer à m'améliorer",
+        _homeFooterSubtitle: "Notez-moi pour m'aider à continuer à m'améliorer",
     
         _itemPdfTitle: "Voulez-vous le motif avec le guide complet en PDF ?",
         _itemPdfButton: "Télécharger le motif en PDF",
@@ -351,7 +351,7 @@ const translations = {
         _homeConvertPhotos: "Meine Fotos umwandeln",
         _homeMyDesigns: "Mehr Designs",
         _homeFooterTitle: "Gefällt Ihnen die App?",
-        _homeFooterSubtitle: "Bewerten Sie mich im Play Store, um mich zu unterstützen",
+        _homeFooterSubtitle: "Bewerten, um mich zu unterstützen",
     
         _itemPdfTitle: "Möchten Sie das Muster mit der vollständigen Anleitung als PDF?",
         _itemPdfButton: "Muster als PDF herunterladen",
@@ -519,7 +519,7 @@ const translations = {
         _homeConvertPhotos: "Converti le mie foto",
         _homeMyDesigns: "Altri modelli",
         _homeFooterTitle: "Ti piace l'app?",
-        _homeFooterSubtitle: "Valutami sul Play Store per aiutarmi a migliorare",
+        _homeFooterSubtitle: "Valutami per aiutarmi a migliorare",
     
         _itemPdfTitle: "Vuoi il modello con la guida completa in PDF?",
         _itemPdfButton: "Scarica modello in PDF",
