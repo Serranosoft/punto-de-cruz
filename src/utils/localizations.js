@@ -71,7 +71,7 @@ const translations = {
         _dataFloresSencillas: "Sencillas",
 
         _dataAnimales: "Animales",
-        _dataAnimalesAbeja: "Ramo redondo",
+        _dataAnimalesAbeja: "Abeja",
         _dataAnimalesPajaro: "Pajaro",
         _dataAnimalesPanda: "Panda",
         _dataAnimalesPerro: "Perro",
