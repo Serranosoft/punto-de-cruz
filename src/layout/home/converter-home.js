@@ -1,24 +1,27 @@
 import { StyleSheet, Text, View } from "react-native";
-import { gap, ui } from "../../utils/styles";
+import { gap, padding, ui } from "../../utils/styles";
 import Button from "../../components/button";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from "expo-router";
 import { LangContext } from "../../utils/LangContext";
 import { useContext } from "react";
 
-export default function ConverterHome() {
+export default function ConverterHome({ setAdTrigger }) {
 
     const { language } = useContext(LangContext);
     const router = useRouter();
 
     return (
-        <View style={gap.medium}>
+        <View style={[gap.medium, padding.bigHorizontal]}>
             <Text style={[ui.h2, ui.center]}>🤩 {language.t("_homeYourPhotos")} 🤩</Text>
             <View style={styles.box}>
                 <View style={styles.wrapper}>
                     <Text style={[ui.text, ui.bold, ui.center, { maxWidth: 250 }]}>{language.t("_homeConvertInfo")}</Text>
                     <Button
-                        onClick={() => router.navigate("/converter")}
+                        onClick={() => {
+                            setAdTrigger((prev) => prev + 1);
+                            router.navigate("/converter");
+                        }}
                         icon={<MaterialIcons name="menu-book" size={24} color="#fff" />}
                         text={language.t("_homeConvertPhotos")}
                     />

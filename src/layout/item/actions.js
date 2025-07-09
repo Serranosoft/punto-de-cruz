@@ -31,7 +31,8 @@ export default function Actions() {
 const styles = StyleSheet.create({
     container: {
         alignSelf: "flex-end",
-        gap: 4
+        gap: 4,
+        paddingHorizontal: 16        
     },
     
     action: {

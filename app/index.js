@@ -11,8 +11,14 @@ import Feedback from "../src/layout/home/feedback";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
 import Constants from "expo-constants";
+import { bannerId } from "../src/utils/constants";
+import { BannerAd, BannerAdSize } from "react-native-google-mobile-ads";
+import { AdsContext } from "../src/utils/AdsContext";
 export default function Home() {
+
     const { language } = useContext(LangContext);
+    const { adsLoaded, setAdTrigger } = useContext(AdsContext);
+
     useEffect(() => scheduleNotification(), []);
 
     function scheduleNotification() {
@@ -24,13 +30,15 @@ export default function Home() {
             <Stack.Screen options={{ header: () => <Header isHome /> }} />
             <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollInner}>
-                <View>
+                <View style={{ paddingHorizontal: 16 }}>
                     <Text style={ui.h1}>{language.t("_homeH1")}</Text>
                     <Text style={ui.muted}>{language.t("_homeSubtitle")}</Text>
                 </View>
-                <DesignsHome />
-                <ConverterHome />
-                <DesignsListHome />
+                { adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} /> }
+                <DesignsHome {...{ setAdTrigger }}/>
+                <ConverterHome {...{ setAdTrigger }}/>
+                { adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} /> }
+                <DesignsListHome {...{ setAdTrigger }}/>
                 <Feedback />
             </ScrollView>
         </View>
@@ -45,7 +53,6 @@ const styles = StyleSheet.create({
     },
     scroll: {
         flex: 1,
-        paddingHorizontal: 20,
     },
 
     scrollInner: {

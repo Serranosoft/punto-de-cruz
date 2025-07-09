@@ -1,13 +1,16 @@
 import { SplashScreen, Stack } from "expo-router";
 import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
 import { translations } from "../src/utils/localizations";
 import { getLocales } from "expo-localization";
+import { AdsContext } from "../src/utils/AdsContext";
+import AdsHandler from "../src/components/AdsHandler";
+import * as StoreReview from 'expo-store-review';
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -42,18 +45,46 @@ export default function Layout() {
     i18n.enableFallback = true
     i18n.defaultLocale = "es";
 
+    // Gestión de anuncios
+    const [adsLoaded, setAdsLoaded] = useState(false);
+    const [adTrigger, setAdTrigger] = useState(0);
+    const [showOpenAd, setShowOpenAd] = useState(true);
+    const adsHandlerRef = createRef();
+
+    useEffect(() => {
+        if (adsLoaded) {
+            if (adTrigger > 5) {
+                adsHandlerRef.current.showIntersitialAd();
+                setAdTrigger(0);
+            }
+        }
+
+        if (adTrigger > 3) {
+            askForReview();
+        }
+    }, [adTrigger])
+
+    async function askForReview() {
+        if (await StoreReview.hasAction()) {
+            StoreReview.requestReview()
+        }
+    }
+
     if (!fontsLoaded) {
         return null;
     }
 
     return (
         <View style={styles.container}>
-            <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
-                <GestureHandlerRootView style={styles.wrapper}>
-                    <Stack />
-                </GestureHandlerRootView>
-            </LangContext.Provider>
-            <StatusBar style="light" />
+            <AdsContext.Provider value={{ setAdTrigger: setAdTrigger, adsLoaded: adsLoaded, setShowOpenAd: setShowOpenAd }}>
+                <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
+                    <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
+                    <GestureHandlerRootView style={styles.wrapper}>
+                        <Stack />
+                        <StatusBar style="light" />
+                    </GestureHandlerRootView>
+                </LangContext.Provider>
+            </AdsContext.Provider>
         </View >
     )
 }

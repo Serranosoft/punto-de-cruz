@@ -1,21 +1,21 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
-import { gap, layout, ui } from "../../utils/styles";
+import { gap, layout, padding, ui } from "../../utils/styles";
 import { Image } from "expo-image";
 import { useContext } from "react";
 import { LangContext } from "../../utils/LangContext";
 import { highlight } from "../../utils/data";
 
-export default function DesignsHome() {
+export default function DesignsHome({ setAdTrigger }) {
 
     const { language } = useContext(LangContext);
 
     return (
-        <View style={gap.big}>
+        <View style={[gap.big, padding.bigHorizontal]}>
             <Text style={[ui.h2, ui.center]}>💫 {language.t("_homePopular")} 💫</Text>
             <View style={[layout.row, gap.small, { height: 250 }]}>
                 <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[0].fetch, subcategoryFetch: highlight(language)[0].data.fetch, category: highlight(language)[0].category, subcategory: highlight(language)[0].data.name, steps: highlight(language)[0].data.steps }}} asChild>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setAdTrigger((prev) => prev + 1)}>
                         <Image
                             style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
                             source={{ uri: highlight(language)[0].data.image }}
@@ -33,7 +33,7 @@ export default function DesignsHome() {
 
                 <View style={[layout.flex, gap.small]}>
                     <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[1].fetch, subcategoryFetch: highlight(language)[1].data.fetch, category: highlight(language)[1].category, subcategory: highlight(language)[1].data.name, steps: highlight(language)[1].data.steps } }} asChild>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAdTrigger((prev) => prev + 1)}>
                             <View style={styles.pill}>
                                 <Text style={[ui.muted, { color: "#fff" }]}>{language.t("_homeTrend")}</Text>
                             </View>
@@ -53,7 +53,7 @@ export default function DesignsHome() {
                     </Link>
 
                     <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[2].fetch, subcategoryFetch: highlight(language)[2].data.fetch, category: highlight(language)[2].category, subcategory: highlight(language)[2].data.name, steps: highlight(language)[2].data.steps } }} asChild>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAdTrigger((prev) => prev + 1)}>
                             <Image
                                 style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
                                 source={{ uri: highlight(language)[2].data.image }}

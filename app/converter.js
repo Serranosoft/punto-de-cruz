@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, View } from "react-native";
 import Bubble from "../src/components/bubble";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Stack } from "expo-router";
 import Button from "../src/components/button";
 import ViewShot from "react-native-view-shot";
@@ -9,10 +9,11 @@ import { convertToPdf, requestPermissions } from "../src/utils/media";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
 import Constants from "expo-constants";
+import { AdsContext } from "../src/utils/AdsContext";
 
 const width = Dimensions.get("screen").width;
 
-const MyWebComponent = ({ setColors, webviewKey }) => {
+const MyWebComponent = ({ setColors, webviewKey, setShowOpenAd }) => {
     return (
         <WebView
             key={webviewKey}
@@ -23,6 +24,7 @@ const MyWebComponent = ({ setColors, webviewKey }) => {
                 if (event.nativeEvent.data === "keepAlive") {
                     console.log("keep alive");
                 } else {
+                    setShowOpenAd(false);
                     setColors(JSON.parse(event.nativeEvent.data))
                 }
             }} />
@@ -32,6 +34,11 @@ const MyWebComponent = ({ setColors, webviewKey }) => {
 export default function Converter() {
 
     const { language } = useContext(LangContext);
+    const { setShowOpenAd } = useContext(AdsContext);
+
+    useEffect(() => {
+        setShowOpenAd(false);
+    }, [])
 
     const [webviewKey, setWebviewKey] = useState(1);
     const [colors, setColors] = useState(null);
@@ -94,7 +101,7 @@ export default function Converter() {
                                 />
                             </View>
                             <View style={{ display: renderColors ? "none" : "flex" }}>
-                                <MyWebComponent {...{ setColors, webviewKey }} />
+                                <MyWebComponent {...{ setColors, webviewKey, setShowOpenAd }} />
                             </View>
                         </>
                     }

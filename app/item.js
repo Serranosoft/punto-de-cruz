@@ -10,12 +10,16 @@ import Button from "../src/components/button";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
 import Constants from "expo-constants";
+import { AdsContext } from "../src/utils/AdsContext";
+import { bannerId } from "../src/utils/constants";
+import { BannerAd, BannerAdSize } from "react-native-google-mobile-ads";
 
 export default function Item() {
 
     const params = useLocalSearchParams();
     const { category, subcategory, categoryFetch, subcategoryFetch, steps } = params;
     const { language } = useContext(LangContext);
+    const { adsLoaded, setAdTrigger } = useContext(AdsContext);
     const [images, setImages] = useState([]);
     const [current, setCurrent] = useState(0);
 
@@ -53,12 +57,13 @@ export default function Item() {
             <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
             <View style={styles.wrapper}>
                 <Card name={`${category} / ${subcategory}`} images={images} setCurrent={setCurrent} current={current} steps={steps} />
+                {adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />}
                 {
-                    (current+1) == steps ?
+                    (current + 1) == steps ?
                         <View style={styles.column}>
                             <Text style={[ui.h3, ui.center]}>{language.t("_itemPdfTitle")}</Text>
                             <Button
-                                text={language.t("_itemPdfButton")} 
+                                text={language.t("_itemPdfButton")}
                                 onClick={() => router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${categoryFetch.toLowerCase().replaceAll(" ", "-")}-${subcategoryFetch.toLowerCase().replaceAll(" ", "-")}.pdf`)}>
                             </Button>
                         </View>
@@ -68,7 +73,7 @@ export default function Item() {
                         </View>
                 }
                 <Actions />
-                <Progress current={(current + 1)} qty={steps} setCurrent={setCurrent} />
+                <Progress current={(current + 1)} qty={steps} setCurrent={setCurrent} setAdTrigger={setAdTrigger} />
             </View>
         </View>
     )
@@ -78,7 +83,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: Constants.statusBarHeight + 32,
-        paddingHorizontal: 16,
         paddingBottom: 16,
         backgroundColor: "#fff"
     },
@@ -93,5 +97,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: "center",
         marginBottom: 8,
+        paddingHorizontal: 16,
     }
 })

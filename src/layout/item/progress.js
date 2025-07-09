@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { LangContext } from "../../utils/LangContext";
 
-export default function Progress({ current, qty, setCurrent }) {
+export default function Progress({ current, qty, setCurrent, setAdTrigger }) {
 
     const { language } = useContext(LangContext);
 
@@ -20,7 +20,10 @@ export default function Progress({ current, qty, setCurrent }) {
                     ]
                 }
                 disabled={current < 2}
-                onPress={() => setCurrent((current) => current - 1)}
+                onPress={() => {
+                    setCurrent((current) => current - 1)
+                    setAdTrigger((prev) => prev + 1);
+                }}
             >
                 <ArrowLeft />
             </TouchableOpacity>
@@ -36,7 +39,10 @@ export default function Progress({ current, qty, setCurrent }) {
                         current >= qty && styles.disabled
                     ]
                 }
-                onPress={() => setCurrent((current) => current + 1)}
+                onPress={() => {
+                    setCurrent((current) => current + 1);
+                    setAdTrigger((prev) => prev + 1);
+                }}
                 disabled={current >= qty}
             >
                 <ArrowRight />
@@ -53,6 +59,7 @@ const styles = StyleSheet.create({
         gap: 16,
         paddingHorizontal: 3,
         paddingVertical: 3,
+        marginHorizontal: 16,
         backgroundColor: "#F0EFF6",
         borderRadius: 24,
     },
