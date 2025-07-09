@@ -14,7 +14,7 @@
         "scheme": "punto-de-cruz",
         "ios": {
             "supportsTablet": false,
-            "buildNumber": "2",
+            "buildNumber": "3",
             "bundleIdentifier": "com.paulaymanu113.puntodecruz",
             "infoPlist": {
                 "ITSAppUsesNonExemptEncryption": false,
@@ -26,7 +26,7 @@
                 "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
                 "backgroundColor": "#F7F0EC"
             },
-            "versionCode": 3,
+            "versionCode": 4,
             "package": "com.paulaymanu113.puntodecruz"
         },
         "web": {
@@ -45,6 +45,23 @@
                 {
                     "photosPermission": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
                     "cameraPermission": "Permite a la aplicación capturar una foto para comenzar con la conversión."
+                }
+            ],
+            [
+                "react-native-google-mobile-ads",
+                {
+                    "androidAppId": "ca-app-pub-3738413299329691~6302219236",
+                    "iosAppId": "ca-app-pub-3738413299329691~6302219236",
+                    "delayAppMeasurementInit": true,
+                    "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+                }
+            ],
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
+                    }
                 }
             ]
         ]
