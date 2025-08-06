@@ -53,7 +53,7 @@ export default function Layout() {
 
     useEffect(() => {
         if (adsLoaded) {
-            if (adTrigger > 5) {
+            if (adTrigger > 4) {
                 adsHandlerRef.current.showIntersitialAd();
                 setAdTrigger(0);
             }

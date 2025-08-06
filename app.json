@@ -6,6 +6,7 @@
         "orientation": "portrait",
         "icon": "./assets/icono-punto-de-cruz-movil.png",
         "userInterfaceStyle": "light",
+        "newArchEnabled": false,
         "splash": {
             "image": "./assets/splash-punto-de-cruz.png",
             "resizeMode": "contain",
@@ -26,7 +27,7 @@
                 "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
                 "backgroundColor": "#F7F0EC"
             },
-            "versionCode": 6,
+            "versionCode": 7,
             "package": "com.paulaymanu113.puntodecruz"
         },
         "web": {
