@@ -39,8 +39,13 @@ export default function Layout() {
                 shouldSetBadge: false,
             }),
         });
-        scheduleWeeklyNotification(i18n);
     }, [])
+    
+    useEffect(() => {
+        if (i18n) {
+            scheduleWeeklyNotification(i18n);
+        }
+    }, [i18n])
 
     // Idioma
     const [language, setLanguage] = useState(getLocales()[0].languageCode || "es");
