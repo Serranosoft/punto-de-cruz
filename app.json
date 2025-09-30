@@ -2,7 +2,7 @@
     "expo": {
         "name": "Punto de Cruz",
         "slug": "punto-de-cruz",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "orientation": "portrait",
         "icon": "./assets/icono-punto-de-cruz-movil.png",
         "userInterfaceStyle": "light",
