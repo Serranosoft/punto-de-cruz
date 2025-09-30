@@ -12,6 +12,7 @@ import { AdsContext } from "../src/utils/AdsContext";
 import AdsHandler from "../src/components/AdsHandler";
 import * as StoreReview from 'expo-store-review';
 import UpdatesModal from "../src/layout/modals/updates-modal";
+import { scheduleWeeklyNotification } from "../src/utils/notifications";
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -37,6 +38,7 @@ export default function Layout() {
                 shouldSetBadge: false,
             }),
         });
+        scheduleWeeklyNotification(i18n);
     }, [])
 
     // Idioma

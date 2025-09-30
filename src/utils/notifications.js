@@ -1,6 +1,6 @@
 import * as Notifications from "expo-notifications";
 
-export async function scheduleWeeklyNotification() {
+export async function scheduleWeeklyNotification(language) {
     try {
 
         // Obtener la lista de notificaciones programadas
