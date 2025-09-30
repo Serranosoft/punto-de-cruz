@@ -16,11 +16,12 @@ export async function scheduleWeeklyNotification(language) {
             return;
         }
 
+        console.log(language)
         const notification = {
             identifier: "notificacion-semanal-miercoles",
             content: {
-                title: "¿Has practicado hoy punto de cruz?",
-                body: "¡Empieza a elaborar los puntos mas comunes!",
+                title: language.t("_notificationTitle"),
+                body: language.t("_notificationBody"),
             },
             trigger: {
                 seconds: getLeftTimeToNextWednesday(),
