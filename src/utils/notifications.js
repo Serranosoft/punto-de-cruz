@@ -16,7 +16,6 @@ export async function scheduleWeeklyNotification(language) {
             return;
         }
 
-        console.log(language)
         const notification = {
             identifier: "notificacion-semanal-miercoles",
             content: {
