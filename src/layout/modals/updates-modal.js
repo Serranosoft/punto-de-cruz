@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { Modal, View, Text, StyleSheet, Button } from 'react-native';
+import { Modal, View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LangContext } from '../../utils/LangContext';
 import { APP, userPreferences } from '../../utils/user-preferences';
 import { ui } from '../../utils/styles';
+import Button from '../../components/button';
 
 
 export default function UpdatesModal() {
