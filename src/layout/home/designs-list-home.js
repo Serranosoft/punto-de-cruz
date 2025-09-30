@@ -22,36 +22,36 @@ export default function DesignsListHome({ setAdTrigger }) {
             {
                 content(language).length > 0 ?
                     <View style={styles.list}>
-
                         {content(language).map(((item, i) => {
-                            if (adIndexes.includes(i) && adsLoaded) {
-                                return (
-                                    <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                        <BannerAd unitId={bannerId} size={BannerAdSize.LARGE_BANNER} requestOptions={{}} />
-                                    </View>
-                                )
-                            }
-                        return (
-                        <View key={i} style={padding.mediumVertical}>
-                            <Text style={[ui.h3, ui.bold]}>{item.name}</Text>
-                            {
-                                item.subcategories.map((subcategory, j) => {
-                                    return (
-                                        <View key={j} style={styles.row}>
-                                            <Link asChild href={{ pathname: "/item", params: { categoryFetch: item.fetch, subcategoryFetch: subcategory.fetch, category: item.name, subcategory: subcategory.name, steps: subcategory.steps } }}>
-                                                <Pressable onPress={() => setAdTrigger((prev) => prev + 1)}>
-                                                    <View style={components.row}>
-                                                        <Image style={styles.rowImage} source={{ uri: subcategory.image }} />
-                                                        <Text style={[ui.h4, ui.bold, styles.rowTitle]}>{subcategory.name}</Text>
-                                                    </View>
-                                                </Pressable>
-                                            </Link>
+                            return (
+                                <>
+                                    {adIndexes.includes(i) && adsLoaded &&
+                                        <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                            <BannerAd unitId={bannerId} size={BannerAdSize.LARGE_BANNER} requestOptions={{}} />
                                         </View>
-                                    )
-                                })
-                            }
-                        </View>
-                        )
+                                    }
+                                    <View key={i} style={padding.mediumVertical}>
+                                        <Text style={[ui.h3, ui.bold]}>{item.name}</Text>
+                                        {
+                                            item.subcategories.map((subcategory, j) => {
+                                                return (
+                                                    <View key={j} style={styles.row}>
+                                                        <Link asChild href={{ pathname: "/item", params: { categoryFetch: item.fetch, subcategoryFetch: subcategory.fetch, category: item.name, subcategory: subcategory.name, steps: subcategory.steps } }}>
+                                                            <Pressable onPress={() => setAdTrigger((prev) => prev + 1)}>
+                                                                <View style={components.row}>
+                                                                    <Image style={styles.rowImage} source={{ uri: subcategory.image }} />
+                                                                    <Text style={[ui.h4, ui.bold, styles.rowTitle]}>{subcategory.name}</Text>
+                                                                </View>
+                                                            </Pressable>
+                                                        </Link>
+                                                    </View>
+                                                )
+                                            })
+                                        }
+                                    </View>
+                                </>
+                            )
+
                         }))}
                     </View>
                     :
