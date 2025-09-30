@@ -1,75 +1,105 @@
 const translations = {
     es: {
+        // Header
         _headerTitle: "Punto de cruz",
-        _headerDropdownOption2: "Configuración",
+        _headerDropdownOption1: "Configuración",
 
+        // Home -> Hero
         _homeH1: "Diseños de punto de cruz",
         _homeSubtitle: "Tenemos los mejores diseños de punto de cruz para ti",
         _homePopular: "Populares",
-        _homeTrend: "Populares",
+        _homeTrend: "¡Porpular!",
+
+        // Convertidor
         _homeYourPhotos: "Tus fotos",
         _homeConvertInfo: "Convierte tus fotos en punto de cruz",
         _homeConvertPhotos: "Convertir mis fotos",
+
+        // Home -> Diseños
         _homeMyDesigns: "Más diseños",
         _homeFooterTitle: "¿Te gusta la app?",
         _homeFooterSubtitle: "Dame una puntuación para ayudarme a seguir mejorando",
 
+        // Diseño -> Detalle
         _itemPdfTitle: "¿Quieres el patrón con la guía completa en PDF?",
         _itemPdfButton: "Descargar patrón en PDF",
         _itemPdfInfo: "En el último paso tienes la guía completa para descargar en PDF",
         _itemProgress: "de",
         _itemActionPinch: "Arrastrar (Zoom)",
         _itemActionDoublePress: "Doble pulsación (Zoom)",
-        
+
         _convertMediaAlbum: "Punto de cruz",
         _convertMediaPermissionDenied: "Permiso denegado",
         _convertMediaSuccess: "Imagen guardada en la galería",
-        
-        // Language list
-        _langListSpanish: "Spanish",
-        _langListEnglish: "English",
-        _langListArabic: "Arabic",
-        _langListGerman: "German",
-        _langListItalic: "Italian",
-        _langListFrench: "French",
-        _langListHindi: "Hindi",
+
+        // Lista de idiomas
+        _langListSpanish: "Español",
+        _langListEnglish: "Inglés",
+        _langListArabic: "Árabe",
+        _langListGerman: "Alemán",
+        _langListFrench: "Francés",
+        _langListHindi: "Hindu",
+        _langListIndonesian: "Indonesio",
+        _langListPortuguese: "Portugués",
+        _langListRussian: "Ruso",
+        _langListPolish: "Polaco",
+        _langListVietnamese: "Vietnamita",
+        _langListTurkish: "Turco",
+        _langListItalian: "Italiano",
+        _langListFarsi: "Farsi",
 
         // Settings screen
         _settingsTitle: "Ajustes",
         _settingsApp: "Ajustes de Aplicación",
         _settingsLang: "Idioma",
 
+        // Categoría Sencillo
         _dataSencillo: "Sencillo",
         _dataSencilloMarinero: "Marinero",
         _dataSencilloNaveEspacial: "Nave espacial",
         _dataSencilloPlanetas: "Planetas",
         _dataSencilloTorreEiffel: "Torre Eiffel",
 
+        // Categoría Bebe
+        _dataBebe: "Bebe",
+        _dataBebeAbejitas: "Abejitas",
+        _dataBebeCircoConFocas: "Focas en el circo",
+        _dataBebeCircoConOsos: "Oso en el circo",
+        _dataBebeElefanteConPelota: "Elefante con una pelota",
+
+        // Categoría Modernos
         _dataModernos: "Modernos",
         _dataModernosMejoresAmigas: "Mejores amigas",
         _dataModernosEnergiaPositiva: "Energia positiva",
         _dataModernosCorazonBff: "Corazon Bff",
         _dataModernosConfetiDeCorazones: "Confeti de corazones",
 
+        // Categoría Perros
         _dataPerros: "Perros",
         _dataPerrosCaniche: "Caniche",
         _dataPerrosCarlino: "Carlino",
         _dataPerrosDalmata: "Dalmata",
 
+        // Categoría Navidad
         _dataNavidad: "Navidad",
         _dataNavidadBolaDeNieve: "Bola de nieve",
         _dataNavidadAdornoDeNavidad: "Adorno de navidad",
-        _dataNavidadMerryChristmas: "Merry christmas",
+        _dataNavidadMerryChristmas: "Merry Christmas",
+        _dataNavidadPerroNavideño: "Perro navideño",
 
+        // Categoría Halloween
         _dataHalloween: "Halloween",
         _dataHalloweenFantasma: "Fantasma",
         _dataHalloweenGatoDeHalloween: "Gato de halloween",
         _dataHalloweenGorroDeBruja: "Gorro de bruja",
 
+        // Categoría Flores
         _dataFlores: "Flores",
         _dataFloresRamoRedondo: "Ramo redondo",
         _dataFloresSencillas: "Sencillas",
+        _dataFloresGirasol: "Girasol",
 
+        // Categoría Animales
         _dataAnimales: "Animales",
         _dataAnimalesAbeja: "Abeja",
         _dataAnimalesPajaro: "Pajaro",
@@ -78,518 +108,25 @@ const translations = {
         _dataAnimalesRaton: "Raton",
         _dataAnimalesTiburones: "Tiburones",
 
+        // Categoría Abecedario
         _dataAbecedario: "Abecedario",
         _dataAbecedarioBasico: "Basico",
         _dataAbecedarioEstiloRomano: "Estilo romano",
 
+        // Categoría Cocina
         _dataCocina: "Cocina",
         _dataCocinaPasteles: "Pasteles",
+        _dataCocinaNaranjas: "Naranjas",
+
+        // Modal de updates
+        _updatesModalNews: "Novedades",
+        _updatesModalV1_1: "¡Ahora puedes reproducir una nota con voz! ",
+        _updatesModalV1_2: "Elige entre diferentes voces",
+        _updatesModalV1_3: "Personaliza el tono de la voz",
+        _updatesModalV1_4: "Personaliza el ritmo de la voz",
+        _updatesModalV1_5: "Disfruta de la aplicación en Italiano y Persa",
+        _updatesModalV1_6: "😊 Esperamos que disfrutes de las novedades 😊",
     },
-    en: {
-        _headerTitle: "Cross-stitch",
-        _headerDropdownOption2: "Settings",
-    
-        _homeH1: "Cross-stitch designs",
-        _homeSubtitle: "We have the best cross-stitch designs for you",
-        _homePopular: "Popular",
-        _homeTrend: "Trending",
-        _homeYourPhotos: "Your photos",
-        _homeConvertInfo: "Turn your photos into cross-stitch",
-        _homeConvertPhotos: "Convert my photos",
-        _homeMyDesigns: "More designs",
-        _homeFooterTitle: "Do you like the app?",
-        _homeFooterSubtitle: "Rate me to help me keep improving",
-    
-        _itemPdfTitle: "Do you want the pattern with the full guide in PDF?",
-        _itemPdfButton: "Download pattern in PDF",
-        _itemPdfInfo: "In the last step, you have the complete guide to download in PDF",
-        _itemProgress: "of",
-        _itemActionPinch: "Drag (Zoom)",
-        _itemActionDoublePress: "Double-tap (Zoom)",
-    
-        _convertMediaAlbum: "Cross-stitch",
-        _convertMediaPermissionDenied: "Permission denied",
-        _convertMediaSuccess: "Image saved to the gallery",
-    
-        _langListSpanish: "Spanish",
-        _langListEnglish: "English",
-        _langListArabic: "Arabic",
-        _langListGerman: "German",
-        _langListItalic: "Italian",
-        _langListFrench: "French",
-        _langListHindi: "Hindi",
-    
-        _settingsTitle: "Settings",
-        _settingsApp: "App settings",
-        _settingsLang: "Language",
-    
-        _dataSencillo: "Simple",
-        _dataSencilloMarinero: "Sailor",
-        _dataSencilloNaveEspacial: "Spaceship",
-        _dataSencilloPlanetas: "Planets",
-        _dataSencilloTorreEiffel: "Eiffel Tower",
-    
-        _dataModernos: "Modern",
-        _dataModernosMejoresAmigas: "Best friends",
-        _dataModernosEnergiaPositiva: "Positive energy",
-        _dataModernosCorazonBff: "BFF heart",
-        _dataModernosConfetiDeCorazones: "Heart confetti",
-    
-        _dataPerros: "Dogs",
-        _dataPerrosCaniche: "Poodle",
-        _dataPerrosCarlino: "Pug",
-        _dataPerrosDalmata: "Dalmatian",
-    
-        _dataNavidad: "Christmas",
-        _dataNavidadBolaDeNieve: "Snow globe",
-        _dataNavidadAdornoDeNavidad: "Christmas ornament",
-        _dataNavidadMerryChristmas: "Merry Christmas",
-    
-        _dataHalloween: "Halloween",
-        _dataHalloweenFantasma: "Ghost",
-        _dataHalloweenGatoDeHalloween: "Halloween cat",
-        _dataHalloweenGorroDeBruja: "Witch's hat",
-    
-        _dataFlores: "Flowers",
-        _dataFloresRamoRedondo: "Round bouquet",
-        _dataFloresSencillas: "Simple",
-    
-        _dataAnimales: "Animals",
-        _dataAnimalesAbeja: "Bee",
-        _dataAnimalesPajaro: "Bird",
-        _dataAnimalesPanda: "Panda",
-        _dataAnimalesPerro: "Dog",
-        _dataAnimalesRaton: "Mouse",
-        _dataAnimalesTiburones: "Sharks",
-    
-        _dataAbecedario: "Alphabet",
-        _dataAbecedarioBasico: "Basic",
-        _dataAbecedarioEstiloRomano: "Roman style",
-    
-        _dataCocina: "Kitchen",
-        _dataCocinaPasteles: "Cakes",
-    },
-    
-    ar: {
-        _headerTitle: "تطريز متقاطع",
-        _headerDropdownOption2: "الإعدادات",
-    
-        _homeH1: "تصاميم تطريز متقاطع",
-        _homeSubtitle: "لدينا أفضل تصاميم التطريز المتقاطع لك",
-        _homePopular: "شائع",
-        _homeTrend: "الأكثر رواجا",
-        _homeYourPhotos: "صورك",
-        _homeConvertInfo: "حوّل صورك إلى تطريز متقاطع",
-        _homeConvertPhotos: "حوّل صوري",
-        _homeMyDesigns: "تصاميم أخرى",
-        _homeFooterTitle: "هل تحب التطبيق؟",
-        _homeFooterSubtitle: "قيمني على متجر Play لمساعدتي في تحسين التطبيق",
-    
-        _itemPdfTitle: "هل تريد النمط مع الدليل الكامل في PDF؟",
-        _itemPdfButton: "تحميل النمط بتنسيق PDF",
-        _itemPdfInfo: "في الخطوة الأخيرة، ستجد الدليل الكامل لتنزيله بتنسيق PDF",
-        _itemProgress: "من",
-        _itemActionPinch: "اسحب (تكبير)",
-        _itemActionDoublePress: "انقر مرتين (تكبير)",
-    
-        _convertMediaAlbum: "تطريز متقاطع",
-        _convertMediaPermissionDenied: "تم رفض الإذن",
-        _convertMediaSuccess: "تم حفظ الصورة في المعرض",
-    
-        _langListSpanish: "الإسبانية",
-        _langListEnglish: "الإنجليزية",
-        _langListArabic: "العربية",
-        _langListGerman: "الألمانية",
-        _langListItalic: "الإيطالية",
-        _langListFrench: "الفرنسية",
-        _langListHindi: "الهندية",
-    
-        _settingsTitle: "الإعدادات",
-        _settingsApp: "إعدادات التطبيق",
-        _settingsLang: "اللغة",
-    
-        _dataSencillo: "بسيط",
-        _dataSencilloMarinero: "بحّار",
-        _dataSencilloNaveEspacial: "سفينة فضاء",
-        _dataSencilloPlanetas: "كواكب",
-        _dataSencilloTorreEiffel: "برج إيفل",
-    
-        _dataModernos: "حديث",
-        _dataModernosMejoresAmigas: "أفضل الأصدقاء",
-        _dataModernosEnergiaPositiva: "طاقة إيجابية",
-        _dataModernosCorazonBff: "قلب BFF",
-        _dataModernosConfetiDeCorazones: "قصاصات قلوب",
-    
-        _dataPerros: "كلاب",
-        _dataPerrosCaniche: "كلب البودل",
-        _dataPerrosCarlino: "كارلينو",
-        _dataPerrosDalmata: "كلب دلماسي",
-    
-        _dataNavidad: "عيد الميلاد",
-        _dataNavidadBolaDeNieve: "كرة ثلج",
-        _dataNavidadAdornoDeNavidad: "زينة عيد الميلاد",
-        _dataNavidadMerryChristmas: "عيد ميلاد سعيد",
-    
-        _dataHalloween: "عيد الهالوين",
-        _dataHalloweenFantasma: "شبح",
-        _dataHalloweenGatoDeHalloween: "قط عيد الهالوين",
-        _dataHalloweenGorroDeBruja: "قبعة الساحرة",
-    
-        _dataFlores: "زهور",
-        _dataFloresRamoRedondo: "باقة مستديرة",
-        _dataFloresSencillas: "بسيطة",
-    
-        _dataAnimales: "حيوانات",
-        _dataAnimalesAbeja: "نحلة",
-        _dataAnimalesPajaro: "طائر",
-        _dataAnimalesPanda: "باندا",
-        _dataAnimalesPerro: "كلب",
-        _dataAnimalesRaton: "فأر",
-        _dataAnimalesTiburones: "أسماك القرش",
-    
-        _dataAbecedario: "الأبجدية",
-        _dataAbecedarioBasico: "أساسي",
-        _dataAbecedarioEstiloRomano: "نمط روماني",
-    
-        _dataCocina: "مطبخ",
-        _dataCocinaPasteles: "كعكات",
-    },
-    fr: {
-        _headerTitle: "Point de croix",
-        _headerDropdownOption2: "Paramètres",
-    
-        _homeH1: "Modèles de point de croix",
-        _homeSubtitle: "Nous avons les meilleurs modèles de point de croix pour vous",
-        _homePopular: "Populaires",
-        _homeTrend: "Tendances",
-        _homeYourPhotos: "Vos photos",
-        _homeConvertInfo: "Transformez vos photos en point de croix",
-        _homeConvertPhotos: "Convertir mes photos",
-        _homeMyDesigns: "Plus de modèles",
-        _homeFooterTitle: "Vous aimez l'application ?",
-        _homeFooterSubtitle: "Notez-moi pour m'aider à continuer à m'améliorer",
-    
-        _itemPdfTitle: "Voulez-vous le motif avec le guide complet en PDF ?",
-        _itemPdfButton: "Télécharger le motif en PDF",
-        _itemPdfInfo: "À la dernière étape, vous avez le guide complet à télécharger en PDF",
-        _itemProgress: "de",
-        _itemActionPinch: "Glisser (Zoom)",
-        _itemActionDoublePress: "Double appui (Zoom)",
-    
-        _convertMediaAlbum: "Point de croix",
-        _convertMediaPermissionDenied: "Permission refusée",
-        _convertMediaSuccess: "Image enregistrée dans la galerie",
-    
-        _langListSpanish: "Espagnol",
-        _langListEnglish: "Anglais",
-        _langListArabic: "Arabe",
-        _langListGerman: "Allemand",
-        _langListItalic: "Italien",
-        _langListFrench: "Français",
-        _langListHindi: "Hindi",
-    
-        _settingsTitle: "Paramètres",
-        _settingsApp: "Paramètres de l'application",
-        _settingsLang: "Langue",
-    
-        _dataSencillo: "Simple",
-        _dataSencilloMarinero: "Marin",
-        _dataSencilloNaveEspacial: "Vaisseau spatial",
-        _dataSencilloPlanetas: "Planètes",
-        _dataSencilloTorreEiffel: "Tour Eiffel",
-    
-        _dataModernos: "Modernes",
-        _dataModernosMejoresAmigas: "Meilleures amies",
-        _dataModernosEnergiaPositiva: "Énergie positive",
-        _dataModernosCorazonBff: "Cœur BFF",
-        _dataModernosConfetiDeCorazones: "Confettis de cœurs",
-    
-        _dataPerros: "Chiens",
-        _dataPerrosCaniche: "Caniche",
-        _dataPerrosCarlino: "Carlin",
-        _dataPerrosDalmata: "Dalmatien",
-    
-        _dataNavidad: "Noël",
-        _dataNavidadBolaDeNieve: "Boule à neige",
-        _dataNavidadAdornoDeNavidad: "Décoration de Noël",
-        _dataNavidadMerryChristmas: "Joyeux Noël",
-    
-        _dataHalloween: "Halloween",
-        _dataHalloweenFantasma: "Fantôme",
-        _dataHalloweenGatoDeHalloween: "Chat d'Halloween",
-        _dataHalloweenGorroDeBruja: "Chapeau de sorcière",
-    
-        _dataFlores: "Fleurs",
-        _dataFloresRamoRedondo: "Bouquet rond",
-        _dataFloresSencillas: "Simples",
-    
-        _dataAnimales: "Animaux",
-        _dataAnimalesAbeja: "Abeille",
-        _dataAnimalesPajaro: "Oiseau",
-        _dataAnimalesPanda: "Panda",
-        _dataAnimalesPerro: "Chien",
-        _dataAnimalesRaton: "Souris",
-        _dataAnimalesTiburones: "Requins",
-    
-        _dataAbecedario: "Alphabet",
-        _dataAbecedarioBasico: "Basique",
-        _dataAbecedarioEstiloRomano: "Style romain",
-    
-        _dataCocina: "Cuisine",
-        _dataCocinaPasteles: "Gâteaux",
-    },
-    de: {
-        _headerTitle: "Kreuzstich",
-        _headerDropdownOption2: "Einstellungen",
-    
-        _homeH1: "Kreuzstich-Designs",
-        _homeSubtitle: "Wir haben die besten Kreuzstich-Designs für Sie",
-        _homePopular: "Beliebt",
-        _homeTrend: "Im Trend",
-        _homeYourPhotos: "Ihre Fotos",
-        _homeConvertInfo: "Machen Sie aus Ihren Fotos Kreuzstichmuster",
-        _homeConvertPhotos: "Meine Fotos umwandeln",
-        _homeMyDesigns: "Mehr Designs",
-        _homeFooterTitle: "Gefällt Ihnen die App?",
-        _homeFooterSubtitle: "Bewerten, um mich zu unterstützen",
-    
-        _itemPdfTitle: "Möchten Sie das Muster mit der vollständigen Anleitung als PDF?",
-        _itemPdfButton: "Muster als PDF herunterladen",
-        _itemPdfInfo: "Im letzten Schritt können Sie die vollständige Anleitung als PDF herunterladen",
-        _itemProgress: "von",
-        _itemActionPinch: "Ziehen (Zoom)",
-        _itemActionDoublePress: "Doppeltippen (Zoom)",
-    
-        _convertMediaAlbum: "Kreuzstich",
-        _convertMediaPermissionDenied: "Zugriff verweigert",
-        _convertMediaSuccess: "Bild in der Galerie gespeichert",
-    
-        _langListSpanish: "Spanisch",
-        _langListEnglish: "Englisch",
-        _langListArabic: "Arabisch",
-        _langListGerman: "Deutsch",
-        _langListItalic: "Italienisch",
-        _langListFrench: "Französisch",
-        _langListHindi: "Hindi",
-    
-        _settingsTitle: "Einstellungen",
-        _settingsApp: "App-Einstellungen",
-        _settingsLang: "Sprache",
-    
-        _dataSencillo: "Einfach",
-        _dataSencilloMarinero: "Matrose",
-        _dataSencilloNaveEspacial: "Raumschiff",
-        _dataSencilloPlanetas: "Planeten",
-        _dataSencilloTorreEiffel: "Eiffelturm",
-    
-        _dataModernos: "Modern",
-        _dataModernosMejoresAmigas: "Beste Freunde",
-        _dataModernosEnergiaPositiva: "Positive Energie",
-        _dataModernosCorazonBff: "BFF-Herz",
-        _dataModernosConfetiDeCorazones: "Herz-Konfetti",
-    
-        _dataPerros: "Hunde",
-        _dataPerrosCaniche: "Pudel",
-        _dataPerrosCarlino: "Mops",
-        _dataPerrosDalmata: "Dalmatiner",
-    
-        _dataNavidad: "Weihnachten",
-        _dataNavidadBolaDeNieve: "Schneekugel",
-        _dataNavidadAdornoDeNavidad: "Weihnachtsschmuck",
-        _dataNavidadMerryChristmas: "Frohe Weihnachten",
-    
-        _dataHalloween: "Halloween",
-        _dataHalloweenFantasma: "Geist",
-        _dataHalloweenGatoDeHalloween: "Halloween-Katze",
-        _dataHalloweenGorroDeBruja: "Hexenhut",
-    
-        _dataFlores: "Blumen",
-        _dataFloresRamoRedondo: "Runder Strauß",
-        _dataFloresSencillas: "Einfach",
-    
-        _dataAnimales: "Tiere",
-        _dataAnimalesAbeja: "Biene",
-        _dataAnimalesPajaro: "Vogel",
-        _dataAnimalesPanda: "Panda",
-        _dataAnimalesPerro: "Hund",
-        _dataAnimalesRaton: "Maus",
-        _dataAnimalesTiburones: "Haie",
-    
-        _dataAbecedario: "Alphabet",
-        _dataAbecedarioBasico: "Grundlegend",
-        _dataAbecedarioEstiloRomano: "Römischer Stil",
-    
-        _dataCocina: "Küche",
-        _dataCocinaPasteles: "Kuchen",
-    },
-    hi: {
-        _headerTitle: "क्रॉस-सिलाई",
-        _headerDropdownOption2: "सेटिंग्स",
-    
-        _homeH1: "क्रॉस-सिलाई डिज़ाइन",
-        _homeSubtitle: "हम आपके लिए सबसे अच्छे क्रॉस-सिलाई डिज़ाइन लाते हैं",
-        _homePopular: "लोकप्रिय",
-        _homeTrend: "ट्रेंडिंग",
-        _homeYourPhotos: "आपकी तस्वीरें",
-        _homeConvertInfo: "अपनी तस्वीरों को क्रॉस-सिलाई में बदलें",
-        _homeConvertPhotos: "मेरी तस्वीरें बदलें",
-        _homeMyDesigns: "अधिक डिज़ाइन",
-        _homeFooterTitle: "क्या आपको ऐप पसंद आया?",
-        _homeFooterSubtitle: "मुझे प्ले स्टोर पर रेटिंग दें ताकि मैं सुधार कर सकूं",
-    
-        _itemPdfTitle: "क्या आप पूरी गाइड पीडीएफ में चाहते हैं?",
-        _itemPdfButton: "पीडीएफ में पैटर्न डाउनलोड करें",
-        _itemPdfInfo: "आखिरी स्टेप में, पीडीएफ में पूरी गाइड डाउनलोड करें",
-        _itemProgress: "का",
-        _itemActionPinch: "पिंच करें (ज़ूम)",
-        _itemActionDoublePress: "डबल प्रेस (ज़ूम)",
-    
-        _convertMediaAlbum: "क्रॉस-सिलाई",
-        _convertMediaPermissionDenied: "अनुमति अस्वीकृत",
-        _convertMediaSuccess: "चित्र गैलरी में सहेजा गया",
-    
-        _langListSpanish: "स्पेनिश",
-        _langListEnglish: "अंग्रेज़ी",
-        _langListArabic: "अरबी",
-        _langListGerman: "जर्मन",
-        _langListItalic: "इटालियन",
-        _langListFrench: "फ्रेंच",
-        _langListHindi: "हिंदी",
-    
-        _settingsTitle: "सेटिंग्स",
-        _settingsApp: "ऐप सेटिंग्स",
-        _settingsLang: "भाषा",
-    
-        _dataSencillo: "साधारण",
-        _dataSencilloMarinero: "नाविक",
-        _dataSencilloNaveEspacial: "अंतरिक्ष यान",
-        _dataSencilloPlanetas: "ग्रह",
-        _dataSencilloTorreEiffel: "एफिल टॉवर",
-    
-        _dataModernos: "आधुनिक",
-        _dataModernosMejoresAmigas: "सर्वश्रेष्ठ मित्र",
-        _dataModernosEnergiaPositiva: "सकारात्मक ऊर्जा",
-        _dataModernosCorazonBff: "बीएफएफ दिल",
-        _dataModernosConfetiDeCorazones: "दिलों की बौछार",
-    
-        _dataPerros: "कुत्ते",
-        _dataPerrosCaniche: "पूडल",
-        _dataPerrosCarlino: "पग",
-        _dataPerrosDalmata: "डालमेटियन",
-    
-        _dataNavidad: "क्रिसमस",
-        _dataNavidadBolaDeNieve: "स्नोबॉल",
-        _dataNavidadAdornoDeNavidad: "क्रिसमस सजावट",
-        _dataNavidadMerryChristmas: "मेरी क्रिसमस",
-    
-        _dataHalloween: "हैलोवीन",
-        _dataHalloweenFantasma: "भूत",
-        _dataHalloweenGatoDeHalloween: "हैलोवीन बिल्ली",
-        _dataHalloweenGorroDeBruja: "चुड़ैल की टोपी",
-    
-        _dataFlores: "फूल",
-        _dataFloresRamoRedondo: "गोल गुच्छा",
-        _dataFloresSencillas: "सरल",
-    
-        _dataAnimales: "जानवर",
-        _dataAnimalesAbeja: "मधुमक्खी",
-        _dataAnimalesPajaro: "पक्षी",
-        _dataAnimalesPanda: "पांडा",
-        _dataAnimalesPerro: "कुत्ता",
-        _dataAnimalesRaton: "चूहा",
-        _dataAnimalesTiburones: "शार्क",
-    
-        _dataAbecedario: "वर्णमाला",
-        _dataAbecedarioBasico: "मूलभूत",
-        _dataAbecedarioEstiloRomano: "रोमन शैली",
-    
-        _dataCocina: "रसोई",
-        _dataCocinaPasteles: "केक",
-    },
-    it: {
-        _headerTitle: "Punto croce",
-        _headerDropdownOption2: "Impostazioni",
-    
-        _homeH1: "Modelli punto croce",
-        _homeSubtitle: "Abbiamo i migliori modelli di punto croce per te",
-        _homePopular: "Popolari",
-        _homeTrend: "In tendenza",
-        _homeYourPhotos: "Le tue foto",
-        _homeConvertInfo: "Trasforma le tue foto in punto croce",
-        _homeConvertPhotos: "Converti le mie foto",
-        _homeMyDesigns: "Altri modelli",
-        _homeFooterTitle: "Ti piace l'app?",
-        _homeFooterSubtitle: "Valutami per aiutarmi a migliorare",
-    
-        _itemPdfTitle: "Vuoi il modello con la guida completa in PDF?",
-        _itemPdfButton: "Scarica modello in PDF",
-        _itemPdfInfo: "Nell'ultima fase troverai la guida completa in PDF da scaricare",
-        _itemProgress: "di",
-        _itemActionPinch: "Stringi (Zoom)",
-        _itemActionDoublePress: "Doppio tocco (Zoom)",
-    
-        _convertMediaAlbum: "Punto croce",
-        _convertMediaPermissionDenied: "Permesso negato",
-        _convertMediaSuccess: "Immagine salvata in galleria",
-    
-        _langListSpanish: "Spagnolo",
-        _langListEnglish: "Inglese",
-        _langListArabic: "Arabo",
-        _langListGerman: "Tedesco",
-        _langListItalic: "Italiano",
-        _langListFrench: "Francese",
-        _langListHindi: "Hindi",
-    
-        _settingsTitle: "Impostazioni",
-        _settingsApp: "Impostazioni dell'app",
-        _settingsLang: "Lingua",
-    
-        _dataSencillo: "Semplice",
-        _dataSencilloMarinero: "Marinaio",
-        _dataSencilloNaveEspacial: "Astronave",
-        _dataSencilloPlanetas: "Pianeti",
-        _dataSencilloTorreEiffel: "Torre Eiffel",
-    
-        _dataModernos: "Moderni",
-        _dataModernosMejoresAmigas: "Migliori amiche",
-        _dataModernosEnergiaPositiva: "Energia positiva",
-        _dataModernosCorazonBff: "Cuore BFF",
-        _dataModernosConfetiDeCorazones: "Confetti di cuori",
-    
-        _dataPerros: "Cani",
-        _dataPerrosCaniche: "Barboncino",
-        _dataPerrosCarlino: "Carlino",
-        _dataPerrosDalmata: "Dalmata",
-    
-        _dataNavidad: "Natale",
-        _dataNavidadBolaDeNieve: "Palla di neve",
-        _dataNavidadAdornoDeNavidad: "Decorazione di Natale",
-        _dataNavidadMerryChristmas: "Buon Natale",
-    
-        _dataHalloween: "Halloween",
-        _dataHalloweenFantasma: "Fantasma",
-        _dataHalloweenGatoDeHalloween: "Gatto di Halloween",
-        _dataHalloweenGorroDeBruja: "Cappello da strega",
-    
-        _dataFlores: "Fiori",
-        _dataFloresRamoRedondo: "Mazzo rotondo",
-        _dataFloresSencillas: "Semplici",
-    
-        _dataAnimales: "Animali",
-        _dataAnimalesAbeja: "Ape",
-        _dataAnimalesPajaro: "Uccello",
-        _dataAnimalesPanda: "Panda",
-        _dataAnimalesPerro: "Cane",
-        _dataAnimalesRaton: "Topo",
-        _dataAnimalesTiburones: "Squali",
-    
-        _dataAbecedario: "Alfabeto",
-        _dataAbecedarioBasico: "Base",
-        _dataAbecedarioEstiloRomano: "Stile romano",
-    
-        _dataCocina: "Cucina",
-        _dataCocinaPasteles: "Dolci",
-    },    
 }
 
 export { translations };

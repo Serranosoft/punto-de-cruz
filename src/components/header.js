@@ -32,7 +32,7 @@ export default function Header({ isHome, title }) {
                         }}>
                             <View style={components.row}>
                                 <Image style={styles.img} source={require("../../assets/settings.png")} />
-                                <Text style={[ui.muted, ui.bold, { marginBottom: -4 }]}>{language.t("_headerDropdownOption2")}</Text>
+                                <Text style={[ui.muted, ui.bold, { marginBottom: -4 }]}>{language.t("_headerDropdownOption1")}</Text>
                             </View>
                         </MenuItem>
                     </Menu>
