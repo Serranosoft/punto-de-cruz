@@ -11,6 +11,7 @@ import { getLocales } from "expo-localization";
 import { AdsContext } from "../src/utils/AdsContext";
 import AdsHandler from "../src/components/AdsHandler";
 import * as StoreReview from 'expo-store-review';
+import UpdatesModal from "../src/layout/modals/updates-modal";
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -83,6 +84,7 @@ export default function Layout() {
                         <Stack />
                         <StatusBar style="light" />
                     </GestureHandlerRootView>
+                    <UpdatesModal />
                 </LangContext.Provider>
             </AdsContext.Provider>
         </View >
