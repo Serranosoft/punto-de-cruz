@@ -32,6 +32,36 @@ export function content(language) {
             ]
         },
         {
+            name: language.t("_dataBebe"),
+            fetch: "Bebe",
+            subcategories: [
+                {
+                    name: language.t("_dataBebeAbejitas"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225149/bebe/abejitas/patron.jpg",
+                    steps: 4,
+                    fetch: "Abejitas",
+                },
+                {
+                    name: language.t("_dataBebeCircoConFocas"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759224954/bebe/circo-con-focas/patron.jpg",
+                    steps: 4,
+                    fetch: "Circo con focas",
+                },
+                {
+                    name: language.t("_dataBebeCircoConOsos"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225002/bebe/circo-con-osos/patron.jpg",
+                    steps: 4,
+                    fetch: "Circo con osos",
+                },
+                {
+                    name: language.t("_dataBebeElefanteConPelota"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225193/bebe/elefante-con-pelota/patron.jpg",
+                    steps: 4,
+                    fetch: "Elefante con pelota",
+                }
+            ]
+        },
+        {
             name: language.t("_dataModernos"),
             fetch: "Modernos",
             subcategories: [
@@ -107,6 +137,12 @@ export function content(language) {
                     steps: 8,
                     fetch: "Merry Christmas"
                 },
+                {
+                    name: language.t("_dataNavidadPerroNavideño"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225436/navidad/perro-navide%C3%B1o/patron.jpg",
+                    steps: 3,
+                    fetch: "Perro Navideño"
+                },
             ]
         },
         {
@@ -148,6 +184,12 @@ export function content(language) {
                     image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/Flores/Sencillas/patron",
                     steps: 8,
                     fetch: "Sencillas"
+                },
+                {
+                    name: language.t("_dataFloresGirasol"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225317/flores/girasol/patron.jpg",
+                    steps: 4,
+                    fetch: "Girasol"
                 },
             ]
         },
@@ -221,6 +263,12 @@ export function content(language) {
                     steps: 4,
                     fetch: "Pasteles"
                 },
+                {
+                    name: language.t("_dataCocinaNaranjas"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225373/cocina/naranjas/patron.jpg",
+                    steps: 4,
+                    fetch: "Naranjas"
+                }
             ]
         }
     ]
