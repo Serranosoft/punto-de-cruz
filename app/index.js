@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Stack } from "expo-router";
 import { ui } from "../src/utils/styles";
 import { useContext, useEffect } from "react";
-import { scheduleWeeklyNotification } from "../src/utils/notifications";
 import Bubble from "../src/components/bubble";
 import ConverterHome from "../src/layout/home/converter-home";
 import DesignsHome from "../src/layout/home/designs-home";
@@ -18,12 +17,6 @@ export default function Home() {
 
     const { language } = useContext(LangContext);
     const { adsLoaded, setAdTrigger } = useContext(AdsContext);
-
-    useEffect(() => scheduleNotification(), []);
-
-    function scheduleNotification() {
-        scheduleWeeklyNotification();
-    }
 
     return (
         <View style={styles.container}>
