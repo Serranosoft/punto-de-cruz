@@ -19,8 +19,8 @@ export async function scheduleWeeklyNotification(language) {
         const notification = {
             identifier: "notificacion-semanal-miercoles",
             content: {
-                title: language.t("_notificationTitle"),
-                body: language.t("_notificationBody"),
+                title: language.t("_notificationsTitle"),
+                body: language.t("_notificationsBody"),
             },
             trigger: {
                 seconds: getLeftTimeToNextWednesday(),

@@ -13,6 +13,8 @@ import AdsHandler from "../src/components/AdsHandler";
 import * as StoreReview from 'expo-store-review';
 import UpdatesModal from "../src/layout/modals/updates-modal";
 import { scheduleWeeklyNotification } from "../src/utils/notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { userPreferences } from "../src/utils/user-preferences";
 
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
@@ -24,42 +26,40 @@ export default function Layout() {
         "poppins-bold": require("../assets/fonts/Poppins-Bold.ttf")
     });
 
-    useEffect(() => {
-        if (fontsLoaded) {
-            SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded]);
-
-    useEffect(() => {
-        Notifications.setNotificationHandler({
-            handleNotification: async () => ({
-                shouldShowBanner: true,
-                shouldShowList: true,
-                shouldPlaySound: false,
-                shouldSetBadge: false,
-            }),
-        });
-    }, [])
-    
-    useEffect(() => {
-        if (i18n) {
-            scheduleWeeklyNotification(i18n);
-        }
-    }, [i18n])
-
     // Idioma
-    const [language, setLanguage] = useState(getLocales()[0].languageCode || "es");
+    const [language, setLanguage] = useState(null);
     const i18n = new I18n(translations);
-    i18n.locale = language;
+    if (language) i18n.locale = language;
     i18n.enableFallback = true
     i18n.defaultLocale = "es";
 
     // Gestión de anuncios
-    const [adsLoaded, setAdsLoaded] = useState(false);
+    const [adsLoaded, setAdsLoaded] = useState();
     const [adTrigger, setAdTrigger] = useState(0);
     const [showOpenAd, setShowOpenAd] = useState(true);
     const adsHandlerRef = createRef();
 
+    // Configurar notificaciones y cargar preferencias de usuario
+    useEffect(() => {
+        configureNotifications();
+        getUserPreferences();
+    }, [])
+
+    // Al terminar de configurar el idioma se lanza notificación
+    useEffect(() => {
+        if (language) {
+            scheduleWeeklyNotification(i18n);
+        }
+    }, [language])
+
+    // Ocultar SplashScreen cuando la fuente y el idioma se ha cargado.
+    useEffect(() => {
+        if (fontsLoaded && language) {
+            SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded, language]);
+
+    // Gestión de anuncios
     useEffect(() => {
         if (adsLoaded) {
             if (adTrigger > 4) {
@@ -72,6 +72,23 @@ export default function Layout() {
             askForReview();
         }
     }, [adTrigger])
+
+    async function getUserPreferences() {
+        // Language
+        const language = await AsyncStorage.getItem(userPreferences.LANGUAGE);
+        setLanguage(language || getLocales()[0].languageCode);
+    }
+
+    async function configureNotifications() {
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+                shouldShowBanner: true,
+                shouldShowList: true,
+                shouldPlaySound: false,
+                shouldSetBadge: false,
+            }),
+        });
+    }
 
     async function askForReview() {
         if (await StoreReview.hasAction()) {

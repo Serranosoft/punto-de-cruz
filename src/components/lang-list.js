@@ -2,6 +2,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import LangListItem from "./lang-list-item";
 import { useContext, useState } from "react";
 import { LangContext } from "../utils/LangContext";
+import { userPreferences } from "../utils/user-preferences";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LangList() {
 
@@ -25,8 +27,9 @@ export default function LangList() {
         { title: language.t("_langListFarsi"), acronym: "fa" }
     ]
 
-    function updateLanguage(acronym) {
+    async function updateLanguage(acronym) {
         setLanguage(acronym);
+        await AsyncStorage.setItem(userPreferences.LANGUAGE, acronym);
     }
 
     return (
