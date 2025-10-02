@@ -12,7 +12,7 @@ export default function Settings() {
     const { language } = useContext(LangContext);
 
     return (
-        <View style={[layout.flex, padding.bigHorizontal, { paddingTop: Constants.statusBarHeight + 80, backgroundColor: "#fff" }]}>
+        <View style={[layout.flex, padding.bigHorizontal, { paddingTop: Constants.statusBarHeight + 64, backgroundColor: "#fff" }]}>
             <Stack.Screen options={{ header: () => <Header title={language.t("_settingsTitle")} /> }} />
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.box}>

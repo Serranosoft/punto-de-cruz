@@ -3,7 +3,6 @@ import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import Progress from "../src/layout/item/progress";
 import Card from "../src/layout/item/Card";
-import Bubble from "../src/components/bubble";
 import { ui } from "../src/utils/styles";
 import Actions from "../src/layout/item/actions";
 import Button from "../src/components/button";
@@ -54,7 +53,6 @@ export default function Item() {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ header: () => <Header title={`${category} / ${subcategory}`} /> }} />
-            <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
             <View style={styles.wrapper}>
                 <Card name={`${category} / ${subcategory}`} images={images} setCurrent={setCurrent} current={current} steps={steps} />
                 {adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />}

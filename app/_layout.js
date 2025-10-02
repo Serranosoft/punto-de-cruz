@@ -107,7 +107,7 @@ export default function Layout() {
                     <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
                     <GestureHandlerRootView style={styles.wrapper}>
                         <Stack />
-                        <StatusBar style="light" />
+                        <StatusBar backgroundColor={"#fff"} style="light" />
                     </GestureHandlerRootView>
                     <UpdatesModal />
                 </LangContext.Provider>

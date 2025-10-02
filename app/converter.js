@@ -1,5 +1,4 @@
 import { Dimensions, StyleSheet, View } from "react-native";
-import Bubble from "../src/components/bubble";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Stack } from "expo-router";
 import Button from "../src/components/button";
@@ -56,7 +55,6 @@ export default function Converter() {
         <>
             <Stack.Screen options={{ header: () => <Header title={language.t("_headerTitle")} /> }} />
             <View style={styles.container}>
-                <Bubble style={{ position: "absolute", top: -200, left: -100, width: 300, height: 300, opacity: 0.75 }} />
 
                 {
                     colors && 
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 12,
-        paddingTop: Constants.statusBarHeight + 80,
+        paddingTop: Constants.statusBarHeight + 64,
         paddingHorizontal: 20,
         paddingBottom: 16,
         backgroundColor: "#fff",
