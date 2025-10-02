@@ -285,17 +285,17 @@ export function highlight(language) {
         {
             category: language.t("_dataSencillo"),
             fetch: content(language)[0].fetch,
-            data: content(language)[0].subcategories[1]
-        },
-        {
-            category: language.t("_dataNavidad"),
-            fetch: content(language)[3].fetch,
-            data: content(language)[3].subcategories[1]
+            data: content(language)[0].subcategories[2]
         },
         {
             category: language.t("_dataPerros"),
+            fetch: content(language)[3].fetch,
+            data: content(language)[3].subcategories[2]
+        },
+        {
+            category: language.t("_dataModernos"),
             fetch: content(language)[2].fetch,
-            data: content(language)[2].subcategories[2]
+            data: content(language)[2].subcategories[3]
         }
     ]
 }

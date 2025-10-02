@@ -16,6 +16,9 @@ export default function DesignsHome({ setAdTrigger }) {
             <View style={[layout.row, gap.small, { height: 250 }]}>
                 <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[0].fetch, subcategoryFetch: highlight(language)[0].data.fetch, category: highlight(language)[0].category, subcategory: highlight(language)[0].data.name, steps: highlight(language)[0].data.steps }}} asChild>
                     <TouchableOpacity onPress={() => setAdTrigger((prev) => prev + 1)}>
+                        <View style={styles.pill}>
+                                <Text style={[ui.muted, { color: "#fff" }]}>{language.t("_homeTrend")}</Text>
+                            </View>
                         <Image
                             style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
                             source={{ uri: highlight(language)[0].data.image }}
@@ -34,9 +37,6 @@ export default function DesignsHome({ setAdTrigger }) {
                 <View style={[layout.flex, gap.small]}>
                     <Link style={layout.flex} href={{ pathname: "/item", params: { categoryFetch: highlight(language)[1].fetch, subcategoryFetch: highlight(language)[1].data.fetch, category: highlight(language)[1].category, subcategory: highlight(language)[1].data.name, steps: highlight(language)[1].data.steps } }} asChild>
                         <TouchableOpacity onPress={() => setAdTrigger((prev) => prev + 1)}>
-                            <View style={styles.pill}>
-                                <Text style={[ui.muted, { color: "#fff" }]}>{language.t("_homeTrend")}</Text>
-                            </View>
                             <Image
                                 style={{ position: "absolute", width: "100%", height: "100%", padding: 8, borderRadius: 24 }}
                                 source={{ uri: highlight(language)[1].data.image }}
