@@ -79,6 +79,85 @@
                         "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
                     }
                 }
+            ],
+            [
+                "expo-notifications",
+                {
+                    "icon": "./assets/icono-punto-de-cruz-movil.png"
+                }
+            ],
+            [
+                "expo-font",
+                {
+                    "android": {
+                        "fonts": [
+                            {
+                                "fontFamily": "poppins-regular",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Regular.ttf",
+                                        "weight": "400",
+                                        "style": "normal"
+                                    }
+                                ]
+                            },
+                            {
+                                "fontFamily": "poppins-medium",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Medium.ttf",
+                                        "weight": "500",
+                                        "style": "normal"
+                                    }
+                                ]
+                            },
+                            {
+                                "fontFamily": "poppins-bold",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Bold.ttf",
+                                        "weight": "600",
+                                        "style": "normal"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "ios": {
+                        "fonts": [
+                            {
+                                "fontFamily": "poppins-regular",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Regular.ttf",
+                                        "weight": "400",
+                                        "style": "normal"
+                                    }
+                                ]
+                            },
+                            {
+                                "fontFamily": "poppins-medium",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Medium.ttf",
+                                        "weight": "500",
+                                        "style": "normal"
+                                    }
+                                ]
+                            },
+                            {
+                                "fontFamily": "poppins-bold",
+                                "fontDefinitions": [
+                                    {
+                                        "path": "./assets/fonts/Poppins-Bold.ttf",
+                                        "weight": "600",
+                                        "style": "normal"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
             ]
         ]
     }

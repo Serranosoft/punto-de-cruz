@@ -1,8 +1,7 @@
-import { SplashScreen, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { createRef, useEffect, useState } from "react";
-import { useFonts } from "expo-font";
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
@@ -16,18 +15,11 @@ import { scheduleWeeklyNotification } from "../src/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userPreferences } from "../src/utils/user-preferences";
 
-SplashScreen.preventAutoHideAsync();
 export default function Layout() {
 
-    // Carga de fuentes.
-    const [fontsLoaded] = useFonts({
-        "poppins-regular": require("../assets/fonts/Poppins-Regular.ttf"),
-        "poppins-medium": require("../assets/fonts/Poppins-Medium.ttf"),
-        "poppins-bold": require("../assets/fonts/Poppins-Bold.ttf")
-    });
-
     // Idioma
-    const [language, setLanguage] = useState(null);
+    const [langRdy, setLangRdy] = useState(false);
+    const [language, setLanguage] = useState(getLocales()[0].languageCode);
     const i18n = new I18n(translations);
     if (language) i18n.locale = language;
     i18n.enableFallback = true
@@ -41,23 +33,16 @@ export default function Layout() {
 
     // Configurar notificaciones y cargar preferencias de usuario
     useEffect(() => {
-        configureNotifications();
         getUserPreferences();
+        configureNotifications();
     }, [])
 
     // Al terminar de configurar el idioma se lanza notificación
     useEffect(() => {
-        if (language) {
+        if (langRdy) {
             scheduleWeeklyNotification(i18n);
         }
-    }, [language])
-
-    // Ocultar SplashScreen cuando la fuente y el idioma se ha cargado.
-    useEffect(() => {
-        if (fontsLoaded && language) {
-            SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded, language]);
+    }, [language, langRdy])
 
     // Gestión de anuncios
     useEffect(() => {
@@ -77,6 +62,7 @@ export default function Layout() {
         // Language
         const language = await AsyncStorage.getItem(userPreferences.LANGUAGE);
         setLanguage(language || getLocales()[0].languageCode);
+        setLangRdy(true);
     }
 
     async function configureNotifications() {
@@ -94,10 +80,6 @@ export default function Layout() {
         if (await StoreReview.hasAction()) {
             StoreReview.requestReview()
         }
-    }
-
-    if (!fontsLoaded) {
-        return null;
     }
 
     return (
