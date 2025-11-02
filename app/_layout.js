@@ -66,14 +66,20 @@ export default function Layout() {
     }
 
     async function configureNotifications() {
-        Notifications.setNotificationHandler({
-            handleNotification: async () => ({
-                shouldShowBanner: true,
-                shouldShowList: true,
-                shouldPlaySound: false,
-                shouldSetBadge: false,
-            }),
-        });
+        const { granted } = await Notifications.requestPermissionsAsync();
+        if (granted) {
+            await AsyncStorage.setItem(userPreferences.NOTIFICATION_PERMISSION, "true");
+            Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                    shouldShowBanner: true,
+                    shouldShowList: true,
+                    shouldPlaySound: false,
+                    shouldSetBadge: false,
+                }),
+            });
+        } else {
+            await AsyncStorage.setItem(userPreferences.NOTIFICATION_PERMISSION, "false");
+        }
     }
 
     async function askForReview() {

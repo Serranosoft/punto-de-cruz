@@ -2,7 +2,7 @@
     "expo": {
         "name": "Punto de Cruz",
         "slug": "punto-de-cruz",
-        "version": "2.0.0",
+        "version": "2.0.1",
         "orientation": "portrait",
         "icon": "./assets/icono-punto-de-cruz-movil.png",
         "userInterfaceStyle": "light",
@@ -27,7 +27,7 @@
                 "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
                 "backgroundColor": "#F7F0EC"
             },
-            "versionCode": 9,
+            "versionCode": 10,
             "package": "com.paulaymanu113.puntodecruz"
         },
         "locales": {
@@ -83,7 +83,7 @@
             [
                 "expo-notifications",
                 {
-                    "icon": "./assets/icono-punto-de-cruz-movil.png"
+                    "icon": "./assets/notification.png"
                 }
             ],
             [

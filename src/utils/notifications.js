@@ -1,13 +1,20 @@
 import * as Notifications from "expo-notifications";
+import { userPreferences } from "./user-preferences";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function scheduleWeeklyNotification(language) {
     try {
-
+        
+        const granted = await AsyncStorage.getItem(userPreferences.NOTIFICATION_PERMISSION);
+        if (granted !== "true") {
+            return;
+        }
+        
         // Obtener la lista de notificaciones programadas
         const scheduledNotifications = await Notifications.getAllScheduledNotificationsAsync();
 
         const exists = scheduledNotifications.some((notificacion) => {
-            return notificacion.identifier === 'notificacion-semanal-miercoles';
+            return notificacion.identifier === 'notificacion';
         });
 
         // Si ya hay una notificación programada, no hagas nada
@@ -17,14 +24,16 @@ export async function scheduleWeeklyNotification(language) {
         }
 
         const notification = {
-            identifier: "notificacion-semanal-miercoles",
+            identifier: "notificacion",
             content: {
                 title: language.t("_notificationsTitle"),
                 body: language.t("_notificationsBody"),
             },
             trigger: {
-                seconds: getLeftTimeToNextWednesday(),
-                repeats: true,
+                type: "weekly",
+                weekday: 4,
+                hour: 12,
+                minute: 0,
             },
         };
 
@@ -34,20 +43,3 @@ export async function scheduleWeeklyNotification(language) {
         console.error('Error al programar la notificación:', error);
     }
 };
-
-export function getLeftTimeToNextWednesday() {
-    const today = new Date();
-    const currentDay = today.getDay();
-
-    const daysUntilWednesday = 3 - currentDay;
-    const nextWednesday = new Date(today);
-    nextWednesday.setDate(today.getDate() + daysUntilWednesday);
-    nextWednesday.setHours(16, 0, 0, 0);
-    
-    if (today > nextWednesday) {
-        nextWednesday.setDate(nextWednesday.getDate() + 7);
-    }
-
-    const diff = Math.floor((nextWednesday - today) / 1000);
-    return diff;
-}
