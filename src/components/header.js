@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
+import Constants from "expo-constants";
 import { components, padding, ui } from "../utils/styles"
 import { useContext, useState } from "react";
 import { LangContext } from "../utils/LangContext";
@@ -52,16 +53,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 20,
-        width: "90%",
-        height: 50,
-        alignSelf: "center",
-        position: "absolute",
+        width: "100%",
+        paddingTop: Constants.statusBarHeight + 5,
+        paddingBottom: 15,
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#f1f1f1",
         justifyContent: "space-between",
-        top: 32,
-        backgroundColor: "#F7F0EC",
-        borderRadius: 100,
-        borderWidth: 3,
-        borderColor: "rgba(255, 154, 91, 0.75)",
     },
 
     img: {

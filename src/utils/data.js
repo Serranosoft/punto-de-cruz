@@ -1,6 +1,31 @@
 
 export function content(language) {
-    return [
+    const data = [
+        {
+            name: language.t("_dataAlimentos"),
+            fetch: "Alimentos",
+            isNew: true,
+            subcategories: [
+                {
+                    name: language.t("_dataAlimentosMaki"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225373/alimentos/maki/patron.jpg",
+                    steps: 3,
+                    fetch: "Maki"
+                },
+                {
+                    name: language.t("_dataAlimentosHamburguesa"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225373/alimentos/hamburguesa/patron.jpg",
+                    steps: 3,
+                    fetch: "Hamburguesa"
+                },
+                {
+                    name: language.t("_dataAlimentosSushi"),
+                    image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225373/alimentos/sushi/patron.jpg",
+                    steps: 3,
+                    fetch: "Sushi"
+                }
+            ]
+        },
         {
             name: language.t("_dataSencillo"),
             fetch: "Sencillo",
@@ -271,7 +296,16 @@ export function content(language) {
                 }
             ]
         }
-    ]
+    ];
+
+    // Add an extra step for PDF download to every pattern
+    return data.map(category => ({
+        ...category,
+        subcategories: category.subcategories.map(subcategory => ({
+            ...subcategory,
+            steps: subcategory.steps + 1
+        }))
+    }));
 }
 
 export const category1 = [
@@ -284,18 +318,18 @@ export function highlight(language) {
     return [
         {
             category: language.t("_dataSencillo"),
-            fetch: content(language)[0].fetch,
-            data: content(language)[0].subcategories[2]
+            fetch: content(language)[1].fetch,
+            data: content(language)[1].subcategories[2]
         },
         {
             category: language.t("_dataPerros"),
-            fetch: content(language)[3].fetch,
-            data: content(language)[3].subcategories[2]
+            fetch: content(language)[4].fetch,
+            data: content(language)[4].subcategories[2]
         },
         {
             category: language.t("_dataModernos"),
-            fetch: content(language)[2].fetch,
-            data: content(language)[2].subcategories[3]
+            fetch: content(language)[3].fetch,
+            data: content(language)[3].subcategories[3]
         }
     ]
 }

@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function LangList() {
 
     const { language, setLanguage } = useContext(LangContext);
-    const [selected, setSelected] = useState(language._locale);
+    const [selected, setSelected] = useState(language.locale);
 
     const languages = [
         { title: language.t("_langListSpanish"), acronym: "es" },
@@ -28,6 +28,7 @@ export default function LangList() {
     ]
 
     async function updateLanguage(acronym) {
+        console.log("LangList - acronym received:", acronym);
         setLanguage(acronym);
         await AsyncStorage.setItem(userPreferences.LANGUAGE, acronym);
     }
@@ -36,9 +37,9 @@ export default function LangList() {
         <View style={styles.container}>
             <ScrollView style={styles.scroll} nestedScrollEnabled={true}>
                 {
-                    languages.map((language, index) => {
+                    languages.map((lang, index) => {
                         return (
-                            <LangListItem key={index} title={language.title} acronym={language.acronym} updateLanguage={updateLanguage} selected={selected} setSelected={setSelected} />
+                            <LangListItem key={index} title={lang.title} acronym={lang.acronym} updateLanguage={updateLanguage} selected={selected} setSelected={setSelected} />
                         )
                     })
                 }

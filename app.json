@@ -1,164 +1,165 @@
 {
-    "expo": {
-        "name": "Punto de Cruz",
-        "slug": "punto-de-cruz",
-        "version": "2.0.1",
-        "orientation": "portrait",
-        "icon": "./assets/icono-punto-de-cruz-movil.png",
-        "userInterfaceStyle": "light",
-        "newArchEnabled": false,
-        "splash": {
-            "image": "./assets/splash-punto-de-cruz.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#F7F0EC"
-        },
-        "scheme": "punto-de-cruz",
-        "ios": {
-            "supportsTablet": false,
-            "buildNumber": "3",
-            "bundleIdentifier": "com.paulaymanu113.puntodecruz",
-            "infoPlist": {
-                "ITSAppUsesNonExemptEncryption": false,
-                "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión."
-            }
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
-                "backgroundColor": "#F7F0EC"
-            },
-            "versionCode": 10,
-            "package": "com.paulaymanu113.puntodecruz"
-        },
-        "locales": {
-            "en": "./languages/english.json",
-            "ar": "./languages/arab.json",
-            "de": "./languages/deutsch.json",
-            "hi": "./languages/hindi.json",
-            "fr": "./languages/french.json",
-            "id": "./languages/indonesian.json",
-            "pt": "./languages/portuguese.json",
-            "ru": "./languages/russian.json",
-            "pl": "./languages/polish.json",
-            "vi": "./languages/vietnamese.json",
-            "tr": "./languages/turkish.json",
-            "it": "./languages/italian.json",
-            "fa": "./languages/farsi.json"
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "5dbcc33b-7d88-4ffd-9f4a-09590c32abd2"
-            }
-        },
-        "plugins": [
-            "expo-asset",
-            "expo-localization",
-            [
-                "expo-image-picker",
-                {
-                    "photosPermission": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
-                    "cameraPermission": "Permite a la aplicación capturar una foto para comenzar con la conversión."
-                }
-            ],
-            [
-                "react-native-google-mobile-ads",
-                {
-                    "androidAppId": "ca-app-pub-3738413299329691~6302219236",
-                    "iosAppId": "ca-app-pub-3738413299329691~6302219236",
-                    "delayAppMeasurementInit": true,
-                    "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
-                }
-            ],
-            [
-                "expo-build-properties",
-                {
-                    "android": {
-                        "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
-                    }
-                }
-            ],
-            [
-                "expo-notifications",
-                {
-                    "icon": "./assets/notification.png"
-                }
-            ],
-            [
-                "expo-font",
-                {
-                    "android": {
-                        "fonts": [
-                            {
-                                "fontFamily": "poppins-regular",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Regular.ttf",
-                                        "weight": "400",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-medium",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Medium.ttf",
-                                        "weight": "500",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-bold",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Bold.ttf",
-                                        "weight": "600",
-                                        "style": "normal"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    "ios": {
-                        "fonts": [
-                            {
-                                "fontFamily": "poppins-regular",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Regular.ttf",
-                                        "weight": "400",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-medium",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Medium.ttf",
-                                        "weight": "500",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-bold",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Bold.ttf",
-                                        "weight": "600",
-                                        "style": "normal"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
+  "expo": {
+    "name": "Punto de Cruz",
+    "slug": "punto-de-cruz",
+    "version": "2.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icono-punto-de-cruz-movil.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-punto-de-cruz.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F7F0EC"
+    },
+    "scheme": "punto-de-cruz",
+    "ios": {
+      "supportsTablet": false,
+      "buildNumber": "3",
+      "bundleIdentifier": "com.paulaymanu113.puntodecruz",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
+        "backgroundColor": "#F7F0EC"
+      },
+      "versionCode": 10,
+      "package": "com.paulaymanu113.puntodecruz"
+    },
+    "locales": {
+      "en": "./languages/english.json",
+      "ar": "./languages/arab.json",
+      "de": "./languages/deutsch.json",
+      "hi": "./languages/hindi.json",
+      "fr": "./languages/french.json",
+      "id": "./languages/indonesian.json",
+      "pt": "./languages/portuguese.json",
+      "ru": "./languages/russian.json",
+      "pl": "./languages/polish.json",
+      "vi": "./languages/vietnamese.json",
+      "tr": "./languages/turkish.json",
+      "it": "./languages/italian.json",
+      "fa": "./languages/farsi.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5dbcc33b-7d88-4ffd-9f4a-09590c32abd2"
+      }
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-localization",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
+          "cameraPermission": "Permite a la aplicación capturar una foto para comenzar con la conversión."
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3738413299329691~6302219236",
+          "iosAppId": "ca-app-pub-3738413299329691~6302219236",
+          "delayAppMeasurementInit": true,
+          "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification.png"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "poppins-regular",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Regular.ttf",
+                    "weight": "400",
+                    "style": "normal"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "poppins-medium",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Medium.ttf",
+                    "weight": "500",
+                    "style": "normal"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "poppins-bold",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Bold.ttf",
+                    "weight": "600",
+                    "style": "normal"
+                  }
+                ]
+              }
             ]
-        ]
-    }
+          },
+          "ios": {
+            "fonts": [
+              {
+                "fontFamily": "poppins-regular",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Regular.ttf",
+                    "weight": "400",
+                    "style": "normal"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "poppins-medium",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Medium.ttf",
+                    "weight": "500",
+                    "style": "normal"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "poppins-bold",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Bold.ttf",
+                    "weight": "600",
+                    "style": "normal"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "expo-sqlite"
+    ]
+  }
 }

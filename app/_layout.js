@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useEffect, useState, useMemo } from "react";
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
@@ -14,16 +14,25 @@ import UpdatesModal from "../src/layout/modals/updates-modal";
 import { scheduleWeeklyNotification } from "../src/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userPreferences } from "../src/utils/user-preferences";
+import Toast from 'react-native-toast-message';
+import { AchievementsProvider } from '../src/utils/AchievementsContext';
 
 export default function Layout() {
 
     // Idioma
     const [langRdy, setLangRdy] = useState(false);
     const [language, setLanguage] = useState(getLocales()[0].languageCode);
-    const i18n = new I18n(translations);
-    if (language) i18n.locale = language;
-    i18n.enableFallback = true
-    i18n.defaultLocale = "es";
+    
+    const i18n = useMemo(() => {
+        const instance = new I18n(translations);
+        instance.enableFallback = true;
+        instance.defaultLocale = "es";
+        return instance;
+    }, []);
+
+    if (language) {
+        i18n.locale = language;
+    }
 
     // Gestión de anuncios
     const [adsLoaded, setAdsLoaded] = useState();
@@ -92,14 +101,19 @@ export default function Layout() {
         <View style={styles.container}>
             <AdsContext.Provider value={{ setAdTrigger: setAdTrigger, adsLoaded: adsLoaded, setShowOpenAd: setShowOpenAd }}>
                 <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
-                    <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
-                    <GestureHandlerRootView style={styles.wrapper}>
-                        <Stack />
-                        <StatusBar backgroundColor={"#fff"} style="light" />
-                    </GestureHandlerRootView>
-                    <UpdatesModal />
+                    <AchievementsProvider>
+                        <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
+                        <GestureHandlerRootView style={styles.wrapper}>
+                            <Stack>
+                                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                            </Stack>
+                            <StatusBar backgroundColor={"#fff"} style="dark" />
+                        </GestureHandlerRootView>
+                        <UpdatesModal />
+                    </AchievementsProvider>
                 </LangContext.Provider>
             </AdsContext.Provider>
+            <Toast />
         </View >
     )
 }
