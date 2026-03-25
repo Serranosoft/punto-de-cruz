@@ -29,7 +29,13 @@ export const AchievementsProvider = ({ children }) => {
         try {
             const data = await AsyncStorage.getItem('stash_achievements');
             if (data) {
-                setUnlockedAchievements(JSON.parse(data));
+                const parsed = JSON.parse(data);
+                if (Array.isArray(parsed)) {
+                    setUnlockedAchievements(parsed);
+                } else {
+                    setUnlockedAchievements([]);
+                    AsyncStorage.removeItem('stash_achievements');
+                }
             }
         } catch (e) {
             console.error("Error loading achievements", e);
@@ -41,7 +47,11 @@ export const AchievementsProvider = ({ children }) => {
     const unlockAchievement = useCallback(async (id) => {
         try {
             const data = await AsyncStorage.getItem('stash_achievements');
-            let current = data ? JSON.parse(data) : [];
+            let current = [];
+            if (data) {
+                const parsed = JSON.parse(data);
+                current = Array.isArray(parsed) ? parsed : [];
+            }
 
             if (!current.includes(id)) {
                 const newUnlocked = [...current, id];

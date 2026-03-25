@@ -25,7 +25,20 @@ export default function Inicio() {
     useFocusEffect(
         useCallback(() => {
             AsyncStorage.getItem('lastProject').then((data) => {
-                if (data) setLastProject(JSON.parse(data));
+                if (data) {
+                    try {
+                        const parsed = JSON.parse(data);
+                        if (parsed && typeof parsed.lastStep === 'number' && typeof parsed.steps === 'number') {
+                            setLastProject(parsed);
+                        } else {
+                            AsyncStorage.removeItem('lastProject');
+                            setLastProject(null);
+                        }
+                    } catch (e) {
+                        AsyncStorage.removeItem('lastProject');
+                        setLastProject(null);
+                    }
+                }
             });
 
             // Noctámbulo check
@@ -74,9 +87,10 @@ export default function Inicio() {
     const radius = 35;
     const strokeWidth = 8;
     const circumference = 2 * Math.PI * radius;
-    const progress = lastProject ? Math.round((lastProject.lastStep / lastProject.steps) * 100) : 0;
-    const strokeDashoffset = circumference - (progress / 100) * circumference;
-    const isProjectActive = lastProject && lastProject.lastStep < lastProject.steps;
+    const progress = lastProject && lastProject.steps ? Math.round((lastProject.lastStep / lastProject.steps) * 100) : 0;
+    const safeProgress = isNaN(progress) ? 0 : progress;
+    const strokeDashoffset = circumference - (safeProgress / 100) * circumference;
+    const isProjectActive = lastProject && lastProject.steps && lastProject.lastStep < lastProject.steps;
 
     const handleContinue = () => {
         if (lastProject) {
