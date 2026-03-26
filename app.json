@@ -27,7 +27,7 @@
                 "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
                 "backgroundColor": "#F7F0EC"
             },
-            "versionCode": 12,
+            "versionCode": 13,
             "package": "com.paulaymanu113.puntodecruz"
         },
         "locales": {
