@@ -28,8 +28,14 @@ export default function Stash() {
             const storedInventory = await AsyncStorage.getItem('stash_inventory');
             const storedShopping = await AsyncStorage.getItem('stash_shopping');
             
-            if (storedInventory) setInventory(JSON.parse(storedInventory));
-            if (storedShopping) setShoppingList(JSON.parse(storedShopping));
+            if (storedInventory) {
+                const parsed = JSON.parse(storedInventory);
+                setInventory(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+            }
+            if (storedShopping) {
+                const parsed = JSON.parse(storedShopping);
+                setShoppingList(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+            }
         } catch (e) {
             console.error("Error cargando inventario", e);
         }

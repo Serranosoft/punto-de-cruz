@@ -28,7 +28,12 @@ export default function Inicio() {
                 if (data) {
                     try {
                         const parsed = JSON.parse(data);
-                        if (parsed && typeof parsed.lastStep === 'number' && typeof parsed.steps === 'number') {
+                        const stepsNum = Number(parsed?.steps);
+                        const lastStepNum = Number(parsed?.lastStep);
+                        if (parsed && !isNaN(stepsNum) && stepsNum > 0 && !isNaN(lastStepNum)) {
+                            // Normalize to numbers to avoid any downstream type issues
+                            parsed.steps = stepsNum;
+                            parsed.lastStep = lastStepNum;
                             setLastProject(parsed);
                         } else {
                             AsyncStorage.removeItem('lastProject');
@@ -133,16 +138,20 @@ export default function Inicio() {
                     style={styles.card}
                     accessible={true}
                     accessibilityLabel={isProjectActive ? language.t('_accessibilityActiveProject', { name: lastProject.subcategory, progress: progress }) : language.t('_homeSuggestion')}
-                    onPress={isProjectActive ? handleContinue : () => router.push({
-                        pathname: "/item",
-                        params: {
-                            category: dailyInspiration[0].parentCategory,
-                            subcategory: dailyInspiration[0].name,
-                            categoryFetch: dailyInspiration[0].categoryFetch,
-                            subcategoryFetch: dailyInspiration[0].fetch,
-                            steps: dailyInspiration[0].steps
+                    onPress={isProjectActive ? handleContinue : () => {
+                        if (dailyInspiration.length > 0) {
+                            router.push({
+                                pathname: "/item",
+                                params: {
+                                    category: dailyInspiration[0].parentCategory,
+                                    subcategory: dailyInspiration[0].name,
+                                    categoryFetch: dailyInspiration[0].categoryFetch,
+                                    subcategoryFetch: dailyInspiration[0].fetch,
+                                    steps: dailyInspiration[0].steps
+                                }
+                            });
                         }
-                    })}
+                    }}
                 >
                     <View style={styles.cardHeader}>
                         <View style={styles.progressContainer}>

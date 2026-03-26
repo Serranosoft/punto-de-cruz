@@ -29,7 +29,6 @@ export default function Item() {
     const isLastStep = (current + 1) == steps;
 
     useEffect(() => {
-        unlockAchievement('explorador');
         if (category && category.toLowerCase().includes('circo') || subcategory && subcategory.toLowerCase().includes('circo')) {
             unlockAchievement('circo');
         }
@@ -41,7 +40,7 @@ export default function Item() {
                     subcategory,
                     categoryFetch,
                     subcategoryFetch,
-                    steps,
+                    steps: Number(steps),
                     lastStep: current + 1,
                     image: images[0],
                     dateUpdated: Date.now()
@@ -61,25 +60,34 @@ export default function Item() {
     }, [])
 
     async function fetchResourcesList(tag) {
-        const response = await fetch(`https://res.cloudinary.com/dvuvk6yrw/image/list/${tag}.json`)
-            .then((response) => response.json())
-            .then(data => data);
+        try {
+            const response = await fetch(`https://res.cloudinary.com/dvuvk6yrw/image/list/${tag}.json`)
+                .then((response) => response.json())
+                .then(data => data);
 
-        let images = [];
-
-        const sorted = response.resources.sort((a, b) => {
-            if (a["public_id"] > b["public_id"]) {
-                return 1;
-            } else {
-                return -1
+            if (!response || !Array.isArray(response.resources)) {
+                console.warn('fetchResourcesList: respuesta inesperada', response);
+                return;
             }
-        })
 
-        sorted.forEach((image) => {
-            images.push("https://res.cloudinary.com/dvuvk6yrw/image/upload/" + image["public_id"]);
-        })
+            let images = [];
 
-        setImages(images);
+            const sorted = response.resources.sort((a, b) => {
+                if (a["public_id"] > b["public_id"]) {
+                    return 1;
+                } else {
+                    return -1
+                }
+            })
+
+            sorted.forEach((image) => {
+                images.push("https://res.cloudinary.com/dvuvk6yrw/image/upload/" + image["public_id"]);
+            })
+
+            setImages(images);
+        } catch (e) {
+            console.error('fetchResourcesList: error al obtener imágenes', e);
+        }
     }
 
     const handleDownload = () => {
