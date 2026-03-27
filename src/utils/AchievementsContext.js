@@ -14,7 +14,6 @@ export const ACHIEVEMENTS_DATA = {
     comprador: { id: 'comprador', title: '_achTitle_comprador', desc: '_achDesc_comprador', icon: 'shopping-cart' },
     hacedor: { id: 'hacedor', title: '_achTitle_hacedor', desc: '_achDesc_hacedor', icon: 'image' },
     perfeccionista: { id: 'perfeccionista', title: '_achTitle_perfeccionista', desc: '_achDesc_perfeccionista', icon: 'upload' },
-    circo: { id: 'circo', title: '_achTitle_circo', desc: '_achDesc_circo', icon: 'star' },
     maestro: { id: 'maestro', title: '_achTitle_maestro', desc: '_achDesc_maestro', icon: 'award' }
 };
 
@@ -31,7 +30,13 @@ export const AchievementsProvider = ({ children }) => {
             if (data) {
                 const parsed = JSON.parse(data);
                 if (Array.isArray(parsed)) {
-                    setUnlockedAchievements(parsed);
+                    // Filtrar IDs que ya no existen en ACHIEVEMENTS_DATA (limpieza de versiones anteriores)
+                    const valid = parsed.filter(id => ACHIEVEMENTS_DATA[id]);
+                    setUnlockedAchievements(valid);
+                    if (valid.length !== parsed.length) {
+                        // Hay entradas obsoletas — persistir la versión limpia
+                        AsyncStorage.setItem('stash_achievements', JSON.stringify(valid));
+                    }
                 } else {
                     setUnlockedAchievements([]);
                     AsyncStorage.removeItem('stash_achievements');

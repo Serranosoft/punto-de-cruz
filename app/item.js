@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Progress from "../src/layout/item/progress";
 import Card from "../src/layout/item/Card";
 import { ui } from "../src/utils/styles";
@@ -19,35 +20,30 @@ import PdfDownload from "../src/layout/item/PdfDownload";
 export default function Item() {
 
     const params = useLocalSearchParams();
-    const { category, subcategory, categoryFetch, subcategoryFetch, steps } = params;
+    const { category, subcategory, categoryFetch, subcategoryFetch, steps, image } = params;
+    const stepsNum = Number(steps);
     const { language } = useContext(LangContext);
     const { adsLoaded, setAdTrigger } = useContext(AdsContext);
     const { unlockAchievement } = useContext(AchievementsContext);
     const [images, setImages] = useState([]);
     const [current, setCurrent] = useState(0);
 
-    const isLastStep = (current + 1) == steps;
+    const isLastStep = (current + 1) === stepsNum;
 
+    // Guardar en AsyncStorage inmediatamente al entrar al patrón y en cada avance
     useEffect(() => {
-        if (category && category.toLowerCase().includes('circo') || subcategory && subcategory.toLowerCase().includes('circo')) {
-            unlockAchievement('circo');
-        }
-        if (images.length > 0) {
-            import('@react-native-async-storage/async-storage').then(({ default: AsyncStorage }) => {
-                AsyncStorage.setItem('lastProject', JSON.stringify({
-                    idPatron: `${category}-${subcategory}`,
-                    category,
-                    subcategory,
-                    categoryFetch,
-                    subcategoryFetch,
-                    steps: Number(steps),
-                    lastStep: current + 1,
-                    image: images[0],
-                    dateUpdated: Date.now()
-                }));
-            });
-        }
-        
+        AsyncStorage.setItem('lastProject', JSON.stringify({
+            idPatron: `${category}-${subcategory}`,
+            category,
+            subcategory,
+            categoryFetch,
+            subcategoryFetch,
+            steps: stepsNum,
+            lastStep: current + 1,
+            image: images.length > 0 ? images[0] : (image || null),
+            dateUpdated: Date.now()
+        }));
+
         if (current > 0) {
             unlockAchievement('primera_puntada');
         }

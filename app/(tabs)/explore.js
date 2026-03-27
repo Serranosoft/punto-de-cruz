@@ -106,7 +106,8 @@ export default function Explore() {
                 subcategory: item.name,
                 categoryFetch: item.parentCategoryFetch,
                 subcategoryFetch: item.fetch,
-                steps: item.steps
+                steps: item.steps,
+                image: item.image
             }
         });
     }, [router]);

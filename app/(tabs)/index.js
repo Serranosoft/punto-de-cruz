@@ -106,7 +106,8 @@ export default function Inicio() {
                     subcategory: lastProject.subcategory,
                     categoryFetch: lastProject.categoryFetch,
                     subcategoryFetch: lastProject.subcategoryFetch,
-                    steps: lastProject.steps
+                    steps: lastProject.steps,
+                    image: lastProject.image
                 }
             });
         }
@@ -147,7 +148,8 @@ export default function Inicio() {
                                     subcategory: dailyInspiration[0].name,
                                     categoryFetch: dailyInspiration[0].categoryFetch,
                                     subcategoryFetch: dailyInspiration[0].fetch,
-                                    steps: dailyInspiration[0].steps
+                                    steps: dailyInspiration[0].steps,
+                                    image: dailyInspiration[0].image
                                 }
                             });
                         }
@@ -220,7 +222,8 @@ export default function Inicio() {
                                     subcategory: item.name,
                                     categoryFetch: item.categoryFetch,
                                     subcategoryFetch: item.fetch,
-                                    steps: item.steps
+                                    steps: item.steps,
+                                    image: item.image
                                 }
                             });
                         }}
