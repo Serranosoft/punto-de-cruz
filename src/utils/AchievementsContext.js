@@ -64,7 +64,7 @@ export const AchievementsProvider = ({ children }) => {
                 setUnlockedAchievements(newUnlocked);
 
                 const achData = ACHIEVEMENTS_DATA[id];
-                if(achData && language) {
+                if (achData && language?.t) {
                     Toast.show({
                         type: 'success',
                         text1: language.t('_achUnlockedToast'),
@@ -74,10 +74,10 @@ export const AchievementsProvider = ({ children }) => {
                         topOffset: 60
                     });
                 }
-                
+
                 // Maestro checker
                 if (newUnlocked.length >= 3 && !newUnlocked.includes('maestro') && id !== 'maestro') {
-                    setTimeout(() => unlockAchievement('maestro'), 4500); 
+                    setTimeout(() => unlockAchievement('maestro'), 4500);
                 }
             }
         } catch (e) {

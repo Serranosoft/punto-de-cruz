@@ -30,7 +30,9 @@ export default function Inicio() {
                         const parsed = JSON.parse(data);
                         const stepsNum = Number(parsed?.steps);
                         const lastStepNum = Number(parsed?.lastStep);
-                        if (parsed && !isNaN(stepsNum) && stepsNum > 0 && !isNaN(lastStepNum)) {
+                        const hasRequiredParams = parsed?.categoryFetch && parsed?.subcategoryFetch;
+
+                        if (parsed && !isNaN(stepsNum) && stepsNum > 0 && !isNaN(lastStepNum) && hasRequiredParams) {
                             // Normalize to numbers to avoid any downstream type issues
                             parsed.steps = stepsNum;
                             parsed.lastStep = lastStepNum;
@@ -119,9 +121,9 @@ export default function Inicio() {
             {/* Header Simplified */}
             <View style={styles.header}>
                 <Text style={styles.title}>{language.t('_headerTitle')}</Text>
-                <TouchableOpacity 
-                    style={styles.bellButton} 
-                    accessibilityLabel={language.t('_accessibilityBell')} 
+                <TouchableOpacity
+                    style={styles.bellButton}
+                    accessibilityLabel={language.t('_accessibilityBell')}
                     accessibilityRole="button"
                 >
                     <Feather name="bell" size={20} color="#333" />
@@ -138,9 +140,9 @@ export default function Inicio() {
                 <TouchableOpacity
                     style={styles.card}
                     accessible={true}
-                    accessibilityLabel={isProjectActive ? language.t('_accessibilityActiveProject', { name: lastProject.subcategory, progress: progress }) : language.t('_homeSuggestion')}
+                    accessibilityLabel={isProjectActive ? language?.t?.('_accessibilityActiveProject', { name: lastProject?.subcategory, progress: progress }) : language?.t?.('_homeSuggestion')}
                     onPress={isProjectActive ? handleContinue : () => {
-                        if (dailyInspiration.length > 0) {
+                        if (dailyInspiration && dailyInspiration.length > 0) {
                             router.push({
                                 pathname: "/item",
                                 params: {
@@ -182,11 +184,11 @@ export default function Inicio() {
                             )}
                         </View>
                         <View style={styles.cardInfo}>
-                            <Text style={styles.projectTitle}>{isProjectActive ? lastProject.subcategory : language.t('_homeWhatToStitch')}</Text>
+                            <Text style={styles.projectTitle}>{isProjectActive ? lastProject?.subcategory : language?.t?.('_homeWhatToStitch')}</Text>
                             <View style={styles.timeInfo}>
                                 <Feather name={isProjectActive ? "clock" : "compass"} size={14} color="#555" />
                                 <Text style={styles.timeText}>
-                                    {isProjectActive ? language.t('_itemStepsRemaining', { count: lastProject.steps - lastProject.lastStep }) : language.t('_itemTapForDetails')}
+                                    {isProjectActive ? language?.t?.('_itemStepsRemaining', { count: (lastProject?.steps || 0) - (lastProject?.lastStep || 0) }) : language?.t?.('_itemTapForDetails')}
                                 </Text>
                             </View>
                             <TouchableOpacity
@@ -194,11 +196,13 @@ export default function Inicio() {
                                 onPress={isProjectActive ? handleContinue : () => router.push('/explore')}
                                 accessibilityRole="button"
                             >
-                                <Text style={styles.continueText}>{isProjectActive ? language.t('_itemContinue') : language.t('_homeViewDesigns')}</Text>
+                                <Text style={styles.continueText}>{isProjectActive ? language?.t?.('_itemContinue') : language?.t?.('_homeViewDesigns')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Image source={isProjectActive ? lastProject.image : dailyInspiration[0]?.image} style={styles.projectImage} contentFit="cover" transition={300} />
+                    {(isProjectActive ? lastProject?.image : (dailyInspiration && dailyInspiration[0]?.image)) &&
+                        <Image source={isProjectActive ? lastProject?.image : dailyInspiration[0]?.image} style={styles.projectImage} contentFit="cover" transition={300} />
+                    }
                 </TouchableOpacity>
             </View>
 

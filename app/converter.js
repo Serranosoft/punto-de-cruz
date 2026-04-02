@@ -24,8 +24,12 @@ const MyWebComponent = ({ setColors, webviewKey, setShowOpenAd }) => {
                 if (event.nativeEvent.data === "keepAlive") {
                     console.log("keep alive");
                 } else {
-                    setShowOpenAd(false);
-                    setColors(JSON.parse(event.nativeEvent.data))
+                    try {
+                        setShowOpenAd(false);
+                        setColors(JSON.parse(event.nativeEvent.data));
+                    } catch (e) {
+                        console.error('onMessage parse error:', e);
+                    }
                 }
             }} />
     )

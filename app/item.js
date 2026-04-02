@@ -50,10 +50,15 @@ export default function Item() {
     }, [current, images]);
 
     useEffect(() => {
+        if (!categoryFetch || !subcategoryFetch) {
+            console.error('item.js: categoryFetch o subcategoryFetch faltantes', { categoryFetch, subcategoryFetch });
+            return;
+        }
+
         // Recuperar todas las imagenes de cloudinary con la tag category+subcategory
         const tag = `${categoryFetch.toLowerCase()}-${subcategoryFetch.toLowerCase().split(" ").join("-")}`;
         fetchResourcesList(tag);
-    }, [])
+    }, [categoryFetch, subcategoryFetch])
 
     async function fetchResourcesList(tag) {
         try {
@@ -87,6 +92,10 @@ export default function Item() {
     }
 
     const handleDownload = () => {
+        if (!categoryFetch || !subcategoryFetch) {
+            console.error('handleDownload: categoryFetch o subcategoryFetch faltantes');
+            return;
+        }
         router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${categoryFetch.toLowerCase().replaceAll(" ", "-")}-${subcategoryFetch.toLowerCase().replaceAll(" ", "-")}.pdf`);
     };
 
@@ -95,9 +104,9 @@ export default function Item() {
             <Stack.Screen options={{ header: () => <Header title={`${category} / ${subcategory}`} /> }} />
             <View style={styles.wrapper}>
                 {isLastStep ? (
-                    <PdfDownload 
-                        language={language} 
-                        onDownload={handleDownload} 
+                    <PdfDownload
+                        language={language}
+                        onDownload={handleDownload}
                     />
                 ) : (
                     <>
@@ -107,13 +116,13 @@ export default function Item() {
                         </View>
                     </>
                 )}
-                
+
                 {adsLoaded && (
                     <View style={styles.adContainer}>
                         <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />
                     </View>
                 )}
-                
+
                 <Actions />
                 <Progress current={(current + 1)} qty={steps} setCurrent={setCurrent} setAdTrigger={setAdTrigger} />
             </View>
@@ -146,4 +155,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
     }
-})
+})

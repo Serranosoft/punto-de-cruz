@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { View, StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { createRef, useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
@@ -21,8 +21,9 @@ export default function Layout() {
 
     // Idioma
     const [langRdy, setLangRdy] = useState(false);
-    const [language, setLanguage] = useState(getLocales()[0].languageCode);
-    
+    const locales = getLocales();
+    const [language, setLanguage] = useState(locales?.[0]?.languageCode || "es");
+
     const i18n = useMemo(() => {
         const instance = new I18n(translations);
         instance.enableFallback = true;
@@ -38,12 +39,12 @@ export default function Layout() {
     const [adsLoaded, setAdsLoaded] = useState();
     const [adTrigger, setAdTrigger] = useState(0);
     const [showOpenAd, setShowOpenAd] = useState(true);
-    const adsHandlerRef = createRef();
+    const adsHandlerRef = useRef(null);
 
     // Configurar notificaciones y cargar preferencias de usuario
     useEffect(() => {
-        getUserPreferences();
-        configureNotifications();
+        getUserPreferences().catch(e => console.error('getUserPreferences error:', e));
+        configureNotifications().catch(e => console.error('configureNotifications error:', e));
     }, [])
 
     // Al terminar de configurar el idioma se lanza notificación

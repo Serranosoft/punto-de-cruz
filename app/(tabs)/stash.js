@@ -18,7 +18,7 @@ export default function Stash() {
     const { unlockAchievement } = useContext(AchievementsContext);
     const [activeTab, setActiveTab] = useState('Hilos'); // Hilos, Compra, Patrones
     const [searchQuery, setSearchQuery] = useState('');
-    
+
     // States for Persistence
     const [inventory, setInventory] = useState({}); // { '310': 2, '666': 0 }
     const [shoppingList, setShoppingList] = useState({}); // { '666': true }
@@ -27,14 +27,24 @@ export default function Stash() {
         try {
             const storedInventory = await AsyncStorage.getItem('stash_inventory');
             const storedShopping = await AsyncStorage.getItem('stash_shopping');
-            
+
             if (storedInventory) {
-                const parsed = JSON.parse(storedInventory);
-                setInventory(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+                try {
+                    const parsed = JSON.parse(storedInventory);
+                    setInventory(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+                } catch (e) {
+                    console.error("Error parseando inventario", e);
+                    setInventory({});
+                }
             }
             if (storedShopping) {
-                const parsed = JSON.parse(storedShopping);
-                setShoppingList(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+                try {
+                    const parsed = JSON.parse(storedShopping);
+                    setShoppingList(parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {});
+                } catch (e) {
+                    console.error("Error parseando lista de compra", e);
+                    setShoppingList({});
+                }
             }
         } catch (e) {
             console.error("Error cargando inventario", e);
@@ -52,7 +62,7 @@ export default function Stash() {
         const newInventory = { ...inventory, [code]: newQty };
         setInventory(newInventory);
         await AsyncStorage.setItem('stash_inventory', JSON.stringify(newInventory));
-        
+
         // Logro Coleccionista
         if (Object.keys(newInventory).filter(k => newInventory[k] > 0).length >= 20) {
             unlockAchievement('coleccionista');
@@ -74,8 +84,8 @@ export default function Stash() {
     const filteredThreads = useMemo(() => {
         let list = DMC_COLORS;
         if (searchQuery) {
-            list = list.filter(item => 
-                item.code.includes(searchQuery) || 
+            list = list.filter(item =>
+                item.code.includes(searchQuery) ||
                 item.name.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
@@ -100,13 +110,13 @@ export default function Stash() {
                 </View>
 
                 <View style={styles.threadControls}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={[styles.shoppingBtn, isShopping && styles.shoppingBtnActive]}
                         onPress={() => toggleShoppingList(item.code)}
                     >
                         <Feather name="shopping-cart" size={16} color={isShopping ? "#fff" : "#888"} />
                     </TouchableOpacity>
-                    
+
                     <View style={styles.stepper}>
                         <TouchableOpacity style={styles.stepBtn} onPress={() => updateInventory(item.code, -1)}>
                             <Feather name="minus" size={16} color="#d35400" />
@@ -125,15 +135,15 @@ export default function Stash() {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>{language.t('_stashTitle')}</Text>
-                
+
                 {/* Custom Tabs */}
                 <View style={styles.tabContainer}>
                     {[
                         { id: 'Hilos', label: language.t('_stashTabThreads') },
                         { id: 'Compra', label: language.t('_stashTabShopping') }
                     ].map(tab => (
-                        <TouchableOpacity 
-                            key={tab.id} 
+                        <TouchableOpacity
+                            key={tab.id}
                             style={[styles.tabBtn, activeTab === tab.id && styles.tabBtnActive]}
                             onPress={() => { setActiveTab(tab.id); setSearchQuery(''); }}
                         >
@@ -146,7 +156,7 @@ export default function Stash() {
                 {activeTab !== 'Patrones' && (
                     <View style={styles.searchBar}>
                         <Feather name="search" size={18} color="#888" style={styles.searchIcon} />
-                        <TextInput 
+                        <TextInput
                             style={styles.searchInput}
                             placeholder={language.t('_stashSearchPlaceholder')}
                             placeholderTextColor="#aaa"

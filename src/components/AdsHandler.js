@@ -17,11 +17,17 @@ const AdsHandler = forwardRef((props, ref) => {
     const isMobileAdsStartCalledRef = useRef(false);
     useEffect(() => {
         const prepare = async () => {
-            const consentInfo = await AdsConsent.requestInfoUpdate();
-            AdsConsent.loadAndShowConsentFormIfRequired()
-                .then(startGoogleMobileAdsSDK)
-                .catch((error) => console.error('Consent gathering failed:', error));
-            startGoogleMobileAdsSDK();
+            try {
+                await AdsConsent.requestInfoUpdate();
+                AdsConsent.loadAndShowConsentFormIfRequired()
+                    .then(startGoogleMobileAdsSDK)
+                    .catch((error) => console.error('Consent gathering failed:', error));
+                startGoogleMobileAdsSDK().catch((e) => console.error('startGoogleMobileAdsSDK error:', e));
+            } catch (e) {
+                console.error('AdsConsent.requestInfoUpdate failed:', e);
+                // Intentar inicializar igualmente si falla el consentimiento
+                startGoogleMobileAdsSDK().catch((e2) => console.error('SDK fallback init error:', e2));
+            }
         }
 
         prepare();
