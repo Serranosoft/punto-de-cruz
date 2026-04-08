@@ -38,15 +38,15 @@ export default function Inicio() {
                             parsed.lastStep = lastStepNum;
                             setLastProject(parsed);
                         } else {
-                            AsyncStorage.removeItem('lastProject');
+                            AsyncStorage.removeItem('lastProject').catch(console.error);
                             setLastProject(null);
                         }
                     } catch (e) {
-                        AsyncStorage.removeItem('lastProject');
+                        AsyncStorage.removeItem('lastProject').catch(console.error);
                         setLastProject(null);
                     }
                 }
-            });
+            }).catch(console.error);
 
             // Noctámbulo check
             const hour = new Date().getHours();
@@ -58,17 +58,17 @@ export default function Inicio() {
             const today = new Date().toDateString();
             AsyncStorage.getItem('last_opened_date').then(date => {
                 if (date !== today) {
-                    AsyncStorage.setItem('last_opened_date', today);
+                    AsyncStorage.setItem('last_opened_date', today).catch(console.error);
                     AsyncStorage.getItem('open_streak').then(streak => {
                         // Easy streak: just total days opened. A real consecutive check would parse dates.
                         const newStreak = (parseInt(streak) || 0) + 1;
-                        AsyncStorage.setItem('open_streak', newStreak.toString());
+                        AsyncStorage.setItem('open_streak', newStreak.toString()).catch(console.error);
                         if (newStreak >= 7) {
                             unlockAchievement('constancia');
                         }
-                    });
+                    }).catch(console.error);
                 }
-            });
+            }).catch(console.error);
         }, [])
     );
 

@@ -35,7 +35,7 @@ export const AchievementsProvider = ({ children }) => {
                     setUnlockedAchievements(valid);
                     if (valid.length !== parsed.length) {
                         // Hay entradas obsoletas — persistir la versión limpia
-                        AsyncStorage.setItem('stash_achievements', JSON.stringify(valid));
+                        AsyncStorage.setItem('stash_achievements', JSON.stringify(valid)).catch(console.error);
                     }
                 } else {
                     setUnlockedAchievements([]);

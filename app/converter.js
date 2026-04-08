@@ -88,7 +88,7 @@ export default function Converter() {
                                 unlockAchievement('hacedor');
                                 ref.current.capture().then(uri => {
                                     requestPermissions(uri, messages)
-                                })
+                                }).catch(console.error);
                             }}
                         >
                             <Feather name="image" size={20} color={renderColors ? "#aaa" : "#fff"} />
@@ -100,7 +100,9 @@ export default function Converter() {
                             disabled={renderColors}
                             onPress={() => {
                                 unlockAchievement('hacedor');
-                                ref.current.capture().then(uri => convertToPdf(uri))
+                                ref.current.capture()
+                                    .then(uri => convertToPdf(uri))
+                                    .catch(console.error);
                             }}
                         >
                             <Feather name="file-text" size={20} color={renderColors ? "#aaa" : "#fff"} />

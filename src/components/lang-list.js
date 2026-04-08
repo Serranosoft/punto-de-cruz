@@ -30,7 +30,11 @@ export default function LangList() {
     async function updateLanguage(acronym) {
         console.log("LangList - acronym received:", acronym);
         setLanguage(acronym);
-        await AsyncStorage.setItem(userPreferences.LANGUAGE, acronym);
+        try {
+            await AsyncStorage.setItem(userPreferences.LANGUAGE, acronym);
+        } catch (e) {
+            console.error("updateLanguage error:", e);
+        }
     }
 
     return (

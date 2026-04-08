@@ -42,7 +42,7 @@ export default function Item() {
             lastStep: current + 1,
             image: images.length > 0 ? images[0] : (image || null),
             dateUpdated: Date.now()
-        }));
+        })).catch(console.error);
 
         if (current > 0) {
             unlockAchievement('primera_puntada');

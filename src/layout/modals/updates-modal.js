@@ -14,9 +14,13 @@ export default function UpdatesModal() {
 
     useEffect(() => {
         const checkIfSeen = async () => {
-            const version = await AsyncStorage.getItem(userPreferences.CHANGELOG_VERSION);
-            if (version !== APP.currentVersion) {
-                setVisible(true);
+            try {
+                const version = await AsyncStorage.getItem(userPreferences.CHANGELOG_VERSION);
+                if (version !== APP.currentVersion) {
+                    setVisible(true);
+                }
+            } catch (e) {
+                console.error("UpdatesModal checkIfSeen error:", e);
             }
         };
         checkIfSeen();
@@ -24,7 +28,11 @@ export default function UpdatesModal() {
 
     const closeModal = async () => {
         setVisible(false);
-        await AsyncStorage.setItem(userPreferences.CHANGELOG_VERSION, APP.currentVersion);
+        try {
+            await AsyncStorage.setItem(userPreferences.CHANGELOG_VERSION, APP.currentVersion);
+        } catch (e) {
+            console.error("UpdatesModal closeModal error:", e);
+        }
     };
 
     return (
