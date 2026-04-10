@@ -15,7 +15,7 @@
         "scheme": "punto-de-cruz",
         "ios": {
             "supportsTablet": false,
-            "buildNumber": "3",
+            "buildNumber": "4",
             "bundleIdentifier": "com.paulaymanu113.puntodecruz",
             "infoPlist": {
                 "ITSAppUsesNonExemptEncryption": false,
