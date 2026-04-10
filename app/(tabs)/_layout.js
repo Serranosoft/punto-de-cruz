@@ -3,9 +3,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, StyleSheet, Platform, Text } from "react-native";
 import { useContext } from "react";
 import { LangContext } from "../../src/utils/LangContext";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
     const { language } = useContext(LangContext);
+    const insets = useSafeAreaInsets();
     
     return (
         <Tabs
@@ -13,7 +15,13 @@ export default function TabLayout() {
                 headerShown: false,
                 tabBarActiveTintColor: '#d35400',
                 tabBarInactiveTintColor: '#8e8e93',
-                tabBarStyle: styles.tabBar,
+                tabBarStyle: [
+                    styles.tabBar,
+                    { 
+                        height: Platform.OS === 'ios' ? 60 + insets.bottom : 70,
+                        paddingBottom: Platform.OS === 'ios' ? (insets.bottom > 0 ? insets.bottom : 10) : 12
+                    }
+                ],
                 tabBarLabelStyle: styles.tabBarLabel,
             }}>
             <Tabs.Screen
@@ -65,8 +73,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderTopWidth: 1,
         borderTopColor: '#f1f1f1',
-        height: Platform.OS === 'ios' ? 88 : 70,
-        paddingBottom: Platform.OS === 'ios' ? 30 : 12,
         paddingTop: 10,
         elevation: 12,
         shadowColor: "#000",

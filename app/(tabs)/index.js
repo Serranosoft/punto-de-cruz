@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from '
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { ui } from '../../src/utils/styles';
-import Constants from 'expo-constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle } from 'react-native-svg';
 import { useContext, useState, useCallback, useMemo } from 'react';
 import { LangContext } from '../../src/utils/LangContext';
@@ -17,6 +17,7 @@ import { AchievementsContext } from '../../src/utils/AchievementsContext';
 export default function Inicio() {
     const { language } = useContext(LangContext);
     const { adsLoaded } = useContext(AdsContext);
+    const insets = useSafeAreaInsets();
     const router = useRouter();
 
     const [lastProject, setLastProject] = useState(null);
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: Constants.statusBarHeight + 2,
+        paddingTop: insets.top + 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 12,

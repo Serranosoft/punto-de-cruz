@@ -64,6 +64,13 @@
                 }
             ],
             [
+                "expo-media-library",
+                {
+                    "photosPermission": "Permite a la aplicación guardar los esquemas generados en tu galería.",
+                    "savePhotosPermission": "Permite a la aplicación guardar los esquemas generados en tu galería."
+                }
+            ],
+            [
                 "react-native-google-mobile-ads",
                 {
                     "androidAppId": "ca-app-pub-3738413299329691~6302219236",

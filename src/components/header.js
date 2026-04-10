@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
-import Constants from "expo-constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { components, padding, ui } from "../utils/styles"
 import { useContext, useState } from "react";
 import { LangContext } from "../utils/LangContext";
@@ -9,13 +9,14 @@ import { router } from "expo-router";
 export default function Header({ isHome, title }) {
 
     const { language } = useContext(LangContext);
+    const insets = useSafeAreaInsets();
 
     const [visible, setVisible] = useState(false);
     const hideMenu = () => setVisible(false);
     const showMenu = () => setVisible(true);
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { paddingTop: insets.top + 5 }]}>
             {
                 isHome ?
                     <Menu
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         width: "100%",
-        paddingTop: Constants.statusBarHeight + 5,
+        paddingTop: insets.top + 5,
         paddingBottom: 15,
         backgroundColor: "#fff",
         borderBottomWidth: 1,

@@ -1,7 +1,9 @@
 import { Stack } from "expo-router";
-import { View, StatusBar, StyleSheet } from "react-native";
+import { View, StatusBar, StyleSheet, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect, useState, useMemo, useRef } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
@@ -41,10 +43,14 @@ export default function Layout() {
     const [showOpenAd, setShowOpenAd] = useState(true);
     const adsHandlerRef = useRef(null);
 
-    // Configurar notificaciones y cargar preferencias de usuario
+    // Configurar notificaciones, ATT y cargar preferencias de usuario
     useEffect(() => {
         getUserPreferences().catch(e => console.error('getUserPreferences error:', e));
         configureNotifications().catch(e => console.error('configureNotifications error:', e));
+        
+        if (Platform.OS === 'ios') {
+            requestTrackingPermissionsAsync().catch(e => console.error('ATT error:', e));
+        }
     }, [])
 
     // Al terminar de configurar el idioma se lanza notificación
@@ -99,23 +105,25 @@ export default function Layout() {
     }
 
     return (
-        <View style={styles.container}>
-            <AdsContext.Provider value={{ setAdTrigger: setAdTrigger, adsLoaded: adsLoaded, setShowOpenAd: setShowOpenAd }}>
-                <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
-                    <AchievementsProvider>
-                        <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
-                        <GestureHandlerRootView style={styles.wrapper}>
-                            <Stack>
-                                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                            </Stack>
-                            <StatusBar backgroundColor={"#fff"} style="dark" />
-                        </GestureHandlerRootView>
-                        <UpdatesModal />
-                    </AchievementsProvider>
-                </LangContext.Provider>
-            </AdsContext.Provider>
-            <Toast />
-        </View >
+        <SafeAreaProvider>
+            <View style={styles.container}>
+                <AdsContext.Provider value={{ setAdTrigger: setAdTrigger, adsLoaded: adsLoaded, setShowOpenAd: setShowOpenAd }}>
+                    <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
+                        <AchievementsProvider>
+                            <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
+                            <GestureHandlerRootView style={styles.wrapper}>
+                                <Stack>
+                                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                                </Stack>
+                                <StatusBar style="dark" />
+                            </GestureHandlerRootView>
+                            <UpdatesModal />
+                        </AchievementsProvider>
+                    </LangContext.Provider>
+                </AdsContext.Provider>
+                <Toast />
+            </View >
+        </SafeAreaProvider>
     )
 }
 const styles = StyleSheet.create({
