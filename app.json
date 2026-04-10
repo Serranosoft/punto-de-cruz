@@ -132,36 +132,9 @@
                     },
                     "ios": {
                         "fonts": [
-                            {
-                                "fontFamily": "poppins-regular",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Regular.ttf",
-                                        "weight": "400",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-medium",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Medium.ttf",
-                                        "weight": "500",
-                                        "style": "normal"
-                                    }
-                                ]
-                            },
-                            {
-                                "fontFamily": "poppins-bold",
-                                "fontDefinitions": [
-                                    {
-                                        "path": "./assets/fonts/Poppins-Bold.ttf",
-                                        "weight": "600",
-                                        "style": "normal"
-                                    }
-                                ]
-                            }
+                            "./assets/fonts/Poppins-Regular.ttf",
+                            "./assets/fonts/Poppins-Medium.ttf",
+                            "./assets/fonts/Poppins-Bold.ttf"
                         ]
                     }
                 }
