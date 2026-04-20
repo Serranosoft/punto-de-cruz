@@ -19,7 +19,8 @@
             "bundleIdentifier": "com.paulaymanu113.puntodecruz",
             "infoPlist": {
                 "ITSAppUsesNonExemptEncryption": false,
-                "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión."
+                "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
+                "NSUserTrackingUsageDescription": "Este identificador se utilizará para ofrecerte anuncios personalizados."
             }
         },
         "android": {
@@ -139,7 +140,8 @@
                     }
                 }
             ],
-            "expo-sqlite"
+            "expo-sqlite",
+            "expo-tracking-transparency"
         ]
     }
 }

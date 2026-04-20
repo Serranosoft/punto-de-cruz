@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
-import { View, StatusBar, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
+import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -43,14 +44,9 @@ export default function Layout() {
     const [showOpenAd, setShowOpenAd] = useState(true);
     const adsHandlerRef = useRef(null);
 
-    // Configurar notificaciones, ATT y cargar preferencias de usuario
     useEffect(() => {
         getUserPreferences().catch(e => console.error('getUserPreferences error:', e));
         configureNotifications().catch(e => console.error('configureNotifications error:', e));
-        
-        if (Platform.OS === 'ios') {
-            requestTrackingPermissionsAsync().catch(e => console.error('ATT error:', e));
-        }
     }, [])
 
     // Al terminar de configurar el idioma se lanza notificación
@@ -77,7 +73,7 @@ export default function Layout() {
     async function getUserPreferences() {
         // Language
         const language = await AsyncStorage.getItem(userPreferences.LANGUAGE);
-        setLanguage(language || getLocales()[0].languageCode);
+        setLanguage(language || getLocales()?.[0]?.languageCode || "es");
         setLangRdy(true);
     }
 
@@ -99,8 +95,8 @@ export default function Layout() {
     }
 
     async function askForReview() {
-        if (await StoreReview.hasAction()) {
-            StoreReview.requestReview()
+        if (await StoreReview.isAvailableAsync()) {
+            await StoreReview.requestReview()
         }
     }
 

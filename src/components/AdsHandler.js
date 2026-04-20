@@ -2,7 +2,8 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import MobileAds, { AdsConsent, useInterstitialAd } from "react-native-google-mobile-ads";
 import { intersitialId, loadId } from "../utils/constants";
 import { AdEventType, AppOpenAd } from "react-native-google-mobile-ads";
-import { AppState } from "react-native";
+import { AppState, Platform } from "react-native";
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
 const AdsHandler = forwardRef((props, ref) => {
 
@@ -13,19 +14,29 @@ const AdsHandler = forwardRef((props, ref) => {
         show: showIntersitial } = useInterstitialAd(intersitialId);
 
 
-    /* CONSENT */
+    /* CONSENT & INITIALIZATION */
     const isMobileAdsStartCalledRef = useRef(false);
     useEffect(() => {
         const prepare = async () => {
             try {
+                // 1. UMP (User Messaging Platform) Consent
                 await AdsConsent.requestInfoUpdate();
-                AdsConsent.loadAndShowConsentFormIfRequired()
-                    .then(startGoogleMobileAdsSDK)
-                    .catch((error) => console.error('Consent gathering failed:', error));
-                startGoogleMobileAdsSDK().catch((e) => console.error('startGoogleMobileAdsSDK error:', e));
+                await AdsConsent.loadAndShowConsentFormIfRequired();
+
+                // 2. ATT (App Tracking Transparency) - Sólo iOS
+                if (Platform.OS === 'ios') {
+                    try {
+                        await requestTrackingPermissionsAsync();
+                    } catch (attError) {
+                        console.error('ATT Request failed:', attError);
+                    }
+                }
+
+                // 3. Initialize SDK
+                await startGoogleMobileAdsSDK();
             } catch (e) {
-                console.error('AdsConsent.requestInfoUpdate failed:', e);
-                // Intentar inicializar igualmente si falla el consentimiento
+                console.error('Consent/Initialization flow failed:', e);
+                // Fallback: intentar inicializar el SDK de todos modos
                 startGoogleMobileAdsSDK().catch((e2) => console.error('SDK fallback init error:', e2));
             }
         }
@@ -34,8 +45,12 @@ const AdsHandler = forwardRef((props, ref) => {
     }, []);
 
     async function startGoogleMobileAdsSDK() {
+        if (isMobileAdsStartCalledRef.current) {
+            return;
+        }
+
         const { canRequestAds } = await AdsConsent.getConsentInfo();
-        if (!canRequestAds || isMobileAdsStartCalledRef.current) {
+        if (!canRequestAds) {
             return;
         }
 
@@ -115,10 +130,14 @@ const AdsHandler = forwardRef((props, ref) => {
         });
         appOpenAd.addAdEventListener(AdEventType.ERROR, () => {
         });
-        AppState.addEventListener("change", nextAppState => {
-            setAppStateChanged(nextAppState);
-        })
     }
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            setAppStateChanged(nextAppState);
+        });
+        return () => subscription.remove();
+    }, []);
 
     return <></>
 })
