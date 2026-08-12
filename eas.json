@@ -6,12 +6,22 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "false"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "true"
+      }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "true"
+      }
+    }
   },
   "submit": {
     "production": {}
