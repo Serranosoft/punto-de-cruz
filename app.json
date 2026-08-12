@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icono-punto-de-cruz-movil.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-punto-de-cruz.png",
       "resizeMode": "contain",

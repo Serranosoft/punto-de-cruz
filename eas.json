@@ -1,6 +1,7 @@
 {
   "cli": {
     "version": ">= 11.0.2",
+    "appVersionSource": "local",
     "promptToConfigurePushNotifications": false
   },
   "build": {
@@ -8,17 +9,23 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
+        "NODE_ENV": "development",
         "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "false"
       }
     },
     "preview": {
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
+        "NODE_ENV": "production",
         "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "true"
       }
     },
     "production": {
       "env": {
+        "NODE_ENV": "production",
         "PUNTODECRUZ_EXCLUDE_EXPO_DEV_CLIENT": "true"
       }
     }
