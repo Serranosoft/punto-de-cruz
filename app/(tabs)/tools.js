@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import Constants from 'expo-constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AdsContext } from '../../src/utils/AdsContext';
 import { LangContext } from '../../src/utils/LangContext';
 import { useContext } from 'react';
@@ -9,6 +9,7 @@ import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { bannerId } from '../../src/utils/constants';
 
 export default function ToolsHub() {
+    const insets = useSafeAreaInsets();
     const router = useRouter();
     const { language } = useContext(LangContext);
     const { adsLoaded } = useContext(AdsContext);
@@ -54,7 +55,7 @@ export default function ToolsHub() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 2 }]}>
                 <Text style={styles.headerTitle}>{language.t('_toolsTitle')}</Text>
             </View>
 
@@ -100,7 +101,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f9fa'
     },
     header: {
-        paddingTop: Constants.statusBarHeight + 2,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 12,

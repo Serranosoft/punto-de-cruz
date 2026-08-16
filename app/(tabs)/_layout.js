@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { View, StyleSheet, Platform, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { useContext } from "react";
 import { LangContext } from "../../src/utils/LangContext";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,8 +18,8 @@ export default function TabLayout() {
                 tabBarStyle: [
                     styles.tabBar,
                     { 
-                        height: Platform.OS === 'ios' ? 60 + insets.bottom : 70,
-                        paddingBottom: Platform.OS === 'ios' ? (insets.bottom > 0 ? insets.bottom : 10) : 12
+                        height: 60 + insets.bottom,
+                        paddingBottom: Math.max(insets.bottom, 10),
                     }
                 ],
                 tabBarLabelStyle: styles.tabBarLabel,

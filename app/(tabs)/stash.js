@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Keyboard
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Constants from 'expo-constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useContext } from 'react';
 import { LangContext } from '../../src/utils/LangContext';
 import { AchievementsContext } from '../../src/utils/AchievementsContext';
@@ -13,6 +13,7 @@ import { DMC_COLORS } from '../../src/utils/dmc';
 // DMC_COLORS is now imported from src/utils/dmc.js
 
 export default function Stash() {
+    const insets = useSafeAreaInsets();
     const router = useRouter();
     const { language } = useContext(LangContext);
     const { unlockAchievement } = useContext(AchievementsContext);
@@ -133,7 +134,7 @@ export default function Stash() {
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 2 }]}>
                 <Text style={styles.headerTitle}>{language.t('_stashTitle')}</Text>
 
                 {/* Custom Tabs */}
@@ -192,7 +193,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f9fa'
     },
     header: {
-        paddingTop: Constants.statusBarHeight + 2,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 16,

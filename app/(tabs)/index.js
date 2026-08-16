@@ -120,7 +120,7 @@ export default function Inicio() {
         <ScrollView style={styles.container} contentContainerStyle={styles.content}>
             {/* Header */}
             {/* Header Simplified */}
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
                 <Text style={styles.title}>{language.t('_headerTitle')}</Text>
                 <TouchableOpacity
                     style={styles.bellButton}
@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: insets.top + 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 12,

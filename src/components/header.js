@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         width: "100%",
-        paddingTop: insets.top + 5,
         paddingBottom: 15,
         backgroundColor: "#fff",
         borderBottomWidth: 1,

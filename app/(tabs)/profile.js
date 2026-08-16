@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather } from '@expo/vector-icons';
-import Constants from 'expo-constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LangContext } from '../../src/utils/LangContext';
 import LangList from '../../src/components/lang-list';
 import { useRouter } from 'expo-router';
@@ -10,6 +10,7 @@ import { AchievementsContext, ACHIEVEMENTS_DATA } from '../../src/utils/Achievem
 
 
 export default function Profile() {
+    const insets = useSafeAreaInsets();
     const { language } = useContext(LangContext);
     const { unlockedAchievements } = useContext(AchievementsContext);
     const router = useRouter();
@@ -37,7 +38,7 @@ export default function Profile() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 2 }]}>
                 <Text style={styles.headerTitle}>{language.t('_profileTitle')}</Text>
             </View>
 
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: Constants.statusBarHeight + 2,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 16,

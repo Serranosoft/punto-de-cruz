@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import { LangContext } from '../../src/utils/LangContext';
 import { content } from '../../src/utils/data';
 import { useRouter } from 'expo-router';
-import Constants from 'expo-constants';
 import React from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { bannerId } from '../../src/utils/constants';
 import { AdsContext } from '../../src/utils/AdsContext';
@@ -48,6 +48,7 @@ const PatternCard = React.memo(({ item, onPress }) => {
 const ALL_CATEGORY = 'all_patterns';
 
 export default function Explore() {
+    const insets = useSafeAreaInsets();
     const { language } = useContext(LangContext);
     const { adsLoaded } = useContext(AdsContext);
 
@@ -126,7 +127,7 @@ export default function Explore() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 2 }]}>
                 <Text style={styles.headerTitle}>{language.t('_exploreTitle')}</Text>
                 <View style={styles.searchBar}>
                     <Feather name="search" size={20} color="#888" style={styles.searchIcon} />
@@ -201,7 +202,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f9fa'
     },
     header: {
-        paddingTop: Constants.statusBarHeight + 2,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
         paddingBottom: 16,
