@@ -1,6 +1,6 @@
 {
   "name": "punto-de-cruz",
-  "version": "2.0.1",
+  "version": "3.0.1",
   "main": "index.js",
   "scripts": {
     "eas-build-pre-install": "node ./build-scripts/prepare-eas-dependencies.js",
@@ -12,11 +12,11 @@
   "dependencies": {
     "@likashefqet/react-native-image-zoom": "^4.2.0",
     "@react-native-async-storage/async-storage": "2.2.0",
-    "expo": "^54.0.0",
+    "expo": "~54.0.37",
     "expo-build-properties": "~1.0.10",
-    "expo-constants": "~18.0.13",
+    "expo-constants": "~18.0.14",
     "expo-dev-client": "~6.0.21",
-    "expo-file-system": "~19.0.23",
+    "expo-file-system": "~19.0.24",
     "expo-image": "~3.0.11",
     "expo-image-manipulator": "~14.0.8",
     "expo-image-picker": "~17.0.11",
