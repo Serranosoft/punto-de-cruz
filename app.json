@@ -55,6 +55,7 @@
       }
     },
     "plugins": [
+      "./plugins/with-gradle-memory",
       "expo-asset",
       "expo-localization",
       [
