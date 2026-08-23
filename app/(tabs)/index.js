@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { ui } from '../../src/utils/styles';
@@ -6,17 +6,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle } from 'react-native-svg';
 import { useContext, useState, useCallback, useMemo } from 'react';
 import { LangContext } from '../../src/utils/LangContext';
-import { AdsContext } from '../../src/utils/AdsContext';
 import { content } from '../../src/utils/data';
 import { useFocusEffect, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { bannerId } from '../../src/utils/constants';
 import { AchievementsContext } from '../../src/utils/AchievementsContext';
+import AdBanner from '../../src/components/AdBanner';
 
 export default function Inicio() {
     const { language } = useContext(LangContext);
-    const { adsLoaded } = useContext(AdsContext);
     const insets = useSafeAreaInsets();
     const router = useRouter();
 
@@ -132,9 +129,7 @@ export default function Inicio() {
             </View>
 
             {/* Banner Ad Adaptive Superior */}
-            <View style={{ marginBottom: 20, alignItems: 'center' }}>
-                {adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />}
-            </View>
+            <AdBanner placement="home" embedded />
 
             {/* Mi Bastidor (Último Proyecto o Recomendación) */}
             <View style={styles.section}>
@@ -201,9 +196,16 @@ export default function Inicio() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    {(isProjectActive ? lastProject?.image : (dailyInspiration && dailyInspiration[0]?.image)) &&
-                        <Image source={isProjectActive ? lastProject?.image : dailyInspiration[0]?.image} style={styles.projectImage} contentFit="cover" transition={300} />
-                    }
+                    {(isProjectActive ? lastProject?.image : (dailyInspiration && dailyInspiration[0]?.image)) && (
+                        <View style={styles.projectImageWrapper}>
+                            <Image source={isProjectActive ? lastProject?.image : dailyInspiration[0]?.image} style={styles.projectImage} contentFit="cover" transition={300} />
+                            {!isProjectActive && dailyInspiration[0]?.isNew && (
+                                <View style={styles.designNewBadge}>
+                                    <Text style={styles.designNewBadgeText}>✨ {language.t('_labelNew')}</Text>
+                                </View>
+                            )}
+                        </View>
+                    )}
                 </TouchableOpacity>
             </View>
 
@@ -234,6 +236,11 @@ export default function Inicio() {
                         }}
                     >
                         <Image source={item.image} style={styles.categoryImage} contentFit="cover" transition={200} />
+                        {item.isNew && (
+                            <View style={styles.designNewBadge}>
+                                <Text style={styles.designNewBadgeText}>✨ {language.t('_labelNew')}</Text>
+                            </View>
+                        )}
                         <View style={styles.categoryOverlay}>
                             <Text style={styles.categoryTitle}>{item.name}</Text>
                             <Text style={styles.categorySubtitle}>{item.parentCategory}</Text>
@@ -409,6 +416,32 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 140,
         borderRadius: 12,
+    },
+    projectImageWrapper: {
+        position: 'relative',
+    },
+    designNewBadge: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 2,
+        backgroundColor: '#d35400',
+        paddingHorizontal: 9,
+        paddingVertical: 5,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#fff',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.18,
+        shadowRadius: 3,
+    },
+    designNewBadgeText: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'poppins-bold',
+        textTransform: 'uppercase',
     },
     banner: {
         backgroundColor: '#fbf0e9',

@@ -1,10 +1,9 @@
 import { Stack } from "expo-router";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
@@ -12,7 +11,6 @@ import { translations } from "../src/utils/localizations";
 import { getLocales } from "expo-localization";
 import { AdsContext } from "../src/utils/AdsContext";
 import AdsHandler from "../src/components/AdsHandler";
-import * as StoreReview from 'expo-store-review';
 import UpdatesModal from "../src/layout/modals/updates-modal";
 import { scheduleWeeklyNotification } from "../src/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -39,9 +37,9 @@ export default function Layout() {
     }
 
     // Gestión de anuncios
-    const [adsLoaded, setAdsLoaded] = useState();
+    const [adsLoaded, setAdsLoaded] = useState(false);
     const [adTrigger, setAdTrigger] = useState(0);
-    const [showOpenAd, setShowOpenAd] = useState(true);
+    const [privacyOptionsRequired, setPrivacyOptionsRequired] = useState(false);
     const adsHandlerRef = useRef(null);
 
     useEffect(() => {
@@ -58,17 +56,13 @@ export default function Layout() {
 
     // Gestión de anuncios
     useEffect(() => {
-        if (adsLoaded) {
-            if (adTrigger > 4) {
-                adsHandlerRef.current.showIntersitialAd();
-                setAdTrigger(0);
+        if (adTrigger > 4) {
+            if (adsLoaded) {
+                adsHandlerRef.current?.showIntersitialAd();
             }
+            setAdTrigger(0);
         }
-
-        if (adTrigger > 3) {
-            askForReview();
-        }
-    }, [adTrigger])
+    }, [adTrigger, adsLoaded])
 
     async function getUserPreferences() {
         // Language
@@ -94,19 +88,33 @@ export default function Layout() {
         }
     }
 
-    async function askForReview() {
-        if (await StoreReview.isAvailableAsync()) {
-            await StoreReview.requestReview()
-        }
-    }
+    const showPrivacyOptions = useCallback(async () => {
+        return adsHandlerRef.current?.showPrivacyOptionsForm();
+    }, []);
+
+    const setShowOpenAd = useCallback((shouldShow) => {
+        adsHandlerRef.current?.setShowOpenAd(shouldShow);
+    }, []);
+
+    const adsContextValue = useMemo(() => ({
+        setAdTrigger,
+        adsLoaded,
+        privacyOptionsRequired,
+        showPrivacyOptions,
+        setShowOpenAd,
+    }), [adsLoaded, privacyOptionsRequired, setShowOpenAd, showPrivacyOptions]);
 
     return (
         <SafeAreaProvider>
             <View style={styles.container}>
-                <AdsContext.Provider value={{ setAdTrigger: setAdTrigger, adsLoaded: adsLoaded, setShowOpenAd: setShowOpenAd }}>
+                <AdsContext.Provider value={adsContextValue}>
                     <LangContext.Provider value={{ setLanguage: setLanguage, language: i18n }}>
                         <AchievementsProvider>
-                            <AdsHandler ref={adsHandlerRef} adsLoaded={adsLoaded} setAdsLoaded={setAdsLoaded} showOpenAd={showOpenAd} setShowOpenAd={setShowOpenAd} />
+                            <AdsHandler
+                                ref={adsHandlerRef}
+                                setAdsLoaded={setAdsLoaded}
+                                setPrivacyOptionsRequired={setPrivacyOptionsRequired}
+                            />
                             <GestureHandlerRootView style={styles.wrapper}>
                                 <Stack>
                                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

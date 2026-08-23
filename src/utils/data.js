@@ -1,10 +1,11 @@
 
+import { getPatternCover, getPatternStepCount } from './pattern-resources';
+
 export function content(language) {
     const data = [
         {
             name: language.t("_dataAlimentos"),
             fetch: "Alimentos",
-            isNew: true,
             subcategories: [
                 {
                     name: language.t("_dataAlimentosMaki"),
@@ -83,6 +84,27 @@ export function content(language) {
                     image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225193/bebe/elefante-con-pelota/patron.jpg",
                     steps: 4,
                     fetch: "Elefante con pelota",
+                },
+                {
+                    name: language.t("_dataBebeChico"),
+                    image: getPatternCover("bebe-chico"),
+                    steps: getPatternStepCount("bebe-chico"),
+                    fetch: "Chico",
+                    isNew: true,
+                },
+                {
+                    name: language.t("_dataBebeChica"),
+                    image: getPatternCover("bebe-chica"),
+                    steps: getPatternStepCount("bebe-chica"),
+                    fetch: "Chica",
+                    isNew: true,
+                },
+                {
+                    name: language.t("_dataBebeRecienNacido"),
+                    image: getPatternCover("bebe-recien-nacido"),
+                    steps: getPatternStepCount("bebe-recien-nacido"),
+                    fetch: "Recien nacido",
+                    isNew: true,
                 }
             ]
         },
@@ -113,6 +135,13 @@ export function content(language) {
                     image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/Modernos/Confeti de corazones/patron",
                     steps: 8,
                     fetch: "Confeti de corazones"
+                },
+                {
+                    name: language.t("_dataModernosNocheEstrellada"),
+                    image: getPatternCover("modernos-noche-estrellada"),
+                    steps: getPatternStepCount("modernos-noche-estrellada"),
+                    fetch: "Noche estrellada",
+                    isNew: true,
                 }
             ]
         },
@@ -293,6 +322,34 @@ export function content(language) {
                     image: "https://res.cloudinary.com/dvuvk6yrw/image/upload/v1759225373/cocina/naranjas/patron.jpg",
                     steps: 4,
                     fetch: "Naranjas"
+                }
+            ]
+        },
+        {
+            name: language.t("_dataConjuntos"),
+            fetch: "Conjuntos",
+            isNew: true,
+            subcategories: [
+                {
+                    name: language.t("_dataConjuntosNaturaleza"),
+                    image: getPatternCover("conjuntos-naturaleza"),
+                    steps: getPatternStepCount("conjuntos-naturaleza"),
+                    fetch: "Naturaleza",
+                    isNew: true,
+                }
+            ]
+        },
+        {
+            name: language.t("_dataMarcapaginas"),
+            fetch: "Marcapaginas",
+            isNew: true,
+            subcategories: [
+                {
+                    name: language.t("_dataMarcapaginasFloral"),
+                    image: getPatternCover("marcapaginas-floral"),
+                    steps: getPatternStepCount("marcapaginas-floral"),
+                    fetch: "Floral",
+                    isNew: true,
                 }
             ]
         }

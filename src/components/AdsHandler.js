@@ -1,145 +1,391 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import MobileAds, { AdsConsent, useInterstitialAd } from "react-native-google-mobile-ads";
-import { intersitialId, loadId } from "../utils/constants";
-import { AdEventType, AppOpenAd } from "react-native-google-mobile-ads";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import MobileAds, {
+    AdEventType,
+    AdsConsent,
+    AdsConsentPrivacyOptionsRequirementStatus,
+    AppOpenAd,
+    useInterstitialAd,
+} from "react-native-google-mobile-ads";
 import { AppState, Platform } from "react-native";
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import {
+    getTrackingPermissionsAsync,
+    PermissionStatus,
+    requestTrackingPermissionsAsync,
+} from "expo-tracking-transparency";
+import { intersitialId, loadId } from "../utils/constants";
+import { userPreferences } from "../utils/user-preferences";
+
+const APP_OPEN_MAX_AGE_MS = 4 * 60 * 60 * 1000;
+const APP_OPEN_MIN_BACKGROUND_MS = 30 * 1000;
+const FULL_SCREEN_MIN_INTERVAL_MS = 2 * 60 * 1000;
+const APP_OPEN_MIN_LAUNCHES = 3;
+const RETRY_DELAY_MS = 30 * 1000;
 
 const AdsHandler = forwardRef((props, ref) => {
-
     const {
-        isLoaded: isLoadedIntersitial,
-        isClosed: isClosedIntersitial,
-        load: loadIntersitial,
-        show: showIntersitial } = useInterstitialAd(intersitialId);
+        isLoaded: isInterstitialLoaded,
+        isOpened: isInterstitialOpened,
+        isClosed: isInterstitialClosed,
+        error: interstitialError,
+        revenue: interstitialRevenue,
+        load: loadInterstitial,
+        show: showInterstitial,
+    } = useInterstitialAd(intersitialId);
 
+    const isMobileAdsStartedRef = useRef(false);
+    const adsReadyRef = useRef(false);
+    const loadInterstitialRef = useRef(loadInterstitial);
+    const interstitialRetryRef = useRef(null);
+    const lastFullScreenAtRef = useRef(0);
+    const appOpenEligibleRef = useRef(false);
 
-    /* CONSENT & INITIALIZATION */
-    const isMobileAdsStartCalledRef = useRef(false);
+    const appOpenAdRef = useRef(null);
+    const appOpenLoadedRef = useRef(false);
+    const appOpenLoadTimeRef = useRef(0);
+    const appOpenRetryRef = useRef(null);
+    const appOpenSubscriptionsRef = useRef([]);
+    const suppressNextAppOpenRef = useRef(false);
+
+    const appStateRef = useRef(AppState.currentState);
+    const backgroundStartedAtRef = useRef(0);
+
     useEffect(() => {
+        loadInterstitialRef.current = loadInterstitial;
+    }, [loadInterstitial]);
+
+    useEffect(() => {
+        let cancelled = false;
+
         const prepare = async () => {
             try {
-                // 1. UMP (User Messaging Platform) Consent
-                await AdsConsent.requestInfoUpdate();
+                await hydrateAdPreferences();
+                let consentInfo = await AdsConsent.requestInfoUpdate();
+                updatePrivacyOptionsState(consentInfo);
                 await AdsConsent.loadAndShowConsentFormIfRequired();
+                consentInfo = await AdsConsent.getConsentInfo();
+                updatePrivacyOptionsState(consentInfo);
 
-                // 2. ATT (App Tracking Transparency) - Sólo iOS
-                if (Platform.OS === 'ios') {
-                    try {
-                        await requestTrackingPermissionsAsync();
-                    } catch (attError) {
-                        console.error('ATT Request failed:', attError);
-                    }
+                if (Platform.OS === "ios") {
+                    await requestTrackingIfNeeded();
                 }
 
-                // 3. Initialize SDK
-                await startGoogleMobileAdsSDK();
-            } catch (e) {
-                console.error('Consent/Initialization flow failed:', e);
-                // Fallback: intentar inicializar el SDK de todos modos
-                startGoogleMobileAdsSDK().catch((e2) => console.error('SDK fallback init error:', e2));
+                if (!cancelled) {
+                    await startGoogleMobileAdsSDK();
+                }
+            } catch (error) {
+                console.error("[ads] consent or initialization flow failed", error);
+                try {
+                    const consentInfo = await AdsConsent.getConsentInfo();
+                    updatePrivacyOptionsState(consentInfo);
+                } catch (consentInfoError) {
+                    console.warn("[ads] could not recover cached consent info", consentInfoError);
+                }
+
+                if (!cancelled) {
+                    await startGoogleMobileAdsSDK().catch((sdkError) => {
+                        console.error("[ads] fallback SDK initialization failed", sdkError);
+                    });
+                }
+            }
+        };
+
+        prepare();
+
+        return () => {
+            cancelled = true;
+            clearTimeout(interstitialRetryRef.current);
+            disposeAppOpenAd();
+        };
+    }, []);
+
+    async function hydrateAdPreferences() {
+        const entries = await AsyncStorage.multiGet([
+            userPreferences.AD_LAST_FULL_SCREEN_AT,
+            userPreferences.AD_APP_LAUNCH_COUNT,
+        ]);
+        const values = Object.fromEntries(entries);
+        const previousLaunchCount = Number(values[userPreferences.AD_APP_LAUNCH_COUNT]) || 0;
+        const currentLaunchCount = previousLaunchCount + 1;
+
+        lastFullScreenAtRef.current = Number(values[userPreferences.AD_LAST_FULL_SCREEN_AT]) || 0;
+        appOpenEligibleRef.current = currentLaunchCount >= APP_OPEN_MIN_LAUNCHES;
+
+        await AsyncStorage.setItem(
+            userPreferences.AD_APP_LAUNCH_COUNT,
+            currentLaunchCount.toString()
+        );
+    }
+
+    function updatePrivacyOptionsState(consentInfo) {
+        const isRequired = consentInfo?.privacyOptionsRequirementStatus ===
+            AdsConsentPrivacyOptionsRequirementStatus.REQUIRED;
+        props.setPrivacyOptionsRequired(isRequired);
+    }
+
+    async function requestTrackingIfNeeded() {
+        try {
+            const { status } = await getTrackingPermissionsAsync();
+            if (status === PermissionStatus.UNDETERMINED) {
+                await requestTrackingPermissionsAsync();
+            }
+        } catch (error) {
+            console.warn("[ads] ATT request failed", error);
+        }
+    }
+
+    async function startGoogleMobileAdsSDK() {
+        const { canRequestAds } = await AdsConsent.getConsentInfo();
+        if (!canRequestAds) {
+            adsReadyRef.current = false;
+            props.setAdsLoaded(false);
+            return;
+        }
+
+        if (!isMobileAdsStartedRef.current) {
+            await MobileAds().initialize();
+            isMobileAdsStartedRef.current = true;
+            adsReadyRef.current = true;
+            createAppOpenAd();
+        } else {
+            adsReadyRef.current = true;
+            if (appOpenAdRef.current) {
+                loadAppOpenAd();
+            } else {
+                createAppOpenAd();
             }
         }
 
-        prepare();
+        props.setAdsLoaded(true);
+        loadInterstitialRef.current();
+    }
+
+    useEffect(() => {
+        if (!isInterstitialClosed || !adsReadyRef.current) {
+            return;
+        }
+
+        clearTimeout(interstitialRetryRef.current);
+        loadInterstitialRef.current();
+    }, [isInterstitialClosed, loadInterstitial]);
+
+    useEffect(() => {
+        if (!interstitialError || !adsReadyRef.current) {
+            return;
+        }
+
+        console.warn("[ads:interstitial] load or show failed", interstitialError);
+        clearTimeout(interstitialRetryRef.current);
+        interstitialRetryRef.current = setTimeout(() => {
+            if (adsReadyRef.current) {
+                loadInterstitialRef.current();
+            }
+        }, RETRY_DELAY_MS);
+    }, [interstitialError, loadInterstitial]);
+
+    useEffect(() => {
+        if (isInterstitialOpened) {
+            console.info("[ads:interstitial] impression");
+        }
+    }, [isInterstitialOpened]);
+
+    useEffect(() => {
+        if (interstitialRevenue) {
+            console.info("[ads:interstitial] revenue", interstitialRevenue);
+        }
+    }, [interstitialRevenue]);
+
+    function canShowFullScreenAd() {
+        return Date.now() - lastFullScreenAtRef.current >= FULL_SCREEN_MIN_INTERVAL_MS;
+    }
+
+    function recordFullScreenShown(format) {
+        const shownAt = Date.now();
+        lastFullScreenAtRef.current = shownAt;
+        AsyncStorage.setItem(
+            userPreferences.AD_LAST_FULL_SCREEN_AT,
+            shownAt.toString()
+        ).catch((error) => console.warn("[ads] could not persist frequency cap", error));
+        console.info(`[ads:${format}] display requested`);
+    }
+
+    function showInterstitialAd() {
+        if (!adsReadyRef.current || !canShowFullScreenAd()) {
+            return false;
+        }
+
+        if (!isInterstitialLoaded) {
+            loadInterstitialRef.current();
+            return false;
+        }
+
+        recordFullScreenShown("interstitial");
+        showInterstitial();
+        return true;
+    }
+
+    function createAppOpenAd() {
+        if (appOpenAdRef.current) {
+            return;
+        }
+
+        const appOpenAd = AppOpenAd.createForAdRequest(loadId);
+        appOpenAdRef.current = appOpenAd;
+
+        appOpenSubscriptionsRef.current = [
+            appOpenAd.addAdEventListener(AdEventType.LOADED, () => {
+                appOpenLoadedRef.current = true;
+                appOpenLoadTimeRef.current = Date.now();
+            }),
+            appOpenAd.addAdEventListener(AdEventType.CLOSED, () => {
+                appOpenLoadedRef.current = false;
+                appOpenLoadTimeRef.current = 0;
+                loadAppOpenAd();
+            }),
+            appOpenAd.addAdEventListener(AdEventType.OPENED, () => {
+                console.info("[ads:app-open] impression");
+            }),
+            appOpenAd.addAdEventListener(AdEventType.ERROR, (error) => {
+                appOpenLoadedRef.current = false;
+                appOpenLoadTimeRef.current = 0;
+                console.warn("[ads:app-open] load or show failed", error);
+                scheduleAppOpenRetry();
+            }),
+            appOpenAd.addAdEventListener(AdEventType.PAID, (event) => {
+                console.info("[ads:app-open] revenue", event);
+            }),
+        ];
+
+        loadAppOpenAd();
+    }
+
+    function disposeAppOpenAd() {
+        clearTimeout(appOpenRetryRef.current);
+        appOpenSubscriptionsRef.current.forEach((unsubscribe) => unsubscribe());
+        appOpenSubscriptionsRef.current = [];
+        appOpenAdRef.current = null;
+        appOpenLoadedRef.current = false;
+        appOpenLoadTimeRef.current = 0;
+    }
+
+    function replaceAppOpenAd() {
+        disposeAppOpenAd();
+        if (adsReadyRef.current) {
+            createAppOpenAd();
+        }
+    }
+
+    function loadAppOpenAd() {
+        if (!adsReadyRef.current || !appOpenAdRef.current) {
+            return;
+        }
+
+        clearTimeout(appOpenRetryRef.current);
+        appOpenAdRef.current.load();
+    }
+
+    function scheduleAppOpenRetry() {
+        clearTimeout(appOpenRetryRef.current);
+        appOpenRetryRef.current = setTimeout(() => {
+            loadAppOpenAd();
+        }, RETRY_DELAY_MS);
+    }
+
+    function isAppOpenAdValid() {
+        return appOpenLoadedRef.current &&
+            Date.now() - appOpenLoadTimeRef.current < APP_OPEN_MAX_AGE_MS;
+    }
+
+    function handleAppForegrounded() {
+        const backgroundDuration = Date.now() - backgroundStartedAtRef.current;
+        if (suppressNextAppOpenRef.current) {
+            suppressNextAppOpenRef.current = false;
+            return;
+        }
+
+        if (
+            !adsReadyRef.current ||
+            !appOpenEligibleRef.current ||
+            backgroundDuration < APP_OPEN_MIN_BACKGROUND_MS ||
+            !canShowFullScreenAd()
+        ) {
+            return;
+        }
+
+        if (!isAppOpenAdValid()) {
+            const isExpired = appOpenLoadedRef.current &&
+                Date.now() - appOpenLoadTimeRef.current >= APP_OPEN_MAX_AGE_MS;
+            if (isExpired) {
+                replaceAppOpenAd();
+            } else {
+                loadAppOpenAd();
+            }
+            return;
+        }
+
+        recordFullScreenShown("app-open");
+        appOpenLoadedRef.current = false;
+        appOpenAdRef.current.show().catch((error) => {
+            console.warn("[ads:app-open] could not be shown", error);
+            scheduleAppOpenRetry();
+        });
+    }
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", (nextAppState) => {
+            const previousAppState = appStateRef.current;
+
+            if (nextAppState === "background") {
+                backgroundStartedAtRef.current = Date.now();
+            }
+
+            if (previousAppState === "background" && nextAppState === "active") {
+                handleAppForegrounded();
+            }
+
+            appStateRef.current = nextAppState;
+        });
+
+        return () => subscription.remove();
     }, []);
 
-    async function startGoogleMobileAdsSDK() {
-        if (isMobileAdsStartCalledRef.current) {
-            return;
+    async function showPrivacyOptionsForm() {
+        const consentInfo = await AdsConsent.showPrivacyOptionsForm();
+        updatePrivacyOptionsState(consentInfo);
+
+        if (consentInfo.canRequestAds) {
+            await startGoogleMobileAdsSDK();
+        } else {
+            adsReadyRef.current = false;
+            props.setAdsLoaded(false);
+            disposeAppOpenAd();
         }
 
-        const { canRequestAds } = await AdsConsent.getConsentInfo();
-        if (!canRequestAds) {
-            return;
-        }
-
-        isMobileAdsStartCalledRef.current = true;
-        await MobileAds().initialize();
-        props.setAdsLoaded(true);
-        loadIntersitial(); // Cargar intersitial ads
-        loadOpenAppAd(); // Cargar open ads
+        return consentInfo;
     }
 
     useImperativeHandle(ref, () => ({
         loadIntersitialAd() {
-            loadIntersitial();
+            if (adsReadyRef.current) {
+                loadInterstitialRef.current();
+            }
         },
         showIntersitialAd() {
-            props.setShowOpenAd(false);
-            showIntersitialAd();
+            return showInterstitialAd();
         },
         isClosedIntersitial() {
-            return isClosedIntersitial;
+            return isInterstitialClosed;
         },
         isLoadedIntersitial() {
-            return isLoadedIntersitial;
+            return isInterstitialLoaded;
         },
-    }))
+        setShowOpenAd(shouldShow) {
+            suppressNextAppOpenRef.current = !shouldShow;
+        },
+        showPrivacyOptionsForm,
+    }));
 
-    useEffect(() => {
-        if (isClosedIntersitial) {
-            if (props.closedIntersitialCallback) {
-                props.closedIntersitialCallback();
-            }
-        } else {
-            loadIntersitial();
-        }
+    return null;
+});
 
-    }, [isClosedIntersitial, props.closedIntersitialCallback])
-
-
-    function showIntersitialAd() {
-        if (isLoadedIntersitial) {
-            showIntersitial();
-        } else {
-            loadIntersitial();
-        }
-    }
-
-
-    /** APP OPEN ADS (BACKGROUND -> FOREGROUND -> SHOW ADD) */
-    const openAdRef = useRef(null);
-    const openAdLoadedRef = useRef(false);
-    const [appStateChanged, setAppStateChanged] = useState(AppState.currentState);
-
-    useEffect(() => {
-        props.adsLoaded && appStateChanged == "active" && handleOpenAd();
-    }, [appStateChanged])
-
-    function handleOpenAd() {
-        // Cuando adtrigger es 0 significa que acaba de hacer un posible trigger de un intersitialAd
-        if (props.showOpenAd) {
-            openAdRef.current && openAdLoadedRef.current && openAdRef.current.show();
-        } else {
-            props.setShowOpenAd(true);
-        }
-    }
-
-    function loadOpenAppAd() {
-        const appOpenAd = AppOpenAd.createForAdRequest(loadId);
-        appOpenAd.load();
-
-        appOpenAd.addAdEventListener(AdEventType.LOADED, () => {
-            openAdRef.current = appOpenAd;
-            openAdLoadedRef.current = true;
-        });
-        appOpenAd.addAdEventListener(AdEventType.CLOSED, () => {
-            openAdRef.current.load();
-            openAdLoadedRef.current = false;
-        });
-        appOpenAd.addAdEventListener(AdEventType.ERROR, () => {
-        });
-    }
-
-    useEffect(() => {
-        const subscription = AppState.addEventListener("change", nextAppState => {
-            setAppStateChanged(nextAppState);
-        });
-        return () => subscription.remove();
-    }, []);
-
-    return <></>
-})
-
-export default AdsHandler
+export default AdsHandler;

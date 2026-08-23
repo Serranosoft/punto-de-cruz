@@ -6,11 +6,13 @@ import Header from "../src/components/header";
 import { Stack, useRouter } from "expo-router";
 import Constants from 'expo-constants';
 import { AchievementsContext } from '../src/utils/AchievementsContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function CalculatorScreen() {
     const { language } = useContext(LangContext);
     const { unlockAchievement } = useContext(AchievementsContext);
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     // Fabric Calculator State
     const [stitchesW, setStitchesW] = useState('');
@@ -46,7 +48,12 @@ export default function CalculatorScreen() {
                 header: () => <Header title={language.t('_toolsCalcTitle')} />
             }} />
 
-            <ScrollView contentContainerStyle={styles.scrollContent}>
+            <ScrollView
+                contentContainerStyle={[
+                    styles.scrollContent,
+                    { paddingBottom: Math.max(insets.bottom, 20) + 20 }
+                ]}
+            >
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
                         <View style={[styles.iconBox, { backgroundColor: '#e8f4fd' }]}>
@@ -122,7 +129,6 @@ export default function CalculatorScreen() {
                         )}
                     </View>
                 </View>
-                <View style={{height: 40}} />
             </ScrollView>
         </KeyboardAvoidingView>
     );

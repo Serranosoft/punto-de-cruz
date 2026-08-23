@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, View, TouchableOpacity, Text, ScrollView } from "react-native";
+import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, ScrollView, useWindowDimensions } from "react-native";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Stack } from "expo-router";
 import ViewShot from "react-native-view-shot";
@@ -6,27 +6,164 @@ import { WebView } from 'react-native-webview';
 import { convertToPdf, requestPermissions } from "../src/utils/media";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
-import Constants from "expo-constants";
 import { AdsContext } from "../src/utils/AdsContext";
 import { Feather } from '@expo/vector-icons';
 import { AchievementsContext } from '../src/utils/AchievementsContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const width = Dimensions.get("screen").width;
+const CONVERSION_STARTED_MESSAGE = "conversionStarted";
 
-const MyWebComponent = ({ setColors, webviewKey, setShowOpenAd }) => {
+const injectedConverterStyles = `
+    (function () {
+        if (!document.getElementById('cross-stitch-app-styles')) {
+            const style = document.createElement('style');
+            style.id = 'cross-stitch-app-styles';
+            style.textContent = \`
+                html, body {
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                    overflow-x: hidden;
+                    background: #fff;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                }
+
+                section,
+                section > div,
+                .toolbar,
+                .content {
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                }
+
+                .toolbar {
+                    justify-content: stretch;
+                    align-content: start;
+                    gap: 16px;
+                    margin: 0;
+                    padding: 20px;
+                }
+
+                .toolbar div,
+                .toolbar .column,
+                .toolbar .row {
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                }
+
+                .toolbar label {
+                    min-width: 0;
+                    max-width: 100%;
+                    font-size: 14px;
+                    line-height: 20px;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                }
+
+                .toolbar .row label {
+                    flex: 1;
+                }
+
+                .toolbar button,
+                .toolbar select {
+                    display: block;
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                    min-height: 48px;
+                    margin: 0;
+                    border-radius: 12px;
+                    font-size: 16px;
+                    line-height: 22px;
+                }
+
+                .toolbar button {
+                    padding: 12px 16px;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                }
+
+                .toolbar select {
+                    padding: 10px 42px 10px 14px;
+                }
+
+                img,
+                svg,
+                #colors {
+                    max-width: 100%;
+                }
+
+                #colors {
+                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                    gap: 10px;
+                    padding: 0 12px 12px;
+                }
+
+                #colors div {
+                    min-width: 0;
+                    height: 72px;
+                }
+
+                @media (max-width: 340px) {
+                    .toolbar {
+                        gap: 12px;
+                        padding: 16px;
+                    }
+
+                    .toolbar label {
+                        font-size: 13px;
+                        line-height: 18px;
+                    }
+                }
+            \`;
+            document.head.appendChild(style);
+        }
+
+        if (!window.__crossStitchLoadingListenerAdded) {
+            window.__crossStitchLoadingListenerAdded = true;
+            window.addEventListener('fileOk', function () {
+                if (window.ReactNativeWebView) {
+                    window.ReactNativeWebView.postMessage('${CONVERSION_STARTED_MESSAGE}');
+                }
+            });
+        }
+
+        true;
+    })();
+`;
+
+const MyWebComponent = ({ setColors, webviewKey, setShowOpenAd, setIsPageLoading, setIsConverting }) => {
     return (
         <WebView
             key={webviewKey}
             source={{ uri: 'https://conversor-patron-de-cruz.vercel.app/' }}
-            style={{ width: (width), flex: 1 }}
+            style={styles.webView}
+            injectedJavaScript={injectedConverterStyles}
             setSupportMultipleWindows={false}
+            onLoadStart={() => setIsPageLoading(true)}
+            onLoadEnd={() => setIsPageLoading(false)}
+            onError={() => {
+                setIsPageLoading(false);
+                setIsConverting(false);
+            }}
+            onHttpError={() => {
+                setIsPageLoading(false);
+                setIsConverting(false);
+            }}
             onMessage={(event) => {
-                if (event.nativeEvent.data === "keepAlive") {
-                    console.log("keep alive");
+                const message = event.nativeEvent.data;
+
+                if (message === "keepAlive") {
+                    return;
+                } else if (message === CONVERSION_STARTED_MESSAGE) {
+                    setIsConverting(true);
                 } else {
                     try {
                         setShowOpenAd(false);
-                        setColors(JSON.parse(event.nativeEvent.data));
+                        setColors(JSON.parse(message));
+                        setIsConverting(false);
                     } catch (e) {
                         console.error('onMessage parse error:', e);
                     }
@@ -40,6 +177,8 @@ export default function Converter() {
     const { language } = useContext(LangContext);
     const { setShowOpenAd } = useContext(AdsContext);
     const { unlockAchievement } = useContext(AchievementsContext);
+    const insets = useSafeAreaInsets();
+    const { width: screenWidth } = useWindowDimensions();
 
     useEffect(() => {
         setShowOpenAd(false);
@@ -48,6 +187,9 @@ export default function Converter() {
     const [webviewKey, setWebviewKey] = useState(1);
     const [colors, setColors] = useState(null);
     const [renderColors, setRenderColors] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(true);
+    const [isConverting, setIsConverting] = useState(false);
+    const isCompact = screenWidth < 360;
 
     const ref = useRef();
 
@@ -72,15 +214,33 @@ export default function Converter() {
                             </ScrollView>
                         </View>
                     ) : (
-                        <MyWebComponent {...{ setColors, webviewKey, setShowOpenAd }} />
+                        <MyWebComponent {...{
+                            setColors,
+                            webviewKey,
+                            setShowOpenAd,
+                            setIsPageLoading,
+                            setIsConverting
+                        }} />
                     )}
                 </ViewShot>
+
+                {(isPageLoading || isConverting) && (
+                    <View style={styles.loadingOverlay}>
+                        <ActivityIndicator size="large" color="#d35400" />
+                        <Text accessibilityLiveRegion="polite" style={styles.loadingText}>
+                            {isConverting ? language.t('_convLoadingPattern') : language.t('_convLoadingTool')}
+                        </Text>
+                    </View>
+                )}
             </View>
 
             {/* Bottom Controls Panel */}
             {colors && (
-                <View style={styles.controlsContainer}>
-                    <View style={styles.actionsRow}>
+                <View style={[
+                    styles.controlsContainer,
+                    { paddingBottom: Math.max(insets.bottom, 20) }
+                ]}>
+                    <View style={[styles.actionsRow, isCompact && styles.controlsRowCompact]}>
                         <TouchableOpacity 
                             style={[styles.actionBtn, renderColors && styles.actionBtnDisabled]} 
                             disabled={renderColors}
@@ -110,7 +270,7 @@ export default function Converter() {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.secondaryRow}>
+                    <View style={[styles.secondaryRow, isCompact && styles.controlsRowCompact]}>
                         <TouchableOpacity 
                             style={styles.outlineBtn}
                             onPress={() => setRenderColors(!renderColors)}
@@ -125,6 +285,8 @@ export default function Converter() {
                                 setWebviewKey((key) => key + 1);
                                 setColors(null); 
                                 setRenderColors(false);
+                                setIsPageLoading(true);
+                                setIsConverting(false);
                             }}
                         >
                             <Feather name="refresh-cw" size={18} color="#e74c3c" />
@@ -141,24 +303,45 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#f8f9fa",
-        paddingTop: Constants.statusBarHeight + 64,
     },
     contentWrapper: {
         flex: 1,
-        borderRadius: 16,
+        borderRadius: 20,
         overflow: 'hidden',
-        marginHorizontal: 16,
-        marginBottom: 16,
+        margin: 20,
         backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#e1e3e8',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
-        elevation: 2,
+        elevation: 3,
     },
     shotContainer: {
         flex: 1,
         backgroundColor: "#fff"
+    },
+    webView: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: '#fff',
+    },
+    loadingOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 12,
+        padding: 24,
+        backgroundColor: 'rgba(255, 255, 255, 0.94)',
+    },
+    loadingText: {
+        maxWidth: 240,
+        fontFamily: 'poppins-medium',
+        color: '#555',
+        fontSize: 14,
+        lineHeight: 20,
+        textAlign: 'center',
     },
     colorsView: {
         flex: 1,
@@ -171,7 +354,6 @@ const styles = StyleSheet.create({
     },
     controlsContainer: {
         paddingHorizontal: 20,
-        paddingBottom: 32,
         backgroundColor: '#f8f9fa',
     },
     actionsRow: {
@@ -181,6 +363,7 @@ const styles = StyleSheet.create({
     },
     actionBtn: {
         flex: 1,
+        minWidth: 0,
         backgroundColor: '#d35400',
         borderRadius: 12,
         flexDirection: 'row',
@@ -193,9 +376,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#e1e3e8',
     },
     actionText: {
+        flexShrink: 1,
         fontFamily: 'poppins-medium',
         color: '#fff',
         fontSize: 14,
+        textAlign: 'center',
     },
     secondaryRow: {
         flexDirection: 'row',
@@ -203,6 +388,7 @@ const styles = StyleSheet.create({
     },
     outlineBtn: {
         flex: 1,
+        minWidth: 0,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -214,8 +400,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     outlineText: {
+        flexShrink: 1,
         fontFamily: 'poppins-medium',
         color: '#d35400',
         fontSize: 13,
+        textAlign: 'center',
+    },
+    controlsRowCompact: {
+        flexDirection: 'column',
     }
 })

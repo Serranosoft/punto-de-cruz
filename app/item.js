@@ -6,16 +6,31 @@ import Progress from "../src/layout/item/progress";
 import Card from "../src/layout/item/Card";
 import { ui } from "../src/utils/styles";
 import Actions from "../src/layout/item/actions";
-import Button from "../src/components/button";
 import { LangContext } from "../src/utils/LangContext";
 import Header from "../src/components/header";
-import Constants from "expo-constants";
 import { AdsContext } from "../src/utils/AdsContext";
-import { bannerId } from "../src/utils/constants";
-import { BannerAd, BannerAdSize } from "react-native-google-mobile-ads";
 import { AchievementsContext } from '../src/utils/AchievementsContext';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AdBanner from "../src/components/AdBanner";
 
 import PdfDownload from "../src/layout/item/PdfDownload";
+import { getPatternImages } from "../src/utils/pattern-resources";
+
+const PDF_UPLOAD_FOLDERS = {
+    'bebe-chico': '2026/08',
+    'bebe-chica': '2026/08',
+    'bebe-recien-nacido': '2026/08',
+    'conjuntos-naturaleza': '2026/08',
+    'modernos-noche-estrellada': '2026/08',
+    'marcapaginas-floral': '2026/08',
+};
+
+const slugify = (value = '') => value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-');
 
 export default function Item() {
 
@@ -23,8 +38,9 @@ export default function Item() {
     const { category, subcategory, categoryFetch, subcategoryFetch, steps, image } = params;
     const stepsNum = Number(steps);
     const { language } = useContext(LangContext);
-    const { adsLoaded, setAdTrigger } = useContext(AdsContext);
+    const { setAdTrigger } = useContext(AdsContext);
     const { unlockAchievement } = useContext(AchievementsContext);
+    const insets = useSafeAreaInsets();
     const [images, setImages] = useState([]);
     const [current, setCurrent] = useState(0);
 
@@ -56,7 +72,14 @@ export default function Item() {
         }
 
         // Recuperar todas las imagenes de cloudinary con la tag category+subcategory
-        const tag = `${categoryFetch.toLowerCase()}-${subcategoryFetch.toLowerCase().split(" ").join("-")}`;
+        const tag = `${slugify(categoryFetch)}-${slugify(subcategoryFetch)}`;
+        const configuredImages = getPatternImages(tag);
+
+        if (configuredImages.length > 0) {
+            setImages(configuredImages);
+            return;
+        }
+
         fetchResourcesList(tag);
     }, [categoryFetch, subcategoryFetch])
 
@@ -96,11 +119,13 @@ export default function Item() {
             console.error('handleDownload: categoryFetch o subcategoryFetch faltantes');
             return;
         }
-        router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/2024/12/patron-${categoryFetch.toLowerCase().replaceAll(" ", "-")}-${subcategoryFetch.toLowerCase().replaceAll(" ", "-")}.pdf`);
+        const patternSlug = `${slugify(categoryFetch)}-${slugify(subcategoryFetch)}`;
+        const uploadFolder = PDF_UPLOAD_FOLDERS[patternSlug] || '2024/12';
+        router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/${uploadFolder}/patron-${patternSlug}.pdf`);
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { paddingBottom: Math.max(insets.bottom, 16) }]}>
             <Stack.Screen options={{ header: () => <Header title={`${category} / ${subcategory}`} /> }} />
             <View style={styles.wrapper}>
                 {isLastStep ? (
@@ -117,11 +142,7 @@ export default function Item() {
                     </>
                 )}
 
-                {adsLoaded && (
-                    <View style={styles.adContainer}>
-                        <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />
-                    </View>
-                )}
+                <AdBanner placement="pattern" embedded />
 
                 <Actions />
                 <Progress current={(current + 1)} qty={steps} setCurrent={setCurrent} setAdTrigger={setAdTrigger} />
@@ -134,7 +155,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 0,
-        paddingBottom: 16,
         backgroundColor: "#fff"
     },
     wrapper: {
@@ -150,9 +170,4 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         paddingHorizontal: 16,
     },
-    adContainer: {
-        width: '100%',
-        alignItems: 'center',
-        paddingVertical: 10,
-    }
 })

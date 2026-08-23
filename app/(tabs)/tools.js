@@ -2,17 +2,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AdsContext } from '../../src/utils/AdsContext';
 import { LangContext } from '../../src/utils/LangContext';
 import { useContext } from 'react';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { bannerId } from '../../src/utils/constants';
+import AdBanner from '../../src/components/AdBanner';
 
 export default function ToolsHub() {
     const insets = useSafeAreaInsets();
     const router = useRouter();
     const { language } = useContext(LangContext);
-    const { adsLoaded } = useContext(AdsContext);
 
     const tools = [
         {
@@ -89,7 +86,7 @@ export default function ToolsHub() {
                     ))}
                 </View>
             </ScrollView>
-            {adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />}
+            <AdBanner placement="tools" />
 
         </View>
     );

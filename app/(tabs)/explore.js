@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useContext } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather } from '@expo/vector-icons';
 import { LangContext } from '../../src/utils/LangContext';
@@ -7,9 +7,7 @@ import { content } from '../../src/utils/data';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { bannerId } from '../../src/utils/constants';
-import { AdsContext } from '../../src/utils/AdsContext';
+import AdBanner from '../../src/components/AdBanner';
 
 const PatternCard = React.memo(({ item, onPress }) => {
     // Determine difficulty badge roughly by steps
@@ -32,6 +30,11 @@ const PatternCard = React.memo(({ item, onPress }) => {
                 contentFit="cover"
                 transition={200}
             />
+            {item.isNew && (
+                <View style={styles.cardNewBadge}>
+                    <Text style={styles.cardNewBadgeText}>✨ {language.t("_labelNew")}</Text>
+                </View>
+            )}
             <View style={styles.cardInfo}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{item.name}</Text>
                 <View style={styles.badgeRow}>
@@ -46,11 +49,11 @@ const PatternCard = React.memo(({ item, onPress }) => {
 });
 
 const ALL_CATEGORY = 'all_patterns';
+const FEATURED_CATEGORY_ORDER = ['Conjuntos', 'Marcapaginas'];
 
 export default function Explore() {
     const insets = useSafeAreaInsets();
     const { language } = useContext(LangContext);
-    const { adsLoaded } = useContext(AdsContext);
 
     const router = useRouter();
 
@@ -75,10 +78,20 @@ export default function Explore() {
     }, [allCategories]);
 
     // categories for pills
-    const pillCategories = useMemo(() => [
-        { id: ALL_CATEGORY, name: language.t("_labelAll"), isNew: false },
-        ...allCategories.map(c => ({ id: c.fetch, name: c.name, isNew: c.isNew }))
-    ], [allCategories, language, language.locale]);
+    const pillCategories = useMemo(() => {
+        const orderedCategories = [...allCategories].sort((a, b) => {
+            const aIndex = FEATURED_CATEGORY_ORDER.indexOf(a.fetch);
+            const bIndex = FEATURED_CATEGORY_ORDER.indexOf(b.fetch);
+            const aOrder = aIndex === -1 ? FEATURED_CATEGORY_ORDER.length : aIndex;
+            const bOrder = bIndex === -1 ? FEATURED_CATEGORY_ORDER.length : bIndex;
+            return aOrder - bOrder;
+        });
+
+        return [
+            { id: ALL_CATEGORY, name: language.t("_labelAll"), isNew: false },
+            ...orderedCategories.map(c => ({ id: c.fetch, name: c.name, isNew: c.isNew }))
+        ];
+    }, [allCategories, language, language.locale]);
 
     // Filter logic
     const filteredPatterns = useMemo(() => {
@@ -180,7 +193,7 @@ export default function Explore() {
 
             <FlatList
                 data={filteredPatterns}
-                keyExtractor={(item) => `${item.categoryFetch}-${item.fetch}`}
+                keyExtractor={(item) => `${item.parentCategoryFetch}-${item.fetch}`}
                 renderItem={renderItem}
                 numColumns={2}
                 contentContainerStyle={styles.gridContent}
@@ -190,7 +203,7 @@ export default function Explore() {
                 maxToRenderPerBatch={10}
                 windowSize={5}
             />
-            {adsLoaded && <BannerAd unitId={bannerId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{}} />}
+            <AdBanner placement="explore" />
 
         </View>
     );
@@ -291,6 +304,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 16,
         overflow: 'hidden',
+        position: 'relative',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -301,6 +315,28 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 140,
         backgroundColor: '#e1e1e1',
+    },
+    cardNewBadge: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: '#d35400',
+        paddingHorizontal: 9,
+        paddingVertical: 5,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#fff',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.18,
+        shadowRadius: 3,
+    },
+    cardNewBadgeText: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'poppins-bold',
+        textTransform: 'uppercase',
     },
     cardInfo: {
         padding: 12,

@@ -5,21 +5,39 @@ import LangList from "../src/components/lang-list";
 import { LangContext } from "../src/utils/LangContext";
 import { Stack } from "expo-router";
 import Header from "../src/components/header";
-import Constants from "expo-constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { AdsContext } from "../src/utils/AdsContext";
+import Button from "../src/components/button";
 
 export default function Settings() {
 
     const { language } = useContext(LangContext);
+    const { privacyOptionsRequired, showPrivacyOptions } = useContext(AdsContext);
+    const insets = useSafeAreaInsets();
 
     return (
         <View style={[layout.flex, padding.bigHorizontal, { paddingTop: 0, backgroundColor: "#fff" }]}>
             <Stack.Screen options={{ header: () => <Header title={language.t("_settingsTitle")} /> }} />
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 16) }}
+            >
                 <View style={styles.box}>
                     <Text style={[ui.h4, ui.black]}>{language.t("_settingsApp")}</Text>
                     <Text style={[ui.text, ui.black]}>{language.t("_settingsLang")}</Text>
                     <LangList />
                 </View>
+                {privacyOptionsRequired && (
+                    <View style={styles.privacyBox}>
+                        <Text style={[ui.h4, ui.black]}>{language.t("_settingsPrivacy")}</Text>
+                        <Button
+                            text={language.t("_settingsPrivacy")}
+                            onClick={() => showPrivacyOptions().catch((error) => {
+                                console.warn("[ads] privacy options could not be shown", error);
+                            })}
+                        />
+                    </View>
+                )}
             </ScrollView>
         </View>
     )
@@ -53,6 +71,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         borderRadius: 8,
         marginVertical: 16
+    },
+
+    privacyBox: {
+        gap: 12,
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 8,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: "#e5e5e5",
+        backgroundColor: "#fff",
     },
 
     typoItem: {
