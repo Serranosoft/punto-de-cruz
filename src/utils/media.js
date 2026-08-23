@@ -1,13 +1,11 @@
 import { Alert, Platform, ToastAndroid } from "react-native";
 import * as MediaLibrary from 'expo-media-library';
 import * as Print from 'expo-print';
-import * as FileSystem from 'expo-file-system';
+import { File } from 'expo-file-system';
 import { shareAsync } from 'expo-sharing';
 
 export async function convertToPdf(image) {
-    const base64Image = await FileSystem.readAsStringAsync(image, {
-        encoding: FileSystem.EncodingType.Base64,
-    });
+    const base64Image = await new File(image).base64();
     const html = `
                     <html>
                       <head>
@@ -37,14 +35,14 @@ export async function requestPermissions(conversion, messages) {
             if (Platform.OS === "android") {
                 ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
             } else {
-                Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+                Alert.alert(messages.PERMISSION_DENIED);
             }
         }
     } catch (error) {
         if (Platform.OS === "android") {
             ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         } else {
-            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+            Alert.alert(messages.PERMISSION_DENIED);
         }
     }
 }
@@ -62,14 +60,14 @@ async function save(conversion, messages) {
         if (Platform.OS === "android") {
             ToastAndroid.showWithGravityAndOffset(messages.SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         } else {
-            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+            Alert.alert(messages.SUCCESS);
         }
 
     } catch (error) {
         if (Platform.OS === "android") {
             ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         } else {
-            Alert.alert("No tengo permisos para acceder a la galería de su dispositivo");
+            Alert.alert(messages.PERMISSION_DENIED);
         }
     }
 }

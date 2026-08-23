@@ -203,9 +203,23 @@ export default function Converter() {
         <View style={styles.container}>
             <Stack.Screen options={{ header: () => <Header title={language.t("_toolsConvTitle")} /> }} />
             
-            <View style={styles.contentWrapper}>
+            <View style={[
+                styles.contentWrapper,
+                !colors && [
+                    styles.initialContentWrapper,
+                    isCompact && styles.initialContentWrapperCompact
+                ]
+            ]}>
                 <ViewShot ref={ref} options={{ fileName: "punto-de-cruz-colores", format: "jpg", quality: 0.9 }} style={styles.shotContainer}>
-                    {renderColors ? (
+                    <MyWebComponent {...{
+                        setColors,
+                        webviewKey,
+                        setShowOpenAd,
+                        setIsPageLoading,
+                        setIsConverting
+                    }} />
+
+                    {renderColors && (
                         <View style={styles.colorsView}>
                             <ScrollView contentContainerStyle={styles.colorsGrid}>
                                 {colors && colors.map((color, idx) => (
@@ -213,14 +227,6 @@ export default function Converter() {
                                 ))}
                             </ScrollView>
                         </View>
-                    ) : (
-                        <MyWebComponent {...{
-                            setColors,
-                            webviewKey,
-                            setShowOpenAd,
-                            setIsPageLoading,
-                            setIsConverting
-                        }} />
                     )}
                 </ViewShot>
 
@@ -318,6 +324,13 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 3,
     },
+    initialContentWrapper: {
+        flex: 0,
+        height: 280,
+    },
+    initialContentWrapperCompact: {
+        height: 300,
+    },
     shotContainer: {
         flex: 1,
         backgroundColor: "#fff"
@@ -344,8 +357,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     colorsView: {
-        flex: 1,
+        ...StyleSheet.absoluteFillObject,
         padding: 16,
+        backgroundColor: '#fff',
     },
     colorsGrid: {
         flexDirection: 'row',
