@@ -182,7 +182,8 @@ export default function Converter() {
 
     useEffect(() => {
         setShowOpenAd(false);
-    }, [])
+        return () => setShowOpenAd(true);
+    }, [setShowOpenAd])
 
     const [webviewKey, setWebviewKey] = useState(1);
     const [colors, setColors] = useState(null);

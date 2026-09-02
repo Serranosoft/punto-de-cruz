@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Linking, StyleSheet, Text, View } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Progress from "../src/layout/item/progress";
@@ -121,7 +121,8 @@ export default function Item() {
         }
         const patternSlug = `${slugify(categoryFetch)}-${slugify(subcategoryFetch)}`;
         const uploadFolder = PDF_UPLOAD_FOLDERS[patternSlug] || '2024/12';
-        router.navigate(`https://mollydigital.manu-scholz.com/wp-content/uploads/${uploadFolder}/patron-${patternSlug}.pdf`);
+        Linking.openURL(`https://mollydigital.manu-scholz.com/wp-content/uploads/${uploadFolder}/patron-${patternSlug}.pdf`)
+            .catch((error) => console.error('handleDownload: no se pudo abrir el PDF', error));
     };
 
     return (

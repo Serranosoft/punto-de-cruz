@@ -21,35 +21,38 @@ export async function convertToPdf(image) {
 
     const { uri } = await Print.printToFileAsync({ html });
 
-    await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+    await shareAsync(uri, { UTI: 'com.adobe.pdf', mimeType: 'application/pdf' });
 };
 
 
 /** Encargado de solicitar los permisos necesarios para almacenar el resultado en la galería del dispositivo */
 export async function requestPermissions(conversion, messages) {
     try {
-        const { status } = await MediaLibrary.requestPermissionsAsync(false, ["photo"]);
+        // iOS only needs add-only access here. Requesting read access exposes the
+        // user's whole library and prevents the write-only save flow from working
+        // as intended when access is limited.
+        const writeOnly = Platform.OS === "ios";
+        const { status } = await MediaLibrary.requestPermissionsAsync(writeOnly, ["photo"]);
         if (status === "granted") {
-            save(conversion, messages);
+            await save(conversion, messages);
         } else {
-            if (Platform.OS === "android") {
-                ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-            } else {
-                Alert.alert(messages.PERMISSION_DENIED);
-            }
+            showMessage(messages.PERMISSION_DENIED);
         }
     } catch (error) {
-        if (Platform.OS === "android") {
-            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-        } else {
-            Alert.alert(messages.PERMISSION_DENIED);
-        }
+        console.warn("Could not request media-library permission", error);
+        showMessage(messages.PERMISSION_DENIED);
     }
 }
 
 /** Almacenar en galería */
 async function save(conversion, messages) {
     try {
+        if (Platform.OS === "ios") {
+            await MediaLibrary.saveToLibraryAsync(conversion);
+            showMessage(messages.SUCCESS);
+            return;
+        }
+
         const asset = await MediaLibrary.createAssetAsync(conversion);
         let album = await MediaLibrary.getAlbumAsync(messages.ALBUM_NAME);
         if (!album) {
@@ -57,17 +60,18 @@ async function save(conversion, messages) {
         } else {
             await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
         }
-        if (Platform.OS === "android") {
-            ToastAndroid.showWithGravityAndOffset(messages.SUCCESS, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-        } else {
-            Alert.alert(messages.SUCCESS);
-        }
+        showMessage(messages.SUCCESS);
 
     } catch (error) {
-        if (Platform.OS === "android") {
-            ToastAndroid.showWithGravityAndOffset(messages.PERMISSION_DENIED, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-        } else {
-            Alert.alert(messages.PERMISSION_DENIED);
-        }
+        console.warn("Could not save media to the library", error);
+        showMessage(messages.PERMISSION_DENIED);
+    }
+}
+
+function showMessage(message) {
+    if (Platform.OS === "android") {
+        ToastAndroid.showWithGravityAndOffset(message, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+    } else {
+        Alert.alert(message);
     }
 }
