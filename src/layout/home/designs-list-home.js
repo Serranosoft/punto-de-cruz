@@ -12,7 +12,7 @@ import { AdsContext } from "../../utils/AdsContext";
 export default function DesignsListHome({ setAdTrigger }) {
 
     const { language } = useContext(LangContext);
-    const { adsLoaded } = useContext(AdsContext);
+    const { adRequestOptions, adsLoaded } = useContext(AdsContext);
 
     const adIndexes = [1, 3, 6]
 
@@ -27,7 +27,7 @@ export default function DesignsListHome({ setAdTrigger }) {
                                 <>
                                     {adIndexes.includes(i) && adsLoaded &&
                                         <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                            <BannerAd unitId={bannerId} size={BannerAdSize.LARGE_BANNER} requestOptions={{}} />
+                                            <BannerAd unitId={bannerId} size={BannerAdSize.LARGE_BANNER} requestOptions={adRequestOptions} />
                                         </View>
                                     }
                                     <View key={i} style={padding.mediumVertical}>

@@ -35,6 +35,7 @@ export default function Layout() {
 
     // Gestión de anuncios
     const [adsLoaded, setAdsLoaded] = useState(false);
+    const [adRequestOptions, setAdRequestOptions] = useState(null);
     const [adTrigger, setAdTrigger] = useState(0);
     const [privacyOptionsRequired, setPrivacyOptionsRequired] = useState(false);
     const adsHandlerRef = useRef(null);
@@ -98,10 +99,11 @@ export default function Layout() {
     const adsContextValue = useMemo(() => ({
         setAdTrigger,
         adsLoaded,
+        adRequestOptions,
         privacyOptionsRequired,
         showPrivacyOptions,
         setShowOpenAd,
-    }), [adsLoaded, privacyOptionsRequired, setShowOpenAd, showPrivacyOptions]);
+    }), [adRequestOptions, adsLoaded, privacyOptionsRequired, setShowOpenAd, showPrivacyOptions]);
 
     return (
         <SafeAreaProvider>
@@ -111,6 +113,8 @@ export default function Layout() {
                         <AchievementsProvider>
                             <AdsHandler
                                 ref={adsHandlerRef}
+                                adRequestOptions={adRequestOptions}
+                                setAdRequestOptions={setAdRequestOptions}
                                 setAdsLoaded={setAdsLoaded}
                                 setPrivacyOptionsRequired={setPrivacyOptionsRequired}
                             />

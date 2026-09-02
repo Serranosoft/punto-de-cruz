@@ -31,10 +31,14 @@ const AdsHandler = forwardRef((props, ref) => {
         revenue: interstitialRevenue,
         load: loadInterstitial,
         show: showInterstitial,
-    } = useInterstitialAd(intersitialId);
+    } = useInterstitialAd(
+        props.adRequestOptions ? intersitialId : null,
+        props.adRequestOptions ?? {}
+    );
 
     const isMobileAdsStartedRef = useRef(false);
     const adsReadyRef = useRef(false);
+    const adRequestOptionsRef = useRef(null);
     const loadInterstitialRef = useRef(loadInterstitial);
     const interstitialRetryRef = useRef(null);
     const lastFullScreenAtRef = useRef(0);
@@ -123,6 +127,41 @@ const AdsHandler = forwardRef((props, ref) => {
         props.setPrivacyOptionsRequired(isRequired);
     }
 
+    async function syncAdRequestOptionsWithConsent() {
+        let requestNonPersonalizedAdsOnly = true;
+
+        try {
+            const gdprApplies = await AdsConsent.getGdprApplies();
+
+            if (!gdprApplies) {
+                requestNonPersonalizedAdsOnly = false;
+            } else {
+                const { selectPersonalisedAds } = await AdsConsent.getUserChoices();
+                requestNonPersonalizedAdsOnly = !selectPersonalisedAds;
+            }
+        } catch (error) {
+            console.warn("[ads] could not read consent choices; using non-personalized ads", error);
+        }
+
+        const previousOptions = adRequestOptionsRef.current;
+        const optionsChanged = previousOptions?.requestNonPersonalizedAdsOnly !==
+            requestNonPersonalizedAdsOnly;
+        const nextOptions = { requestNonPersonalizedAdsOnly };
+
+        adRequestOptionsRef.current = nextOptions;
+        props.setAdRequestOptions((currentOptions) => {
+            if (
+                currentOptions?.requestNonPersonalizedAdsOnly ===
+                requestNonPersonalizedAdsOnly
+            ) {
+                return currentOptions;
+            }
+            return nextOptions;
+        });
+
+        return optionsChanged;
+    }
+
     async function requestTrackingIfNeeded() {
         try {
             const { status } = await getTrackingPermissionsAsync();
@@ -142,11 +181,16 @@ const AdsHandler = forwardRef((props, ref) => {
             return;
         }
 
+        const requestOptionsChanged = await syncAdRequestOptionsWithConsent();
+
         if (!isMobileAdsStartedRef.current) {
             await MobileAds().initialize();
             isMobileAdsStartedRef.current = true;
             adsReadyRef.current = true;
             createAppOpenAd();
+        } else if (requestOptionsChanged) {
+            adsReadyRef.current = true;
+            replaceAppOpenAd();
         } else {
             adsReadyRef.current = true;
             if (appOpenAdRef.current) {
@@ -157,8 +201,15 @@ const AdsHandler = forwardRef((props, ref) => {
         }
 
         props.setAdsLoaded(true);
-        loadInterstitialRef.current();
     }
+
+    useEffect(() => {
+        if (!props.adRequestOptions || !adsReadyRef.current) {
+            return;
+        }
+
+        loadInterstitialRef.current();
+    }, [props.adRequestOptions, loadInterstitial]);
 
     useEffect(() => {
         if (!isInterstitialClosed || !adsReadyRef.current) {
@@ -229,7 +280,10 @@ const AdsHandler = forwardRef((props, ref) => {
             return;
         }
 
-        const appOpenAd = AppOpenAd.createForAdRequest(loadId);
+        const appOpenAd = AppOpenAd.createForAdRequest(
+            loadId,
+            adRequestOptionsRef.current ?? { requestNonPersonalizedAdsOnly: true }
+        );
         appOpenAdRef.current = appOpenAd;
 
         appOpenSubscriptionsRef.current = [

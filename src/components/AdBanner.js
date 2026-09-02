@@ -10,7 +10,7 @@ import { AdsContext } from "../utils/AdsContext";
 import { getBannerId } from "../utils/constants";
 
 export default function AdBanner({ placement, embedded = false }) {
-    const { adsLoaded } = useContext(AdsContext);
+    const { adRequestOptions, adsLoaded } = useContext(AdsContext);
     const [isFocused, setIsFocused] = useState(false);
     const isFocusedRef = useRef(false);
     const bannerRef = useRef(null);
@@ -42,7 +42,7 @@ export default function AdBanner({ placement, embedded = false }) {
                 ref={bannerRef}
                 unitId={getBannerId(placement)}
                 size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                requestOptions={{}}
+                requestOptions={adRequestOptions}
                 onAdFailedToLoad={(error) => console.warn(`[ads:${placement}] banner load failed`, error)}
                 onAdImpression={() => console.info(`[ads:${placement}] banner impression`)}
                 onPaid={(event) => console.info(`[ads:${placement}] banner revenue`, event)}
