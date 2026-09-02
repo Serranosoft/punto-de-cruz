@@ -97,6 +97,7 @@
     },
     "plugins": [
       "./plugins/with-gradle-memory",
+      "./plugins/with-android-resource-locales",
       "expo-asset",
       [
         "expo-localization",

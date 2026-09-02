@@ -4,6 +4,7 @@ const path = require('node:path');
 const { createRequire } = require('node:module');
 const { transformSync } = require('@babel/core');
 const { I18n } = require('i18n-js');
+const { toAndroidResourceConfiguration } = require('../plugins/with-android-resource-locales');
 
 const root = path.resolve(__dirname, '..');
 const readJson = (file) => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
@@ -55,6 +56,12 @@ assert.deepEqual(
 const config = readJson('app.json').expo;
 const plugin = config.plugins.find((entry) => Array.isArray(entry) && entry[0] === 'expo-localization');
 assert.deepEqual([...plugin[1].supportedLocales].sort(), [...codes].sort(), 'Native supported locales disagree');
+assert.ok(
+    config.plugins.indexOf('./plugins/with-android-resource-locales') < config.plugins.indexOf(plugin),
+    'Android resource locale conversion must run after expo-localization modifies build.gradle'
+);
+assert.equal(toAndroidResourceConfiguration('zh-TW'), 'b+zh+TW', 'Android regional resource qualifier');
+assert.ok(codes.map(toAndroidResourceConfiguration).every((code) => !code.includes('-')), 'Invalid Android resource qualifier');
 const source = translations.en;
 const keys = Object.keys(source).sort();
 const variables = { name: 'PROJECT_TEST', progress: 42, count: 3, total: 10, w: 12, h: 18, code: 310 };
