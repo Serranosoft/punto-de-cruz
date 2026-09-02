@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Ponto de cruz"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Ponto de cruz",
+        "NSCameraUsageDescription": "Permita que a aplicação tire uma fotografia para criar um esquema de ponto de cruz.",
+        "NSPhotoLibraryUsageDescription": "Permita que a aplicação escolha uma fotografia para criar um esquema de ponto de cruz.",
+        "NSPhotoLibraryAddUsageDescription": "Permita que a aplicação guarde os esquemas gerados na sua galeria de fotografias.",
+        "NSUserTrackingUsageDescription": "Este identificador será utilizado para lhe apresentar anúncios personalizados."
+    }
+}

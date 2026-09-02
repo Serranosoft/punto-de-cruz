@@ -3,6 +3,7 @@
   "version": "3.0.1",
   "main": "index.js",
   "scripts": {
+    "check:locales": "node ./build-scripts/check-locales.js",
     "eas-build-pre-install": "node ./build-scripts/prepare-eas-dependencies.js",
     "start": "expo start",
     "android": "expo run:android",

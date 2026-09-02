@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Jahitan Silang"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Jahitan Silang",
+        "NSCameraUsageDescription": "Benarkan apl mengambil foto untuk mencipta corak jahitan silang.",
+        "NSPhotoLibraryUsageDescription": "Benarkan apl memilih foto untuk mencipta corak jahitan silang.",
+        "NSPhotoLibraryAddUsageDescription": "Benarkan apl menyimpan corak yang dijana ke galeri foto anda.",
+        "NSUserTrackingUsageDescription": "Pengecam ini akan digunakan untuk menghantar iklan yang diperibadikan kepada anda."
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "ক্রস স্টিচ"
+    },
+    "ios": {
+        "CFBundleDisplayName": "ক্রস স্টিচ",
+        "NSCameraUsageDescription": "একটি ক্রস স্টিচ প্যাটার্ন তৈরি করতে অ্যাপটিকে একটি ফটো তোলার অনুমতি দিন।",
+        "NSPhotoLibraryUsageDescription": "একটি ক্রস স্টিচ প্যাটার্ন তৈরি করতে অ্যাপটিকে একটি ছবি বেছে নেওয়ার অনুমতি দিন।",
+        "NSPhotoLibraryAddUsageDescription": "অ্যাপটিকে আপনার ফটো গ্যালারিতে জেনারেট করা প্যাটার্ন সংরক্ষণ করার অনুমতি দিন।",
+        "NSUserTrackingUsageDescription": "এই শনাক্তকারী আপনাকে ব্যক্তিগতকৃত বিজ্ঞাপন সরবরাহ করতে ব্যবহার করা হবে।"
+    }
+}

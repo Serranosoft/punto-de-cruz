@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Ristipisto"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Ristipisto",
+        "NSCameraUsageDescription": "Anna sovelluksen ottaa valokuva ristipistokuvion luomiseksi.",
+        "NSPhotoLibraryUsageDescription": "Anna sovelluksen valita valokuva ristipistokuvion luomiseksi.",
+        "NSPhotoLibraryAddUsageDescription": "Anna sovelluksen tallentaa luodut kuviot kuvagalleriaasi.",
+        "NSUserTrackingUsageDescription": "Tätä tunnistetta käytetään räätälöityjen mainosten toimittamiseen sinulle."
+    }
+}

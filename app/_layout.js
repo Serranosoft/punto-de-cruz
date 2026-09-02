@@ -8,6 +8,7 @@ import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
 import { translations } from "../src/utils/localizations";
+import { resolveLanguage } from "../src/utils/supported-languages";
 import { getLocales } from "expo-localization";
 import { AdsContext } from "../src/utils/AdsContext";
 import AdsHandler from "../src/components/AdsHandler";
@@ -22,19 +23,15 @@ export default function Layout() {
 
     // Idioma
     const [langRdy, setLangRdy] = useState(false);
-    const locales = getLocales();
-    const [language, setLanguage] = useState(locales?.[0]?.languageCode || "es");
+    const [language, setLanguage] = useState(() => resolveLanguage(null, getLocales()));
 
     const i18n = useMemo(() => {
         const instance = new I18n(translations);
         instance.enableFallback = true;
         instance.defaultLocale = "es";
+        instance.locale = language;
         return instance;
-    }, []);
-
-    if (language) {
-        i18n.locale = language;
-    }
+    }, [language]);
 
     // Gestión de anuncios
     const [adsLoaded, setAdsLoaded] = useState(false);
@@ -65,10 +62,12 @@ export default function Layout() {
     }, [adTrigger, adsLoaded])
 
     async function getUserPreferences() {
-        // Language
-        const language = await AsyncStorage.getItem(userPreferences.LANGUAGE);
-        setLanguage(language || getLocales()?.[0]?.languageCode || "es");
-        setLangRdy(true);
+        try {
+            const savedLanguage = await AsyncStorage.getItem(userPreferences.LANGUAGE);
+            setLanguage(resolveLanguage(savedLanguage, getLocales()));
+        } finally {
+            setLangRdy(true);
+        }
     }
 
     async function configureNotifications() {

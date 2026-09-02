@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Korssting"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Korssting",
+        "NSCameraUsageDescription": "La appen ta et bilde for å lage et korsstingmønster.",
+        "NSPhotoLibraryUsageDescription": "La ​​appen velge et bilde for å lage et korsstingmønster.",
+        "NSPhotoLibraryAddUsageDescription": "La appen lagre genererte mønstre i fotogalleriet ditt.",
+        "NSUserTrackingUsageDescription": "Denne identifikatoren vil bli brukt til å levere personlig tilpassede annonser til deg."
+    }
+}

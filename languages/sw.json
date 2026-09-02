@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Mshono wa Msalaba"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Mshono wa Msalaba",
+        "NSCameraUsageDescription": "Ruhusu programu kupiga picha ili kuunda ruwaza ya mshono wa msalaba.",
+        "NSPhotoLibraryUsageDescription": "Ruhusu programu kuchagua picha ili kuunda ruwaza ya mshono wa msalaba.",
+        "NSPhotoLibraryAddUsageDescription": "Ruhusu programu kuhifadhi ruwaza zilizoundwa kwenye matunzio yako ya picha.",
+        "NSUserTrackingUsageDescription": "Kitambulisho hiki kitatumika kukuletea matangazo maalum."
+    }
+}

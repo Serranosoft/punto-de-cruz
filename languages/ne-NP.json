@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "क्रस स्टिच"
+    },
+    "ios": {
+        "CFBundleDisplayName": "क्रस स्टिच",
+        "NSCameraUsageDescription": "क्रस स्टिच ढाँचा सिर्जना गर्न एपलाई फोटो खिच्न अनुमति दिनुहोस्।",
+        "NSPhotoLibraryUsageDescription": "एपलाई क्रस स्टिच ढाँचा सिर्जना गर्न फोटो छनौट गर्न अनुमति दिनुहोस्।",
+        "NSPhotoLibraryAddUsageDescription": "एपलाई तपाईंको फोटो ग्यालेरीमा उत्पन्न ढाँचाहरू बचत गर्न अनुमति दिनुहोस्।",
+        "NSUserTrackingUsageDescription": "यो पहिचानकर्ता तपाईंलाई व्यक्तिगत विज्ञापनहरू डेलिभर गर्न प्रयोग गरिनेछ।"
+    }
+}

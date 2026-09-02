@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Krížikový steh"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Krížikový steh",
+        "NSCameraUsageDescription": "Povoľte aplikácii odfotiť fotografiu na vytvorenie vzoru krížikovej výšivky.",
+        "NSPhotoLibraryUsageDescription": "Povoľte aplikácii vybrať fotografiu na vytvorenie vzoru krížikovej výšivky.",
+        "NSPhotoLibraryAddUsageDescription": "Povoľte aplikácii uložiť vytvorené vzory do fotogalérie.",
+        "NSUserTrackingUsageDescription": "Tento identifikátor sa použije na doručenie prispôsobených reklám."
+    }
+}

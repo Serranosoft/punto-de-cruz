@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Cross Stitch"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Cross Stitch",
+        "NSCameraUsageDescription": "Payagan ang app na kumuha ng larawan upang lumikha ng cross stitch pattern.",
+        "NSPhotoLibraryUsageDescription": "Payagan ang app na pumili ng isang larawan upang lumikha ng isang cross stitch pattern.",
+        "NSPhotoLibraryAddUsageDescription": "Payagan ang app na i-save ang mga nabuong pattern sa iyong photo gallery.",
+        "NSUserTrackingUsageDescription": "Gagamitin ang identifier na ito upang maghatid ng mga personalized na ad sa iyo."
+    }
+}

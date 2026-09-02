@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "क्रॉस स्टिच"
+    },
+    "ios": {
+        "CFBundleDisplayName": "क्रॉस स्टिच",
+        "NSCameraUsageDescription": "क्रॉस स्टिच पॅटर्न तयार करण्यासाठी ॲपला फोटो घेण्याची अनुमती द्या.",
+        "NSPhotoLibraryUsageDescription": "क्रॉस स्टिच पॅटर्न तयार करण्यासाठी ॲपला फोटो निवडण्याची अनुमती द्या.",
+        "NSPhotoLibraryAddUsageDescription": "तुमच्या फोटो गॅलरीमध्ये व्युत्पन्न केलेले नमुने जतन करण्यासाठी ॲपला अनुमती द्या.",
+        "NSUserTrackingUsageDescription": "हा ओळखकर्ता तुम्हाला वैयक्तिकृत जाहिराती वितरीत करण्यासाठी वापरला जाईल."
+    }
+}

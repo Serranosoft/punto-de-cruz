@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "十字绣"
+    },
+    "ios": {
+        "CFBundleDisplayName": "十字绣",
+        "NSCameraUsageDescription": "允许应用拍照以创建十字绣图案。",
+        "NSPhotoLibraryUsageDescription": "允许应用选择照片来创建十字绣图案。",
+        "NSPhotoLibraryAddUsageDescription": "允许应用程序将生成的图案保存到您的照片库。",
+        "NSUserTrackingUsageDescription": "该标识符将用于向您投放个性化广告。"
+    }
+}

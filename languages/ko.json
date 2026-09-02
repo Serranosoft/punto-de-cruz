@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "십자수"
+    },
+    "ios": {
+        "CFBundleDisplayName": "십자수",
+        "NSCameraUsageDescription": "십자수 도안을 만들 수 있도록 앱의 사진 촬영을 허용합니다.",
+        "NSPhotoLibraryUsageDescription": "십자수 도안을 만들 수 있도록 앱의 사진 선택을 허용합니다.",
+        "NSPhotoLibraryAddUsageDescription": "생성한 도안을 사진 갤러리에 저장하도록 앱을 허용합니다.",
+        "NSUserTrackingUsageDescription": "이 식별자는 귀하에게 개인화된 광고를 전달하는 데 사용됩니다."
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Cusătură în cruce"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Cusătură în cruce",
+        "NSCameraUsageDescription": "Permiteți aplicației să facă o fotografie pentru a crea un model de cusătură în cruce.",
+        "NSPhotoLibraryUsageDescription": "Permiteți aplicației să aleagă o fotografie pentru a crea un model de cusătură în cruce.",
+        "NSPhotoLibraryAddUsageDescription": "Permiteți aplicației să salveze modelele generate în galeria dvs. foto.",
+        "NSUserTrackingUsageDescription": "Acest identificator va fi folosit pentru a vă livra reclame personalizate."
+    }
+}

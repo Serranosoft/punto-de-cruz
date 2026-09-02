@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "ક્રોસ સ્ટીચ"
+    },
+    "ios": {
+        "CFBundleDisplayName": "ક્રોસ સ્ટીચ",
+        "NSCameraUsageDescription": "ક્રોસ સ્ટીચ પેટર્ન બનાવવા માટે એપ્લિકેશનને ફોટો લેવાની મંજૂરી આપો.",
+        "NSPhotoLibraryUsageDescription": "ક્રોસ સ્ટીચ પેટર્ન બનાવવા માટે એપ્લિકેશનને ફોટો પસંદ કરવાની મંજૂરી આપો.",
+        "NSPhotoLibraryAddUsageDescription": "એપ્લિકેશનને તમારી ફોટો ગેલેરીમાં જનરેટ કરેલ પેટર્ન સાચવવાની મંજૂરી આપો.",
+        "NSUserTrackingUsageDescription": "આ ઓળખકર્તાનો ઉપયોગ તમને વ્યક્તિગત જાહેરાતો પહોંચાડવા માટે કરવામાં આવશે."
+    }
+}

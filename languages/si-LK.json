@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "හරස් මැහුම්"
+    },
+    "ios": {
+        "CFBundleDisplayName": "හරස් මැහුම්",
+        "NSCameraUsageDescription": "හරස් මැහුම් රටාවක් සෑදීමට ඡායාරූපයක් ගැනීමට යෙදුමට ඉඩ දෙන්න.",
+        "NSPhotoLibraryUsageDescription": "හරස් මැහුම් රටාවක් සෑදීමට ඡායාරූපයක් තෝරා ගැනීමට යෙදුමට ඉඩ දෙන්න.",
+        "NSPhotoLibraryAddUsageDescription": "ඔබගේ ඡායාරූප ගැලරිය වෙත ජනනය කරන ලද රටා සුරැකීමට යෙදුමට ඉඩ දෙන්න.",
+        "NSUserTrackingUsageDescription": "ඔබට පෞද්ගලීකරණය කළ දැන්වීම් ලබා දීමට මෙම හඳුනාගැනීම භාවිතා කරනු ඇත."
+    }
+}

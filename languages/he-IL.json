@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "תפר צלב"
+    },
+    "ios": {
+        "CFBundleDisplayName": "תפר צלב",
+        "NSCameraUsageDescription": "אפשר לאפליקציה לצלם תמונה כדי ליצור תרשים תפר צלב.",
+        "NSPhotoLibraryUsageDescription": "אפשר לאפליקציה לבחור תמונה כדי ליצור תרשים תפר צלב.",
+        "NSPhotoLibraryAddUsageDescription": "אפשר לאפליקציה לשמור את התרשימים שנוצרו בגלריית התמונות שלך.",
+        "NSUserTrackingUsageDescription": "המזהה הזה ישמש להצגת מודעות מותאמות אישית אליך."
+    }
+}

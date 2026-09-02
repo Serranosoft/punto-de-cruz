@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "十字繡"
+    },
+    "ios": {
+        "CFBundleDisplayName": "十字繡",
+        "NSCameraUsageDescription": "允許應用拍照以創建十字繡圖案。",
+        "NSPhotoLibraryUsageDescription": "允許應用選擇照片來創建十字繡圖案。",
+        "NSPhotoLibraryAddUsageDescription": "允許應用程式將生成的圖案儲存到您的照片庫。",
+        "NSUserTrackingUsageDescription": "此識別碼將用於向您投放個人化廣告。"
+    }
+}

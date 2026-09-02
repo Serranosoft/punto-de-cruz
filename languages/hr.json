@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Križić"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Križić",
+        "NSCameraUsageDescription": "Dopustite aplikaciji da snimi fotografiju za izradu uzorka križnog uboda.",
+        "NSPhotoLibraryUsageDescription": "Dopustite aplikaciji da odabere fotografiju za izradu uzorka križića.",
+        "NSPhotoLibraryAddUsageDescription": "Dopustite aplikaciji da spremi generirane uzorke u vašu fotogaleriju.",
+        "NSUserTrackingUsageDescription": "Ovaj identifikator koristit će se za isporuku prilagođenih oglasa."
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Kruissteek"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Kruissteek",
+        "NSCameraUsageDescription": "Laat die toepassing toe om 'n foto te neem om 'n kruissteekpatroon te skep.",
+        "NSPhotoLibraryUsageDescription": "Laat die toepassing toe om 'n foto te kies om 'n kruissteekpatroon te skep.",
+        "NSPhotoLibraryAddUsageDescription": "Laat die toepassing toe om gegenereerde patrone in jou fotogalery te stoor.",
+        "NSUserTrackingUsageDescription": "Hierdie identifiseerder sal gebruik word om gepersonaliseerde advertensies aan jou te lewer."
+    }
+}

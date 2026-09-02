@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "ครอสติช"
+    },
+    "ios": {
+        "CFBundleDisplayName": "ครอสติช",
+        "NSCameraUsageDescription": "อนุญาตให้แอปถ่ายภาพเพื่อสร้างแบบปักครอสติช",
+        "NSPhotoLibraryUsageDescription": "อนุญาตให้แอปเลือกรูปภาพเพื่อสร้างแบบปักครอสติช",
+        "NSPhotoLibraryAddUsageDescription": "อนุญาตให้แอปบันทึกแบบที่สร้างขึ้นลงในแกลเลอรีรูปภาพของคุณ",
+        "NSUserTrackingUsageDescription": "ตัวระบุนี้จะใช้ในการส่งโฆษณาส่วนบุคคลให้กับคุณ"
+    }
+}

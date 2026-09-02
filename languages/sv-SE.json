@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Korsstygn"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Korsstygn",
+        "NSCameraUsageDescription": "Tillåt appen att ta ett foto för att skapa ett korsstygnsmönster.",
+        "NSPhotoLibraryUsageDescription": "Tillåt appen att välja ett foto för att skapa ett korsstygnsmönster.",
+        "NSPhotoLibraryAddUsageDescription": "Tillåt appen att spara genererade mönster i ditt fotogalleri.",
+        "NSUserTrackingUsageDescription": "Denna identifierare kommer att användas för att leverera personliga annonser till dig."
+    }
+}

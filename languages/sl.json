@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Križni šiv"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Križni šiv",
+        "NSCameraUsageDescription": "Dovolite aplikaciji, da posname fotografijo, da ustvari vzorec križnega šiva.",
+        "NSPhotoLibraryUsageDescription": "Dovolite aplikaciji, da izbere fotografijo za ustvarjanje vzorca križnega šiva.",
+        "NSPhotoLibraryAddUsageDescription": "Dovolite aplikaciji, da shrani ustvarjene vzorce v vašo fotogalerijo.",
+        "NSUserTrackingUsageDescription": "Ta identifikator bo uporabljen za prikazovanje prilagojenih oglasov."
+    }
+}

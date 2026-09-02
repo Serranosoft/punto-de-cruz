@@ -1,34 +1,16 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import LangListItem from "./lang-list-item";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { LangContext } from "../utils/LangContext";
 import { userPreferences } from "../utils/user-preferences";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { supportedLanguages } from "../utils/supported-languages";
 
 export default function LangList() {
 
     const { language, setLanguage } = useContext(LangContext);
-    const [selected, setSelected] = useState(language.locale);
-
-    const languages = [
-        { title: language.t("_langListSpanish"), acronym: "es" },
-        { title: language.t("_langListEnglish"), acronym: "en" },
-        { title: language.t("_langListArabic"), acronym: "ar" },
-        { title: language.t("_langListGerman"), acronym: "de" },
-        { title: language.t("_langListFrench"), acronym: "fr" },
-        { title: language.t("_langListHindi"), acronym: "hi" },
-        { title: language.t("_langListIndonesian"), acronym: "id" },
-        { title: language.t("_langListPortuguese"), acronym: "pt" },
-        { title: language.t("_langListRussian"), acronym: "ru" },
-        { title: language.t("_langListPolish"), acronym: "pl" },
-        { title: language.t("_langListVietnamese"), acronym: "vi" },
-        { title: language.t("_langListTurkish"), acronym: "tr" },
-        { title: language.t("_langListItalian"), acronym: "it" },
-        { title: language.t("_langListFarsi"), acronym: "fa" }
-    ]
 
     async function updateLanguage(acronym) {
-        console.log("LangList - acronym received:", acronym);
         setLanguage(acronym);
         try {
             await AsyncStorage.setItem(userPreferences.LANGUAGE, acronym);
@@ -41,9 +23,9 @@ export default function LangList() {
         <View style={styles.container}>
             <ScrollView style={styles.scroll} nestedScrollEnabled={true}>
                 {
-                    languages.map((lang, index) => {
+                    supportedLanguages.map((lang) => {
                         return (
-                            <LangListItem key={index} title={lang.title} acronym={lang.acronym} updateLanguage={updateLanguage} selected={selected} setSelected={setSelected} />
+                            <LangListItem key={lang.code} nativeName={lang.nativeName} acronym={lang.code} rtl={lang.rtl} updateLanguage={updateLanguage} selected={language.locale} />
                         )
                     })
                 }

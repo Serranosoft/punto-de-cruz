@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "Keresztöltés"
+    },
+    "ios": {
+        "CFBundleDisplayName": "Keresztöltés",
+        "NSCameraUsageDescription": "Engedélyezze az alkalmazás számára, hogy fényképet készítsen keresztszemes minta létrehozásához.",
+        "NSPhotoLibraryUsageDescription": "Engedélyezze az alkalmazásnak, hogy válasszon fényképet keresztszemes minta létrehozásához.",
+        "NSPhotoLibraryAddUsageDescription": "Engedélyezze az alkalmazás számára, hogy a generált mintákat a fotógalériájába mentse.",
+        "NSUserTrackingUsageDescription": "Ezt az azonosítót személyre szabott hirdetések kézbesítésére használjuk fel Önnek."
+    }
+}

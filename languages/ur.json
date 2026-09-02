@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "کراس سلائی"
+    },
+    "ios": {
+        "CFBundleDisplayName": "کراس سلائی",
+        "NSCameraUsageDescription": "کراس سلائی پیٹرن بنانے کے لیے ایپ کو تصویر لینے کی اجازت دیں۔",
+        "NSPhotoLibraryUsageDescription": "کراس سلائی پیٹرن بنانے کے لیے ایپ کو تصویر منتخب کرنے کی اجازت دیں۔",
+        "NSPhotoLibraryAddUsageDescription": "ایپ کو اپنی تصویر گیلری میں تیار کردہ نمونوں کو محفوظ کرنے کی اجازت دیں۔",
+        "NSUserTrackingUsageDescription": "یہ شناخت کنندہ آپ کو ذاتی نوعیت کے اشتہارات فراہم کرنے کے لیے استعمال کیا جائے گا۔"
+    }
+}

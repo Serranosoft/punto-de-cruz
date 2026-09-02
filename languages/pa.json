@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "ਕਰਾਸ ਸਟੀਚ"
+    },
+    "ios": {
+        "CFBundleDisplayName": "ਕਰਾਸ ਸਟੀਚ",
+        "NSCameraUsageDescription": "ਇੱਕ ਕਰਾਸ ਸਟੀਚ ਪੈਟਰਨ ਬਣਾਉਣ ਲਈ ਐਪ ਨੂੰ ਇੱਕ ਫੋਟੋ ਲੈਣ ਦੀ ਆਗਿਆ ਦਿਓ।",
+        "NSPhotoLibraryUsageDescription": "ਇੱਕ ਕਰਾਸ ਸਟੀਚ ਪੈਟਰਨ ਬਣਾਉਣ ਲਈ ਐਪ ਨੂੰ ਇੱਕ ਫੋਟੋ ਚੁਣਨ ਦੀ ਆਗਿਆ ਦਿਓ।",
+        "NSPhotoLibraryAddUsageDescription": "ਐਪ ਨੂੰ ਤੁਹਾਡੀ ਫੋਟੋ ਗੈਲਰੀ ਵਿੱਚ ਤਿਆਰ ਕੀਤੇ ਪੈਟਰਨਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਦੀ ਆਗਿਆ ਦਿਓ।",
+        "NSUserTrackingUsageDescription": "ਇਸ ਪਛਾਣਕਰਤਾ ਦੀ ਵਰਤੋਂ ਤੁਹਾਨੂੰ ਵਿਅਕਤੀਗਤ ਵਿਗਿਆਪਨ ਪ੍ਰਦਾਨ ਕਰਨ ਲਈ ਕੀਤੀ ਜਾਵੇਗੀ।"
+    }
+}

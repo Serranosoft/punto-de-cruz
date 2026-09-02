@@ -1,0 +1,12 @@
+{
+    "android": {
+        "app_name": "クロスステッチ"
+    },
+    "ios": {
+        "CFBundleDisplayName": "クロスステッチ",
+        "NSCameraUsageDescription": "クロスステッチ図案を作成するため、アプリに写真の撮影を許可します。",
+        "NSPhotoLibraryUsageDescription": "クロスステッチ図案を作成するため、アプリに写真の選択を許可します。",
+        "NSPhotoLibraryAddUsageDescription": "作成した図案を写真ライブラリに保存することをアプリに許可します。",
+        "NSUserTrackingUsageDescription": "この識別子は、パーソナライズされた広告を配信するために使用されます。"
+    }
+}
