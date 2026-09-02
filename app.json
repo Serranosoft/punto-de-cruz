@@ -2,7 +2,7 @@
   "expo": {
     "name": "Punto de Cruz",
     "slug": "punto-de-cruz",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "orientation": "portrait",
     "icon": "./assets/icono-punto-de-cruz-movil.png",
     "userInterfaceStyle": "light",
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/icono-punto-de-cruz-movil.png",
         "backgroundColor": "#F7F0EC"
       },
-      "versionCode": 16,
+      "versionCode": 17,
       "package": "com.paulaymanu113.puntodecruz"
     },
     "locales": {
