@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -99,7 +99,7 @@ export default function Profile() {
                     <View style={styles.settingsCard}>
                         <TouchableOpacity 
                             style={styles.settingActionRow}
-                            onPress={() => Linking.openURL('https://mollydigital.manu-scholz.com/politica-de-privacidad-disena-tu-mirada/')}
+                            onPress={() => router.push('/privacy')}
                         >
                             <Feather name="shield" size={20} color="#555" />
                             <Text style={styles.settingLabel}>{language.t('_settingsPrivacy')}</Text>

@@ -38,15 +38,6 @@ export default function ToolsHub() {
             color: '#2ecc71',
             bg: '#eafaf1',
             route: '/stash'
-        },
-        {
-            id: 'guide',
-            title: language.t('_toolsGuideTitle'),
-            description: language.t('_toolsGuideDescription'),
-            icon: 'book',
-            color: '#9b59b6',
-            bg: '#f5eef8',
-            route: null // Próximamente
         }
     ];
 
@@ -73,15 +64,9 @@ export default function ToolsHub() {
                             <Text style={styles.toolTitle}>{tool.title}</Text>
                             <Text style={styles.toolDescription}>{tool.description}</Text>
 
-                            {tool.route ? (
-                                <View style={styles.arrowContainer}>
-                                    <Ionicons name="chevron-forward" size={18} color="#ccc" />
-                                </View>
-                            ) : (
-                                <View style={styles.soonBadge}>
-                                    <Text style={styles.soonText}>{language.t('_labelSoon')}</Text>
-                                </View>
-                            )}
+                            <View style={styles.arrowContainer}>
+                                <Ionicons name="chevron-forward" size={18} color="#ccc" />
+                            </View>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -163,18 +148,4 @@ const styles = StyleSheet.create({
         top: 16,
         right: 16,
     },
-    soonBadge: {
-        position: 'absolute',
-        top: 16,
-        right: 16,
-        backgroundColor: '#f0f0f0',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 8,
-    },
-    soonText: {
-        fontFamily: 'poppins-bold',
-        fontSize: 8,
-        color: '#999',
-    }
 });

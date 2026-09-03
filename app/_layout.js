@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as Notifications from 'expo-notifications';
 import { LangContext } from "../src/utils/LangContext";
 import { I18n } from "i18n-js";
 import { translations } from "../src/utils/localizations";
@@ -42,7 +41,6 @@ export default function Layout() {
 
     useEffect(() => {
         getUserPreferences().catch(e => console.error('getUserPreferences error:', e));
-        configureNotifications().catch(e => console.error('configureNotifications error:', e));
     }, [])
 
     // Al terminar de configurar el idioma se lanza notificación
@@ -68,23 +66,6 @@ export default function Layout() {
             setLanguage(resolveLanguage(savedLanguage, getLocales()));
         } finally {
             setLangRdy(true);
-        }
-    }
-
-    async function configureNotifications() {
-        const { granted } = await Notifications.requestPermissionsAsync();
-        if (granted) {
-            await AsyncStorage.setItem(userPreferences.NOTIFICATION_PERMISSION, "true");
-            Notifications.setNotificationHandler({
-                handleNotification: async () => ({
-                    shouldShowBanner: true,
-                    shouldShowList: true,
-                    shouldPlaySound: false,
-                    shouldSetBadge: false,
-                }),
-            });
-        } else {
-            await AsyncStorage.setItem(userPreferences.NOTIFICATION_PERMISSION, "false");
         }
     }
 

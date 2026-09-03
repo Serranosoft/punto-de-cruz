@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { ui } from '../../src/utils/styles';
@@ -11,6 +11,11 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AchievementsContext } from '../../src/utils/AchievementsContext';
 import AdBanner from '../../src/components/AdBanner';
+import {
+    disableWeeklyNotification,
+    enableWeeklyNotification,
+    getWeeklyNotificationEnabled,
+} from '../../src/utils/notifications';
 
 export default function Inicio() {
     const { language } = useContext(LangContext);
@@ -18,10 +23,16 @@ export default function Inicio() {
     const router = useRouter();
 
     const [lastProject, setLastProject] = useState(null);
+    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+    const [notificationBusy, setNotificationBusy] = useState(false);
     const { unlockAchievement } = useContext(AchievementsContext);
 
     useFocusEffect(
         useCallback(() => {
+            getWeeklyNotificationEnabled()
+                .then(setNotificationsEnabled)
+                .catch((error) => console.warn('Could not read notification status', error));
+
             AsyncStorage.getItem('lastProject').then((data) => {
                 if (data) {
                     try {
@@ -113,6 +124,29 @@ export default function Inicio() {
         }
     }
 
+    const handleNotificationToggle = async () => {
+        if (notificationBusy) return;
+
+        setNotificationBusy(true);
+        try {
+            if (notificationsEnabled) {
+                await disableWeeklyNotification();
+                setNotificationsEnabled(false);
+                return;
+            }
+
+            const result = await enableWeeklyNotification(language);
+            setNotificationsEnabled(result.enabled);
+            if (result.shouldOpenSettings) {
+                await Linking.openSettings();
+            }
+        } catch (error) {
+            console.warn('Could not update notification preference', error);
+        } finally {
+            setNotificationBusy(false);
+        }
+    };
+
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.content}>
             {/* Header */}
@@ -120,11 +154,18 @@ export default function Inicio() {
             <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
                 <Text style={styles.title}>{language.t('_headerTitle')}</Text>
                 <TouchableOpacity
-                    style={styles.bellButton}
+                    style={[styles.bellButton, notificationsEnabled && styles.bellButtonActive]}
                     accessibilityLabel={language.t('_accessibilityBell')}
                     accessibilityRole="button"
+                    accessibilityState={{ selected: notificationsEnabled, disabled: notificationBusy }}
+                    disabled={notificationBusy}
+                    onPress={handleNotificationToggle}
                 >
-                    <Feather name="bell" size={20} color="#333" />
+                    <Feather
+                        name={notificationsEnabled ? "bell" : "bell-off"}
+                        size={20}
+                        color={notificationsEnabled ? "#fff" : "#333"}
+                    />
                 </TouchableOpacity>
             </View>
 
@@ -317,6 +358,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
+    },
+    bellButtonActive: {
+        backgroundColor: '#d35400',
     },
     section: {
         marginTop: 20,
