@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { View, StyleSheet } from "react-native";
+import { ActivityIndicator, Image, View, StyleSheet } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useCallback, useEffect, useState, useMemo, useRef } from "react";
@@ -37,6 +37,7 @@ export default function Layout() {
     const [adRequestOptions, setAdRequestOptions] = useState(null);
     const [adTrigger, setAdTrigger] = useState(0);
     const [privacyOptionsRequired, setPrivacyOptionsRequired] = useState(false);
+    const [adsBootstrapComplete, setAdsBootstrapComplete] = useState(false);
     const adsHandlerRef = useRef(null);
 
     useEffect(() => {
@@ -52,11 +53,19 @@ export default function Layout() {
 
     // Gestión de anuncios
     useEffect(() => {
-        if (adTrigger > 4) {
-            if (adsLoaded) {
-                adsHandlerRef.current?.showIntersitialAd();
+        if (!adsLoaded) {
+            return;
+        }
+
+        if (adTrigger >= 3) {
+            adsHandlerRef.current?.loadIntersitialAd();
+        }
+
+        if (adTrigger >= 5) {
+            const wasShown = adsHandlerRef.current?.showIntersitialAd();
+            if (wasShown) {
+                setAdTrigger(0);
             }
-            setAdTrigger(0);
         }
     }, [adTrigger, adsLoaded])
 
@@ -77,14 +86,30 @@ export default function Layout() {
         adsHandlerRef.current?.setShowOpenAd(shouldShow);
     }, []);
 
+    const onRewardedAdOpened = useCallback(() => {
+        adsHandlerRef.current?.onRewardedAdOpened();
+    }, []);
+
+    const onRewardedAdClosed = useCallback(() => {
+        adsHandlerRef.current?.onRewardedAdClosed();
+    }, []);
+
+    const completeAdsBootstrap = useCallback(() => {
+        setAdsBootstrapComplete(true);
+    }, []);
+
+    const adsCanRender = adsLoaded && adsBootstrapComplete;
+
     const adsContextValue = useMemo(() => ({
         setAdTrigger,
-        adsLoaded,
+        adsLoaded: adsCanRender,
         adRequestOptions,
         privacyOptionsRequired,
         showPrivacyOptions,
         setShowOpenAd,
-    }), [adRequestOptions, adsLoaded, privacyOptionsRequired, setShowOpenAd, showPrivacyOptions]);
+        onRewardedAdOpened,
+        onRewardedAdClosed,
+    }), [adRequestOptions, adsCanRender, onRewardedAdClosed, onRewardedAdOpened, privacyOptionsRequired, setShowOpenAd, showPrivacyOptions]);
 
     return (
         <SafeAreaProvider>
@@ -98,6 +123,7 @@ export default function Layout() {
                                 setAdRequestOptions={setAdRequestOptions}
                                 setAdsLoaded={setAdsLoaded}
                                 setPrivacyOptionsRequired={setPrivacyOptionsRequired}
+                                onColdStartComplete={completeAdsBootstrap}
                             />
                             <GestureHandlerRootView style={styles.wrapper}>
                                 <Stack>
@@ -110,6 +136,16 @@ export default function Layout() {
                     </LangContext.Provider>
                 </AdsContext.Provider>
                 <Toast />
+                {!adsBootstrapComplete && (
+                    <View style={styles.adsLoadingOverlay} accessibilityLabel="Cargando aplicación">
+                        <Image
+                            source={require("../assets/splash-punto-de-cruz.png")}
+                            style={styles.adsLoadingImage}
+                            resizeMode="contain"
+                        />
+                        <ActivityIndicator size="large" color="#d35400" />
+                    </View>
+                )}
             </View >
         </SafeAreaProvider>
     )
@@ -125,5 +161,18 @@ const styles = StyleSheet.create({
         width: "100%",
         alignSelf: "center",
         justifyContent: "center",
+    },
+    adsLoadingOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        zIndex: 1000,
+        elevation: 1000,
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 20,
+        backgroundColor: "#F7F0EC",
+    },
+    adsLoadingImage: {
+        width: "72%",
+        height: 220,
     },
 })

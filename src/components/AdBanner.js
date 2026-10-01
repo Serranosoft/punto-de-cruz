@@ -43,9 +43,13 @@ export default function AdBanner({ placement, embedded = false }) {
                 unitId={getBannerId(placement)}
                 size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                 requestOptions={adRequestOptions}
-                onAdFailedToLoad={(error) => console.warn(`[ads:${placement}] banner load failed`, error)}
-                onAdImpression={() => console.info(`[ads:${placement}] banner impression`)}
-                onPaid={(event) => console.info(`[ads:${placement}] banner revenue`, event)}
+                onAdLoaded={() => console.info(`[ads:banner:${placement}] loaded`)}
+                onAdFailedToLoad={(error) => console.warn(`[ads:banner:${placement}] load_failed`, {
+                    code: error?.code,
+                    message: error?.message,
+                })}
+                onAdImpression={() => console.info(`[ads:banner:${placement}] impression`)}
+                onPaid={(event) => console.info(`[ads:banner:${placement}] revenue`, event)}
             />
         </View>
     );

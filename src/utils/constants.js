@@ -1,15 +1,16 @@
 import { TestIds } from "react-native-google-mobile-ads";
 
-const productionBannerId = "ca-app-pub-3738413299329691/5344360784";
+const productionBannerId = "ca-app-pub-3738413299329691/5411255060";
 const productionInterstitialId = "ca-app-pub-3738413299329691/7356280609";
 const productionAppOpenId = "ca-app-pub-3738413299329691/9092034102";
+const productionRewardedVipId = "ca-app-pub-3738413299329691/1772975531";
 const useTestAds = __DEV__ || process.env.EXPO_PUBLIC_USE_TEST_ADS === "true";
 
 const productionBannerIds = {
-    home: process.env.EXPO_PUBLIC_ADMOB_BANNER_HOME_ID || productionBannerId,
-    explore: process.env.EXPO_PUBLIC_ADMOB_BANNER_EXPLORE_ID || productionBannerId,
-    tools: process.env.EXPO_PUBLIC_ADMOB_BANNER_TOOLS_ID || productionBannerId,
-    pattern: process.env.EXPO_PUBLIC_ADMOB_BANNER_PATTERN_ID || productionBannerId,
+    home: "ca-app-pub-3738413299329691/5411255060",
+    explore: "ca-app-pub-3738413299329691/8885353804",
+    tools: "ca-app-pub-3738413299329691/4098173399",
+    pattern: "ca-app-pub-3738413299329691/8253040820",
 };
 
 export const getBannerId = (placement = "home") => (
@@ -19,3 +20,4 @@ export const getBannerId = (placement = "home") => (
 export const bannerId = getBannerId();
 export const intersitialId = useTestAds ? TestIds.INTERSTITIAL : productionInterstitialId;
 export const loadId = useTestAds ? TestIds.APP_OPEN : productionAppOpenId;
+export const rewardedVipId = useTestAds ? TestIds.REWARDED : productionRewardedVipId;
