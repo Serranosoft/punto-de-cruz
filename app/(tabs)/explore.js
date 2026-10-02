@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AdBanner from '../../src/components/AdBanner';
+import { getPatternBooksCopy } from '../../src/utils/pattern-books-copy';
 
 const PatternCard = React.memo(({ item, onPress }) => {
     // Determine difficulty badge roughly by steps
@@ -56,6 +57,7 @@ export default function Explore() {
     const { language } = useContext(LangContext);
 
     const router = useRouter();
+    const booksCopy = getPatternBooksCopy(language.locale);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState(ALL_CATEGORY);
@@ -191,6 +193,16 @@ export default function Explore() {
                 />
             </View>
 
+            <TouchableOpacity
+                style={styles.booksLink}
+                onPress={() => router.push('/pattern-books')}
+                accessibilityRole="button"
+            >
+                <Feather name="book-open" size={22} color="#d35400" />
+                <Text style={styles.booksLinkText}>{booksCopy.title}</Text>
+                <Feather name="chevron-right" size={20} color="#d35400" />
+            </TouchableOpacity>
+
             <FlatList
                 data={filteredPatterns}
                 keyExtractor={(item) => `${item.parentCategoryFetch}-${item.fetch}`}
@@ -210,6 +222,23 @@ export default function Explore() {
 }
 
 const styles = StyleSheet.create({
+    booksLink: {
+        marginHorizontal: 20,
+        marginTop: 12,
+        minHeight: 56,
+        padding: 14,
+        borderRadius: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        backgroundColor: '#fcf3e8',
+    },
+    booksLinkText: {
+        flex: 1,
+        fontFamily: 'poppins-bold',
+        fontSize: 14,
+        color: '#d35400',
+    },
     container: {
         flex: 1,
         backgroundColor: '#f8f9fa'

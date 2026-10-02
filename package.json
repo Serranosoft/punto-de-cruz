@@ -3,6 +3,12 @@
   "version": "3.0.1",
   "main": "index.js",
   "scripts": {
+    "scrape:pattern-books": "node ./build-scripts/scrape-pattern-books.js",
+    "check:pattern-books": "node ./build-scripts/check-pattern-books.js",
+    "upload:pattern-books": "node ./build-scripts/upload-pattern-books.js",
+    "check:wordpress-pattern-books": "node ./build-scripts/check-wordpress-pattern-books.js",
+    "check:pattern-book-access": "node ./build-scripts/check-pattern-book-access.js",
+    "split:wordpress-pattern-books": "node ./build-scripts/split-wordpress-pattern-books.js",
     "check:locales": "node ./build-scripts/check-locales.js",
     "eas-build-pre-install": "node ./build-scripts/prepare-eas-dependencies.js",
     "start": "expo start",
@@ -52,7 +58,9 @@
     "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "cheerio": "^1.2.0",
+    "pdf-lib": "^1.17.1"
   },
   "private": true
 }

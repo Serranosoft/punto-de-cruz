@@ -16,8 +16,7 @@ import {
     enableWeeklyNotification,
     getWeeklyNotificationEnabled,
 } from '../../src/utils/notifications';
-import { formatVipExpiry, getVipAccessStatus } from '../../src/utils/vip-access';
-import { getVipCopy, interpolateVipCopy } from '../../src/utils/vip-copy';
+import { getPatternBooksCopy } from '../../src/utils/pattern-books-copy';
 
 export default function Inicio() {
     const { language } = useContext(LangContext);
@@ -27,7 +26,6 @@ export default function Inicio() {
     const [lastProject, setLastProject] = useState(null);
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
     const [notificationBusy, setNotificationBusy] = useState(false);
-    const [vipStatus, setVipStatus] = useState(null);
     const { unlockAchievement } = useContext(AchievementsContext);
 
     useFocusEffect(
@@ -35,10 +33,6 @@ export default function Inicio() {
             getWeeklyNotificationEnabled()
                 .then(setNotificationsEnabled)
                 .catch((error) => console.warn('Could not read notification status', error));
-
-            getVipAccessStatus()
-                .then(setVipStatus)
-                .catch((error) => console.warn('[vip] Could not read access status', error));
 
             AsyncStorage.getItem('lastProject').then((data) => {
                 if (data) {
@@ -114,8 +108,7 @@ export default function Inicio() {
     const safeProgress = isNaN(progress) ? 0 : progress;
     const strokeDashoffset = circumference - (safeProgress / 100) * circumference;
     const isProjectActive = lastProject && lastProject.steps && lastProject.lastStep < lastProject.steps;
-    const vipCopy = getVipCopy(language.locale);
-    const vipExpiryDate = formatVipExpiry(vipStatus?.expiresAt, language.locale);
+    const booksCopy = getPatternBooksCopy(language.locale);
 
     const handleContinue = () => {
         if (lastProject) {
@@ -259,36 +252,25 @@ export default function Inicio() {
                 </TouchableOpacity>
             </View>
 
-            {/* Patrones VIP */}
+            {/* Revistas y libros de punto de cruz */}
             <TouchableOpacity
-                style={styles.vipCard}
-                onPress={() => router.push('/vip-patterns')}
+                style={styles.booksCard}
+                onPress={() => router.push('/pattern-books')}
                 accessibilityRole="button"
-                accessibilityLabel={vipCopy.title}
+                accessibilityLabel={booksCopy.title}
             >
-                <View style={styles.vipGlowLarge} />
-                <View style={styles.vipGlowSmall} />
-                <View style={styles.vipTopRow}>
-                    <View style={styles.vipIcon}>
-                        <Ionicons name="diamond" size={24} color="#2b153c" />
-                    </View>
-                    <View style={[styles.vipStatusBadge, vipStatus?.isActive && styles.vipStatusBadgeActive]}>
-                        <Text style={[styles.vipStatusText, vipStatus?.isActive && styles.vipStatusTextActive]}>
-                            {vipStatus?.isActive ? vipCopy.activeBadge : vipCopy.badge}
-                        </Text>
+                <View style={styles.booksGlowLarge} />
+                <View style={styles.booksGlowSmall} />
+                <View style={styles.booksTopRow}>
+                    <View style={styles.booksIcon}>
+                        <Ionicons name="book-outline" size={24} color="#d35400" />
                     </View>
                 </View>
-                <Text style={styles.vipTitle}>{vipCopy.homeTitle}</Text>
-                <Text style={styles.vipSubtitle}>
-                    {vipStatus?.isActive
-                        ? interpolateVipCopy(vipCopy.homeActive, { date: vipExpiryDate })
-                        : vipCopy.homeLocked}
-                </Text>
-                <View style={styles.vipCta}>
-                    <Text style={styles.vipCtaText}>
-                        {vipStatus?.isActive ? vipCopy.homeCtaActive : vipCopy.homeCtaLocked}
-                    </Text>
-                    <Ionicons name="arrow-forward" size={18} color="#2b153c" />
+                <Text style={styles.booksTitle}>{booksCopy.homeTitle}</Text>
+                <Text style={styles.booksSubtitle}>{booksCopy.description}</Text>
+                <View style={styles.booksCta}>
+                    <Text style={styles.booksCtaText}>{booksCopy.homeCta}</Text>
+                    <Ionicons name="arrow-forward" size={18} color="#d35400" />
                 </View>
             </TouchableOpacity>
 
@@ -414,77 +396,54 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingHorizontal: 20,
     },
-    vipCard: {
+    booksCard: {
         overflow: 'hidden',
         minHeight: 238,
         marginHorizontal: 20,
         marginBottom: 26,
         borderRadius: 24,
         padding: 22,
-        backgroundColor: '#2b153c',
-        shadowColor: '#2b153c',
+        backgroundColor: '#d35400',
+        shadowColor: '#d35400',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.2,
         shadowRadius: 14,
         elevation: 6,
     },
-    vipGlowLarge: {
+    booksGlowLarge: {
         position: 'absolute',
         width: 180,
         height: 180,
         top: -85,
         right: -40,
         borderRadius: 90,
-        backgroundColor: 'rgba(247, 200, 94, 0.18)',
+        backgroundColor: 'rgba(255, 255, 255, 0.14)',
     },
-    vipGlowSmall: {
+    booksGlowSmall: {
         position: 'absolute',
         width: 100,
         height: 100,
         top: 40,
         right: 45,
         borderRadius: 50,
-        backgroundColor: 'rgba(181, 126, 220, 0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
     },
-    vipTopRow: {
+    booksTopRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: 20,
     },
-    vipIcon: {
+    booksIcon: {
         width: 48,
         height: 48,
         borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f7c85e',
+        backgroundColor: '#fff',
         transform: [{ rotate: '-5deg' }],
     },
-    vipStatusBadge: {
-        maxWidth: '70%',
-        paddingHorizontal: 11,
-        paddingVertical: 7,
-        borderRadius: 20,
-        backgroundColor: 'rgba(247, 200, 94, 0.14)',
-        borderWidth: 1,
-        borderColor: 'rgba(247, 200, 94, 0.38)',
-    },
-    vipStatusBadgeActive: {
-        backgroundColor: 'rgba(105, 214, 151, 0.14)',
-        borderColor: 'rgba(105, 214, 151, 0.38)',
-    },
-    vipStatusText: {
-        color: '#f7c85e',
-        textAlign: 'center',
-        fontFamily: 'poppins-bold',
-        fontSize: 9,
-        letterSpacing: 0.7,
-    },
-    vipStatusTextActive: {
-        color: '#8ee4b3',
-    },
-    vipTitle: {
+    booksTitle: {
         maxWidth: 310,
         color: '#fff',
         fontFamily: 'poppins-bold',
@@ -492,15 +451,16 @@ const styles = StyleSheet.create({
         lineHeight: 28,
         marginBottom: 7,
     },
-    vipSubtitle: {
+    booksSubtitle: {
         maxWidth: 315,
-        color: '#e4d8e9',
+        color: '#fff',
         fontFamily: 'poppins-regular',
         fontSize: 12,
         lineHeight: 18,
         marginBottom: 17,
     },
-    vipCta: {
+    booksCta: {
+        minHeight: 48,
         alignSelf: 'flex-start',
         flexDirection: 'row',
         alignItems: 'center',
@@ -508,10 +468,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 16,
-        backgroundColor: '#f7c85e',
+        backgroundColor: '#fff',
     },
-    vipCtaText: {
-        color: '#2b153c',
+    booksCtaText: {
+        color: '#d35400',
         fontFamily: 'poppins-bold',
         fontSize: 12,
     },

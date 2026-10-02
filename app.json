@@ -19,6 +19,8 @@
       "bundleIdentifier": "com.paulaymanu113.puntodecruz",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
+        "UIFileSharingEnabled": true,
+        "LSSupportsOpeningDocumentsInPlace": true,
         "NSCameraUsageDescription": "Permite a la aplicación elegir una foto para comenzar con la conversión.",
         "NSUserTrackingUsageDescription": "Este identificador se utilizará para ofrecerte anuncios personalizados."
       }

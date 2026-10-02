@@ -1,0 +1,5 @@
+#pdcr-pages { display: flex; flex-wrap: wrap; gap: 16px; padding: 0; counter-reset: pdcr-page; }
+#pdcr-pages li { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border: 1px solid #ccd0d4; background: #fff; cursor: move; counter-increment: pdcr-page; }
+#pdcr-pages li::before { content: 'Página ' counter(pdcr-page); font-weight: 600; }
+#pdcr-pages img { width: 120px; height: 150px; object-fit: contain; }
+#pdcr-pages .button { cursor: pointer; }

@@ -33,3 +33,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Generated pattern-book archives and upload checkpoints
+/out/
+/wordpress/*.zip
+/tmp/pattern-book-volumes/
+/tmp/pdfs/

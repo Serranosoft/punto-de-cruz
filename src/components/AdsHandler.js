@@ -697,8 +697,8 @@ const AdsHandler = forwardRef((props, ref) => {
             }
             rewardedAdShowingRef.current = true;
             isFullScreenShowingRef.current = true;
-            recordFullScreenShown("rewarded-vip");
-            logAdEvent("rewarded-vip", "impression");
+            recordFullScreenShown("rewarded-book");
+            logAdEvent("rewarded-book", "impression");
         },
         onRewardedAdClosed() {
             if (!rewardedAdShowingRef.current) {
@@ -706,7 +706,7 @@ const AdsHandler = forwardRef((props, ref) => {
             }
             rewardedAdShowingRef.current = false;
             isFullScreenShowingRef.current = false;
-            logAdEvent("rewarded-vip", "closed");
+            logAdEvent("rewarded-book", "closed");
         },
         showPrivacyOptionsForm,
     }));
