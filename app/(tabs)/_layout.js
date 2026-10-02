@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     },
     tabBarLabel: {
-        fontFamily: "poppins-medium",
+        fontFamily: fonts.medium,
         fontSize: 10,
     }
 });

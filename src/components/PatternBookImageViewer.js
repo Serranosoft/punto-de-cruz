@@ -1,3 +1,4 @@
+import { fonts } from "../utils/fonts";
 import { useRef, useState } from 'react';
 import { ActivityIndicator, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -114,16 +115,16 @@ const styles = StyleSheet.create({
     screen: { flex: 1, backgroundColor: '#111' },
     header: { paddingHorizontal: 16, paddingBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: '#191919' },
     titleBlock: { flex: 1, gap: 4 },
-    title: { fontFamily: 'poppins-medium', fontSize: 14, color: '#fff' },
-    counter: { fontFamily: 'poppins-regular', fontSize: 12, color: '#ccc' },
+    title: { fontFamily: fonts.medium, fontSize: 14, color: '#fff' },
+    counter: { fontFamily: fonts.regular, fontSize: 12, color: '#ccc' },
     viewport: { flex: 1, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
     image: { width: '100%', height: '100%' },
     overlay: { ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center', gap: 12, padding: 24 },
     footer: { paddingTop: 12, paddingHorizontal: 12, backgroundColor: '#191919', gap: 8 },
-    hint: { fontFamily: 'poppins-regular', fontSize: 12, lineHeight: 18, color: '#ccc', textAlign: 'center' },
+    hint: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 18, color: '#ccc', textAlign: 'center' },
     controls: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' },
     iconButton: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center', borderRadius: 24, backgroundColor: '#303030' },
     disabled: { opacity: 0.3 },
     retry: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 20, borderRadius: 12, backgroundColor: '#d35400' },
-    buttonText: { fontFamily: 'poppins-medium', fontSize: 14, color: '#fff' },
+    buttonText: { fontFamily: fonts.medium, fontSize: 14, color: '#fff' },
 });

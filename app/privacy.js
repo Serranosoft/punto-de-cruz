@@ -1,3 +1,4 @@
+import { fonts } from "../src/utils/fonts";
 import { useContext } from 'react';
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Stack } from 'expo-router';
@@ -88,13 +89,13 @@ const styles = StyleSheet.create({
         paddingBottom: 48,
     },
     updated: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         color: '#777',
         fontSize: 12,
         marginBottom: 16,
     },
     intro: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#33251f',
         fontSize: 15,
         lineHeight: 23,
@@ -109,13 +110,13 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     sectionTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         color: '#7a2e00',
         fontSize: 16,
         marginBottom: 8,
     },
     body: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         color: '#4f443e',
         fontSize: 14,
         lineHeight: 21,
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     },
     linkText: {
         flex: 1,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#d35400',
         fontSize: 14,
     },

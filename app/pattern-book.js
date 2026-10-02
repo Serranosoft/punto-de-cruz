@@ -1,3 +1,4 @@
+import { fonts } from "../src/utils/fonts";
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
@@ -159,20 +160,20 @@ const styles = StyleSheet.create({
     content: { padding: 16, gap: 18 },
     actions: { gap: 8, marginBottom: 6 },
     pdfButton: { minHeight: 52, borderRadius: 16, padding: 14, gap: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#d35400' },
-    pdfText: { flexShrink: 1, fontFamily: 'poppins-bold', fontSize: 14, color: '#fff' },
+    pdfText: { flexShrink: 1, fontFamily: fonts.bold, fontSize: 14, color: '#fff' },
     sourceButton: { minHeight: 48, gap: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
-    sourceText: { fontFamily: 'poppins-regular', fontSize: 12, color: '#666' },
+    sourceText: { fontFamily: fonts.regular, fontSize: 12, color: '#666' },
     page: { padding: 10, borderRadius: 12, backgroundColor: '#fff', gap: 10 },
     pageHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
-    pageLabel: { fontFamily: 'poppins-medium', fontSize: 12, color: '#666' },
+    pageLabel: { fontFamily: fonts.medium, fontSize: 12, color: '#666' },
     empty: { padding: 24, alignItems: 'center', gap: 12 },
     lockedContent: { padding: 20, flexGrow: 1, justifyContent: 'center' },
     lockedCard: { padding: 22, borderRadius: 24, backgroundColor: '#fff', alignItems: 'center', gap: 16 },
     cover: { width: '100%', height: 240, borderRadius: 12, backgroundColor: '#fdf3eb' },
-    bookTitle: { fontFamily: 'poppins-bold', fontSize: 20, lineHeight: 28, color: '#222', textAlign: 'center' },
-    description: { fontFamily: 'poppins-regular', fontSize: 14, lineHeight: 22, color: '#666', textAlign: 'center' },
-    notice: { fontFamily: 'poppins-medium', fontSize: 12, lineHeight: 20, color: '#963d00', textAlign: 'center' },
-    accessLabel: { fontFamily: 'poppins-medium', fontSize: 12, color: '#666', textAlign: 'center', marginBottom: 6 },
+    bookTitle: { fontFamily: fonts.bold, fontSize: 20, lineHeight: 28, color: '#222', textAlign: 'center' },
+    description: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 22, color: '#666', textAlign: 'center' },
+    notice: { fontFamily: fonts.medium, fontSize: 12, lineHeight: 20, color: '#963d00', textAlign: 'center' },
+    accessLabel: { fontFamily: fonts.medium, fontSize: 12, color: '#666', textAlign: 'center', marginBottom: 6 },
     loadingRow: { gap: 10, alignItems: 'center' },
     disabled: { opacity: 0.65 },
 });

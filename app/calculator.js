@@ -1,3 +1,4 @@
+import { fonts } from "../src/utils/fonts";
 import { useState, useMemo, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -167,12 +168,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     cardTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#222',
     },
     cardSubtitle: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 13,
         color: '#666',
         marginBottom: 16,
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     inputLabel: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 13,
         color: '#444',
         marginBottom: 8,
@@ -197,14 +198,14 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         height: 50,
         paddingHorizontal: 16,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 16,
         color: '#111',
         borderWidth: 1,
         borderColor: '#e1e3e8',
     },
     helpText: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 11,
         color: '#888',
         marginTop: 6,
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
         borderColor: '#3498db',
     },
     countPillText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 14,
         color: '#555',
     },
@@ -244,23 +245,23 @@ const styles = StyleSheet.create({
         paddingVertical: 32,
     },
     resultEmptyText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 13,
         color: '#999',
     },
     resultLabel: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 13,
         color: '#fff',
         opacity: 0.9,
     },
     resultValue: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 24,
         color: '#fff',
     },
     resultSubValue: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 12,
         color: '#fff',
         opacity: 0.8,

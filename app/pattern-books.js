@@ -1,3 +1,4 @@
+import { fonts } from "../src/utils/fonts";
 import React, { useCallback, useContext } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
@@ -72,13 +73,13 @@ const styles = StyleSheet.create({
     screen: { flex: 1, backgroundColor: '#f8f9fa' },
     empty: { paddingVertical: 40, alignItems: 'center', gap: 12 },
     content: { padding: 20, gap: 16 },
-    description: { fontFamily: 'poppins-regular', fontSize: 14, lineHeight: 22, color: '#666', marginBottom: 4 },
+    description: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 22, color: '#666', marginBottom: 4 },
     card: { flexDirection: 'row', padding: 14, gap: 16, borderRadius: 20, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ece8e4' },
     cover: { width: 100, height: 145, borderRadius: 10, backgroundColor: '#f6f1eb' },
     info: { flex: 1, justifyContent: 'center', gap: 8 },
-    bookTitle: { fontFamily: 'poppins-bold', fontSize: 15, color: '#222' },
-    pages: { fontFamily: 'poppins-regular', fontSize: 12, color: '#666' },
-    status: { fontFamily: 'poppins-medium', fontSize: 11, color: '#666' },
+    bookTitle: { fontFamily: fonts.bold, fontSize: 15, color: '#222' },
+    pages: { fontFamily: fonts.regular, fontSize: 12, color: '#666' },
+    status: { fontFamily: fonts.medium, fontSize: 11, color: '#666' },
     cta: { minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: 8 },
-    ctaText: { fontFamily: 'poppins-medium', fontSize: 13, color: '#d35400' },
+    ctaText: { fontFamily: fonts.medium, fontSize: 13, color: '#d35400' },
 });

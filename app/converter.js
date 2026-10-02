@@ -1,3 +1,4 @@
+import { fonts } from "../src/utils/fonts";
 import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, ScrollView, useWindowDimensions } from "react-native";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Stack } from "expo-router";
@@ -351,7 +352,7 @@ const styles = StyleSheet.create({
     },
     loadingText: {
         maxWidth: 240,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#555',
         fontSize: 14,
         lineHeight: 20,
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
     },
     actionText: {
         flexShrink: 1,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#fff',
         fontSize: 14,
         textAlign: 'center',
@@ -416,7 +417,7 @@ const styles = StyleSheet.create({
     },
     outlineText: {
         flexShrink: 1,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#d35400',
         fontSize: 13,
         textAlign: 'center',

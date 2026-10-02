@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     headerTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 24,
         color: '#111',
     },
@@ -171,18 +172,18 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
     },
     levelText: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         color: '#fff',
         fontSize: 14,
     },
     userName: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 22,
         color: '#111',
         marginBottom: 4,
     },
     userTitle: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 14,
         color: '#d35400',
         marginBottom: 20,
@@ -208,12 +209,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     xpText: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 12,
         color: '#777',
     },
     xpTextDetail: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 11,
         color: '#999',
     },
@@ -222,13 +223,13 @@ const styles = StyleSheet.create({
         marginBottom: 32,
     },
     sectionTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#222',
         marginBottom: 4,
     },
     sectionSubtitle: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 13,
         color: '#777',
         marginBottom: 16,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#e1e3e8',
     },
     achTitle: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 10,
         color: '#333',
         textAlign: 'center',
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     },
     settingLabel: {
         flex: 1,
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 15,
         color: '#333',
     },

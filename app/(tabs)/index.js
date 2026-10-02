@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -360,12 +361,12 @@ const styles = StyleSheet.create({
         borderRadius: 24,
     },
     greeting: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         color: '#555',
         fontSize: 14,
     },
     title: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         color: '#111',
         fontSize: 20,
         lineHeight: 24,
@@ -390,7 +391,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     sectionTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#111',
         marginBottom: 16,
@@ -446,7 +447,7 @@ const styles = StyleSheet.create({
     booksTitle: {
         maxWidth: 310,
         color: '#fff',
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 21,
         lineHeight: 28,
         marginBottom: 7,
@@ -454,7 +455,7 @@ const styles = StyleSheet.create({
     booksSubtitle: {
         maxWidth: 315,
         color: '#fff',
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 12,
         lineHeight: 18,
         marginBottom: 17,
@@ -472,11 +473,11 @@ const styles = StyleSheet.create({
     },
     booksCtaText: {
         color: '#d35400',
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 12,
     },
     sectionTitleInHeader: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#111',
     },
@@ -488,7 +489,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     viewAllText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#d35400',
         fontSize: 14,
     },
@@ -522,7 +523,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     progressText: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#d35400',
     },
@@ -531,7 +532,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     projectTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 16,
         color: '#111',
         marginBottom: 4,
@@ -543,7 +544,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     timeText: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 12,
         color: '#555',
     },
@@ -555,7 +556,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     continueText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         color: '#fff',
         fontSize: 13,
     },
@@ -587,7 +588,7 @@ const styles = StyleSheet.create({
     designNewBadgeText: {
         color: '#fff',
         fontSize: 9,
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         textTransform: 'uppercase',
     },
     banner: {
@@ -615,12 +616,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     bannerTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 15,
         color: '#d35400',
     },
     bannerSubtitle: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 13,
         color: '#e67e22',
         marginTop: 2,
@@ -652,12 +653,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     categoryTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         color: '#fff',
         fontSize: 16,
     },
     categorySubtitle: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         color: '#eee',
         fontSize: 12,
     },

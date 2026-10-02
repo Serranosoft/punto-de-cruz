@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#f1f1f1',
     },
     headerTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 22,
         color: '#111',
     },
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
     },
     introText: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 14,
         color: '#666',
         marginBottom: 24,
@@ -132,13 +133,13 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     toolTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 15,
         color: '#222',
         marginBottom: 8,
     },
     toolDescription: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 11,
         color: '#777',
         lineHeight: 16,

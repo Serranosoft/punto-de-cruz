@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { useState, useMemo, useCallback, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Platform } from 'react-native';
 import { Image } from 'expo-image';
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     },
     booksLinkText: {
         flex: 1,
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 14,
         color: '#d35400',
     },
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     headerTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 24,
         color: '#111',
         marginBottom: 16,
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 15,
         color: '#333',
         height: '100%',
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#d35400',
     },
     pillText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 14,
         color: '#555',
     },
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
     newBadgeText: {
         color: '#fff',
         fontSize: 8,
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         textTransform: 'uppercase',
     },
     gridContent: {
@@ -364,14 +365,14 @@ const styles = StyleSheet.create({
     cardNewBadgeText: {
         color: '#fff',
         fontSize: 9,
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         textTransform: 'uppercase',
     },
     cardInfo: {
         padding: 12,
     },
     cardTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 14,
         color: '#222',
         marginBottom: 6,
@@ -387,12 +388,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     badgeText: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 10,
         color: '#fff',
     },
     stepsText: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 12,
         color: '#777',
     },
@@ -403,14 +404,14 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     emptyTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 18,
         color: '#333',
         marginTop: 16,
         textAlign: 'center',
     },
     emptySubtitle: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 14,
         color: '#777',
         textAlign: 'center',

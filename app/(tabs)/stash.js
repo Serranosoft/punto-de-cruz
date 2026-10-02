@@ -1,3 +1,4 @@
+import { fonts } from "../../src/utils/fonts";
 import { useState, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     headerTitle: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 24,
         color: '#111',
         marginBottom: 16,
@@ -228,13 +229,13 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     tabText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 13,
         color: '#666',
     },
     tabTextActive: {
         color: '#111',
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
     },
     searchBar: {
         flexDirection: 'row',
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 14,
         color: '#333',
         height: '100%',
@@ -286,12 +287,12 @@ const styles = StyleSheet.create({
         marginRight: 12,
     },
     threadCode: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 15,
         color: '#222',
     },
     threadName: {
-        fontFamily: 'poppins-regular',
+        fontFamily: fonts.regular,
         fontSize: 12,
         color: '#777',
     },
@@ -328,7 +329,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     stepVal: {
-        fontFamily: 'poppins-bold',
+        fontFamily: fonts.bold,
         fontSize: 14,
         color: '#d35400',
         width: 28,
@@ -341,7 +342,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     emptyText: {
-        fontFamily: 'poppins-medium',
+        fontFamily: fonts.medium,
         fontSize: 14,
         color: '#999',
         textAlign: 'center',
